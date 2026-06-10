@@ -5,7 +5,7 @@ const https = require('https');
 const crypto = require('crypto');
 
 const app = express();
-const PORT = process.env.PORT || 5500;
+const PORT = process.env.PORT || 8080;
 const PLISIO_KEY = process.env.PLISIO_SECRET_KEY || '';
 const NGN_TO_USD = parseFloat(process.env.NGN_TO_USD) || 0.00067;
 const INVOICES_FILE = path.join(__dirname, 'invoices.json');

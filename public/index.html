@@ -6,7 +6,6 @@
 <title>Qumovcoin</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<script src="https://plisio.net/assets/js/plisio.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -58,21 +57,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);overf
 .eyebtn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--mut);cursor:pointer;font-size:14px}
 select.finput{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%237d7a8a' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
 select.finput option{background:var(--card);color:var(--fg)}
-
-/* ── Notification bar: ALWAYS dark background, always light text ── */
 .notif-bar{position:fixed;top:0;left:0;right:0;z-index:500;background:linear-gradient(90deg,rgba(7,7,12,.96),rgba(15,15,24,.96));border-bottom:1px solid rgba(212,168,67,.15);padding:0;overflow:hidden;height:36px;display:none}
 .notif-bar.on{display:block}
 .notif-track{display:flex;align-items:center;height:36px;animation:scrollNotif 30s linear infinite;white-space:nowrap}
 .notif-track:hover{animation-play-state:paused}
 @keyframes scrollNotif{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
-.notif-item{display:inline-flex;align-items:center;gap:6px;padding:0 24px;font-size:11px;font-weight:600;flex-shrink:0;
-/* Force light colors that never change regardless of theme */
-color:#f0ece4}
+.notif-item{display:inline-flex;align-items:center;gap:6px;padding:0 24px;font-size:11px;font-weight:600;flex-shrink:0;color:#f0ece4}
 .notif-item .ni-amount{color:#2ecc71}
 .notif-item .ni-name{color:#f0ece4}
 .notif-item .ni-level{color:#d4a843}
 .notif-item .ni-time{color:#7d7a8a;font-weight:400}
-
 #authScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px;position:relative;z-index:1}
 #authScreen.off{display:none}
 .authbox{width:100%;max-width:420px;background:var(--card);border:1px solid var(--bdr);border-radius:20px;padding:36px 28px;animation:slideIn .5s ease;box-shadow:0 8px 40px rgba(0,0,0,.3)}
@@ -85,17 +79,6 @@ html.light-mode .authbox{box-shadow:0 8px 40px rgba(0,0,0,.08)}
 .auth-sub{text-align:center;color:var(--mut);font-size:14px;margin-bottom:24px;line-height:1.6}
 .auth-footer{text-align:center;margin-top:20px;font-size:13px;color:var(--mut)}
 .auth-footer a{color:var(--gold);cursor:pointer;font-weight:600;text-decoration:none}
-.quick-access{display:flex;flex-direction:column;gap:10px;margin-top:18px}
-.qa-divider{display:flex;align-items:center;gap:12px;font-size:11px;color:var(--mut)}
-.qa-divider::before,.qa-divider::after{content:'';flex:1;height:1px;background:var(--bdr)}
-.qa-btn{width:100%;padding:13px 16px;border-radius:var(--rad2);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .25s}
-.qa-btn.demo{background:rgba(46,204,113,.06);border:1px solid rgba(46,204,113,.2);color:var(--green)}
-.qa-btn.demo:hover{background:rgba(46,204,113,.12)}
-.qa-btn.temp{background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.2);color:var(--blue)}
-.qa-btn.temp:hover{background:rgba(52,152,219,.12)}
-.qa-badge{font-size:9px;padding:2px 7px;border-radius:50px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.qa-btn.demo .qa-badge{background:rgba(46,204,113,.15)}
-.qa-btn.temp .qa-badge{background:rgba(52,152,219,.15)}
 #mainApp{display:none}
 #mainApp.on{display:block}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--bdr);position:sticky;top:36px;z-index:50;transition:background .3s}
@@ -124,8 +107,6 @@ html.light-mode .topbar{background:rgba(245,245,245,.92)}
 .cur-opt.active .co-check{opacity:1}
 .cur-opt .co-sym{font-size:11px;color:var(--gold);font-weight:600;display:block;margin-top:1px}
 .cur-modal-note{text-align:center;font-size:11px;color:var(--mut);margin-top:16px;line-height:1.5}
-.temp-banner{background:rgba(52,152,219,.08);border:1px solid rgba(52,152,219,.2);border-radius:var(--rad2);padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--blue)}
-.temp-banner button{margin-left:auto;background:none;border:none;color:var(--blue);cursor:pointer;font-size:14px;padding:4px}
 .bal-card{border:1px solid var(--bdr2);border-radius:18px;padding:24px;margin:20px 0;position:relative;overflow:hidden}
 html:not(.light-mode) .bal-card{background:linear-gradient(135deg,#161628,#1a1432,#121220)}
 html.light-mode .bal-card{background:linear-gradient(135deg,#e8e8f0,#eeeef8,#e8e8f0)}
@@ -194,6 +175,9 @@ html.light-mode .ref-hero{background:linear-gradient(135deg,#e8e8f0,#eeeef8)}
 .ref-hero h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;margin-bottom:8px;position:relative;z-index:1}
 .ref-hero p{color:var(--mut);font-size:13px;position:relative;z-index:1;margin-bottom:20px}
 .ref-badge-big{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--green-d);border:1px solid rgba(46,204,113,.2);border-radius:50px;font-size:16px;font-weight:700;color:var(--green);position:relative;z-index:1}
+.ref-country-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;position:relative;z-index:1}
+.ref-country-flag{font-size:28px;line-height:1}
+.ref-country-name{font-size:13px;color:var(--mut);font-weight:500}
 .ref-code-box{background:var(--card);border:1px solid var(--bdr);border-radius:var(--rad);padding:20px;margin-bottom:16px}
 .ref-code-box label{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:10px}
 .ref-code-row{display:flex;gap:8px}
@@ -258,27 +242,8 @@ html.light-mode .modal-bg.center .modal-box{box-shadow:0 16px 60px rgba(0,0,0,.1
 .pay-tab i{font-size:18px}
 .pay-tab.on{border-color:var(--gold);color:var(--gold);background:var(--gold-d)}
 .pay-tab .pt-badge{font-size:8px;padding:1px 5px;border-radius:50px;font-weight:700}
-.crypto-info{background:var(--elev);border:1px solid var(--bdr);border-radius:12px;padding:16px;margin-bottom:16px}
-.crypto-network{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px 14px;border-radius:var(--rad3)}
-html:not(.light-mode) .crypto-network{background:rgba(255,255,255,.03)}
-html.light-mode .crypto-network{background:rgba(0,0,0,.03)}
-.crypto-network i{font-size:22px}
-.crypto-network .cn-name{font-weight:700;font-size:14px}
-.crypto-network .cn-net{font-size:11px;color:var(--mut)}
 .crypto-warn{font-size:11px;color:var(--mut);line-height:1.6;margin-top:12px;display:flex;gap:6px}
 .crypto-warn i{color:var(--gold);flex-shrink:0;margin-top:2px}
-.bank-info{background:var(--elev);border:1px solid var(--bdr);border-radius:12px;padding:16px}
-.bank-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(212,168,67,.04)}
-.bank-row:last-child{border-bottom:none}
-.bk-l{font-size:12px;color:var(--mut)}
-.bk-v{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
-.copy-btn{width:34px;height:34px;border-radius:var(--rad3);background:var(--gold-d);border:none;color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .25s;flex-shrink:0}
-.copy-btn:hover{background:rgba(212,168,67,.2)}
-.upload-zone{border:2px dashed var(--bdr);border-radius:12px;padding:28px;text-align:center;cursor:pointer;transition:all .25s;margin-top:14px}
-.upload-zone:hover{border-color:var(--gold);background:rgba(212,168,67,.02)}
-.upload-zone i{font-size:28px;color:var(--gold);margin-bottom:10px;display:block}
-.upload-zone p{font-size:13px;color:var(--mut)}
-.file-name{font-size:12px;color:var(--green);margin-top:6px;font-weight:600}
 .hist-hero{border:1px solid var(--bdr2);border-radius:18px;padding:24px;margin:20px 0;position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
 html:not(.light-mode) .hist-hero{background:linear-gradient(135deg,#161628,#1a1432,#121220)}
 html.light-mode .hist-hero{background:linear-gradient(135deg,#e8e8f0,#eeeef8,#e8e8f0)}
@@ -298,7 +263,9 @@ html.light-mode .hist-hero{background:linear-gradient(135deg,#e8e8f0,#eeeef8,#e8
 .txn-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .txn-icon.deposit{background:var(--gold-d);color:var(--gold)}
 .txn-icon.withdraw-pending{background:var(--gold-d);color:var(--gold)}
-.txn-icon.withdraw-done{background:var(--green-d);color:var(--green)}
+.txn-icon.withdraw-processing{background:rgba(52,152,219,.12);color:var(--blue)}
+.txn-icon.withdraw-completed{background:var(--green-d);color:var(--green)}
+.txn-icon.withdraw-failed{background:var(--red-d);color:var(--red)}
 .txn-icon.payout{background:rgba(155,89,182,.12);color:#9b59b6}
 .txn-info{flex:1;min-width:0}
 .txn-info h4{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -307,9 +274,11 @@ html.light-mode .hist-hero{background:linear-gradient(135deg,#e8e8f0,#eeeef8,#e8
 .txn-amount{font-size:15px;font-weight:700}
 .txn-amount.positive{color:var(--green)}
 .txn-amount.negative{color:var(--red)}
-.txn-amount.neutral{color:var(--gold)}
 .txn-status{font-size:10px;font-weight:600;margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
-.txn-status.pending{color:var(--gold)}.txn-status.completed{color:var(--green)}.txn-status.active{color:var(--green)}
+.txn-status.pending{color:var(--gold)}
+.txn-status.processing{color:var(--blue)}
+.txn-status.completed{color:var(--green)}
+.txn-status.failed{color:var(--red)}
 .txn-badge{display:inline-block;padding:2px 8px;border-radius:50px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
 .txn-badge.deposit{background:var(--gold-d);color:var(--gold)}
 .txn-badge.withdraw{background:var(--red-d);color:var(--red)}
@@ -337,16 +306,27 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
 .toast.hiding{opacity:0;transform:translateX(60px);transition:all .3s}
 @keyframes toastIn{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
 .plisio-qr-container{text-align:center;padding:20px 0}
-.plisio-qr-container img{max-width:200px;height:auto;border-radius:12px;border:4px solid var(--gold)}
+.plisio-qr-container img{max-width:220px;height:auto;border-radius:12px;border:4px solid var(--gold)}
 .plisio-amount{text-align:center;margin:16px 0;font-size:24px;font-weight:700;color:var(--gold)}
 .plisio-address-box{background:var(--inp);border:1px solid var(--bdr);border-radius:var(--rad3);padding:12px;margin:12px 0;display:flex;align-items:center;gap:8px}
-.plisio-address-box input{flex:1;background:none;border:none;color:var(--fg);font-size:12px;font-family:monospace;outline:none}
+.plisio-address-box input{flex:1;background:none;border:none;color:var(--fg);font-size:11px;font-family:monospace;outline:none;word-break:break-all}
 .plisio-timer{text-align:center;font-size:14px;color:var(--mut);margin:12px 0}
 .plisio-timer span{color:var(--gold);font-weight:700}
 .plisio-status{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:var(--rad3);font-size:13px;font-weight:600}
 .plisio-status.waiting{background:var(--gold-d);color:var(--gold)}
 .plisio-status.confirmed{background:var(--green-d);color:var(--green)}
+.plisio-status.expired{background:var(--red-d);color:var(--red)}
+.plisio-status.error{background:var(--red-d);color:var(--red)}
 .plisio-status i{font-size:16px}
+.plisio-loading{text-align:center;padding:40px 20px}
+.plisio-loading .spinner{width:40px;height:40px;border:3px solid var(--bdr);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.copy-btn{width:34px;height:34px;border-radius:var(--rad3);background:var(--gold-d);border:none;color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .25s;flex-shrink:0}
+.copy-btn:hover{background:rgba(212,168,67,.2)}
+.wd-direct-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--green-d);border:1px solid rgba(46,204,113,.2);border-radius:50px;font-size:12px;font-weight:600;color:var(--green);margin-bottom:16px}
+.wd-direct-badge i{font-size:14px}
+.min-withdraw-note{font-size:11px;color:var(--mut);margin-top:8px;display:flex;align-items:center;gap:4px}
+.min-withdraw-note i{color:var(--gold)}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(212,168,67,.2);border-radius:2px}
@@ -366,11 +346,6 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
     <div class="fgroup"><label>Email Address</label><div class="fwrap"><input type="email" class="finput" id="loginEmail" placeholder="you@example.com"><i class="fas fa-envelope ico"></i></div></div>
     <div class="fgroup"><label>Password</label><div class="fwrap"><input type="password" class="finput" id="loginPass" placeholder="Enter password"><i class="fas fa-lock ico"></i><button class="eyebtn" onclick="toggleEye('loginPass',this)"><i class="fas fa-eye"></i></button></div></div>
     <button class="btn btn-gold btn-full btn-big" onclick="handleLogin()"><i class="fas fa-arrow-right-to-bracket"></i> Sign In</button>
-    <div class="quick-access">
-      <div class="qa-divider">or quick access</div>
-      <button class="qa-btn demo" onclick="handleDemoLogin()"><i class="fas fa-bolt"></i> Demo Login (chidi@test.com) <span class="qa-badge">Pre-loaded</span></button>
-      <button class="qa-btn temp" onclick="handleTempLogin()"><i class="fas fa-clock"></i> Temporary Login <span class="qa-badge">No account needed</span></button>
-    </div>
     <div class="auth-footer">Don't have an account? <a onclick="showRegister()">Create one</a></div>
   </div>
   <div class="authbox" id="registerBox" style="display:none">
@@ -390,9 +365,8 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
 <div id="mainApp">
   <div class="page on" id="pageHome">
     <div class="wrap">
-      <div id="tempBannerBox" style="display:none"><div class="temp-banner"><i class="fas fa-info-circle"></i><span>You're in a <strong>temporary session</strong>. Data won't be saved.</span><button onclick="this.parentElement.parentElement.style.display='none'"><i class="fas fa-times"></i></button></div></div>
-      <div class="topbar"><h2>Qumovcoin</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnHome" onclick="openModal('modalCurrency')"><span class="cur-flag">🇪🇺</span><span class="cur-sym">€</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageRefer')"><i class="fas fa-gift"></i></button><button class="avatar-btn" id="avatarHome" onclick="navigateTo('pageSettings')">G</button></div></div>
-      <div class="bal-card"><div class="bal-label">Total Balance</div><div class="bal-amount" id="homeBalance">€0</div><div class="bal-row"><div class="bal-stat"><div class="bs-label">Invested</div><div class="bs-val" id="homeInvested">€0</div></div><div class="bal-stat"><div class="bs-label">Earned</div><div class="bs-val grn" id="homeEarned">€0</div></div><div class="bal-stat"><div class="bs-label">Ref Bonus</div><div class="bs-val grn" id="homeRefBonus">€0</div></div></div></div>
+      <div class="topbar"><h2>Qumovcoin</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnHome" onclick="openModal('modalCurrency')"><span class="cur-flag">🇳🇬</span><span class="cur-sym">₦</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageRefer')"><i class="fas fa-gift"></i></button><button class="avatar-btn" id="avatarHome" onclick="navigateTo('pageSettings')">G</button></div></div>
+      <div class="bal-card"><div class="bal-label">Total Balance</div><div class="bal-amount" id="homeBalance">₦0</div><div class="bal-row"><div class="bal-stat"><div class="bs-label">Invested</div><div class="bs-val" id="homeInvested">₦0</div></div><div class="bal-stat"><div class="bs-label">Earned</div><div class="bs-val grn" id="homeEarned">₦0</div></div><div class="bal-stat"><div class="bs-label">Ref Bonus</div><div class="bs-val grn" id="homeRefBonus">₦0</div></div></div></div>
       <div class="quick-act">
         <div class="qact" onclick="navigateTo('pageLevels')"><div class="qact-ico" style="background:var(--gold-d);color:var(--gold)"><i class="fas fa-layer-group"></i></div><span class="qact-lbl">Invest</span></div>
         <div class="qact" onclick="navigateTo('pagePortfolio')"><div class="qact-ico" style="background:var(--green-d);color:var(--green)"><i class="fas fa-chart-pie"></i></div><span class="qact-lbl">Portfolio</span></div>
@@ -405,7 +379,7 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
 
   <div class="page" id="pageLevels">
     <div class="wrap">
-      <div class="topbar"><h2>Investment Plans</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnLevels" onclick="openModal('modalCurrency')"><span class="cur-flag">🇪🇺</span><span class="cur-sym">€</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageHome')"><i class="fas fa-arrow-left"></i></button></div></div>
+      <div class="topbar"><h2>Investment Plans</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnLevels" onclick="openModal('modalCurrency')"><span class="cur-flag">🇳🇬</span><span class="cur-sym">₦</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageHome')"><i class="fas fa-arrow-left"></i></button></div></div>
       <p style="font-size:13px;color:var(--mut);margin:16px 0 10px;line-height:1.6">Higher levels unlock better profit margins and faster payout cycles.</p>
       <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
         <span style="font-size:11px;padding:5px 10px;border-radius:50px;background:rgba(52,152,219,.1);color:var(--blue);border:1px solid rgba(52,152,219,.2)"><i class="fas fa-clock" style="margin-right:4px"></i>L1-L3: 6 days</span>
@@ -418,10 +392,10 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
 
   <div class="page" id="pagePortfolio">
     <div class="wrap">
-      <div class="topbar"><h2>My Portfolio</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnPortfolio" onclick="openModal('modalCurrency')"><span class="cur-flag">🇪🇺</span><span class="cur-sym">€</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageHome')"><i class="fas fa-arrow-left"></i></button></div></div>
+      <div class="topbar"><h2>My Portfolio</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnPortfolio" onclick="openModal('modalCurrency')"><span class="cur-flag">🇳🇬</span><span class="cur-sym">₦</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageHome')"><i class="fas fa-arrow-left"></i></button></div></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0">
-        <div class="bal-stat" style="background:var(--card);border:1px solid var(--bdr);padding:16px;border-radius:var(--rad)"><div class="bs-label">Total Invested</div><div class="bs-val" id="portInvested" style="font-size:20px">€0</div></div>
-        <div class="bal-stat" style="background:var(--card);border:1px solid var(--bdr);padding:16px;border-radius:var(--rad)"><div class="bs-label">Total Earned</div><div class="bs-val grn" id="portEarned" style="font-size:20px">€0</div></div>
+        <div class="bal-stat" style="background:var(--card);border:1px solid var(--bdr);padding:16px;border-radius:var(--rad)"><div class="bs-label">Total Invested</div><div class="bs-val" id="portInvested" style="font-size:20px">₦0</div></div>
+        <div class="bal-stat" style="background:var(--card);border:1px solid var(--bdr);padding:16px;border-radius:var(--rad)"><div class="bs-label">Total Earned</div><div class="bs-val grn" id="portEarned" style="font-size:20px">₦0</div></div>
       </div>
       <div class="sec-hd"><h3>All Investments</h3></div>
       <div class="inv-list" id="portInvestList"><div class="empty-state"><i class="fas fa-inbox"></i><p>You haven't invested yet.</p></div></div>
@@ -430,9 +404,9 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
 
   <div class="page" id="pageHistory">
     <div class="wrap">
-      <div class="topbar"><h2>History</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnHistory" onclick="openModal('modalCurrency')"><span class="cur-flag">🇪🇺</span><span class="cur-sym">€</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageHome')"><i class="fas fa-arrow-left"></i></button></div></div>
+      <div class="topbar"><h2>History</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnHistory" onclick="openModal('modalCurrency')"><span class="cur-flag">🇳🇬</span><span class="cur-sym">₦</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageHome')"><i class="fas fa-arrow-left"></i></button></div></div>
       <div class="hist-hero">
-        <div class="hh-left"><div class="hh-label">Available to Withdraw</div><div class="hh-amount" id="histWdBalance">€0</div><div class="hh-sub">Level 1-3 profits only</div></div>
+        <div class="hh-left"><div class="hh-label">Available to Withdraw</div><div class="hh-amount" id="histWdBalance">₦0</div><div class="hh-sub">Level 1-3 profits only</div></div>
         <div class="hh-right"><button class="btn btn-green" onclick="openModal('modalWithdraw')" id="histWdBtn"><i class="fas fa-arrow-right-from-bracket"></i> Withdraw</button></div>
       </div>
       <div class="hist-filters" id="histFilters">
@@ -447,18 +421,26 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
 
   <div class="page" id="pageRefer">
     <div class="wrap">
-      <div class="topbar"><h2>Referral Program</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnRefer" onclick="openModal('modalCurrency')"><span class="cur-flag">🇪🇺</span><span class="cur-sym">€</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageHome')"><i class="fas fa-arrow-left"></i></button></div></div>
-      <div class="ref-hero"><h2>Invite & Earn</h2><p>Share your code and earn per referral.</p><div class="ref-badge-big"><i class="fas fa-gift"></i> 500 NGN Per Referral</div></div>
+      <div class="topbar"><h2>Referral Program</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnRefer" onclick="openModal('modalCurrency')"><span class="cur-flag">🇳🇬</span><span class="cur-sym">₦</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageHome')"><i class="fas fa-arrow-left"></i></button></div></div>
+      <div class="ref-hero">
+        <h2>Invite & Earn</h2>
+        <p>Share your code and earn per referral.</p>
+        <div class="ref-country-row">
+          <span class="ref-country-flag" id="refCountryFlag">🇳🇬</span>
+          <span class="ref-country-name" id="refCountryName">Nigeria</span>
+        </div>
+        <div class="ref-badge-big"><i class="fas fa-gift"></i> <span id="refBonusAmount">₦908</span> Per Referral</div>
+      </div>
       <div class="ref-code-box"><label>Your Referral Code</label><div class="ref-code-row"><input type="text" id="myRefCode" readonly><button class="btn btn-gold btn-sm" onclick="copyText(document.getElementById('myRefCode').value)"><i class="fas fa-copy"></i> Copy</button></div></div>
       <button class="btn btn-green btn-full" onclick="shareReferral()" style="margin-bottom:20px"><i class="fas fa-share-nodes"></i> Share Link</button>
-      <div class="ref-stats"><div class="ref-stat"><div class="rs-val" id="refCount">0</div><div class="rs-lbl">Total Referrals</div></div><div class="ref-stat"><div class="rs-val" id="refEarnings">€0</div><div class="rs-lbl">Total Earned</div></div></div>
+      <div class="ref-stats"><div class="ref-stat"><div class="rs-val" id="refCount">0</div><div class="rs-lbl">Total Referrals</div></div><div class="ref-stat"><div class="rs-val" id="refEarnings">₦0</div><div class="rs-lbl">Total Earned</div></div></div>
       <div class="ref-history"><div class="ref-hist-hd">History</div><div id="refHistoryList"><div class="empty-state" style="padding:32px 16px"><i class="fas fa-users"></i><p>No referrals yet.</p></div></div></div>
     </div>
   </div>
 
   <div class="page" id="pageSettings">
     <div class="wrap">
-      <div class="topbar"><h2>Settings</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnSettings" onclick="openModal('modalCurrency')"><span class="cur-flag">🇪🇺</span><span class="cur-sym">€</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageHome')"><i class="fas fa-arrow-left"></i></button></div></div>
+      <div class="topbar"><h2>Settings</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnSettings" onclick="openModal('modalCurrency')"><span class="cur-flag">🇳🇬</span><span class="cur-sym">₦</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageHome')"><i class="fas fa-arrow-left"></i></button></div></div>
       <div style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--bdr);border-radius:var(--rad);padding:20px;margin:16px 0"><button class="avatar-btn" id="avatarSettings" style="width:52px;height:52px;font-size:20px;border-radius:14px">G</button><div><div style="font-size:16px;font-weight:700" id="settingsName">Guest</div><div style="font-size:12px;color:var(--mut);margin-top:2px" id="settingsEmail">temp</div></div></div>
       <div class="set-group"><div class="set-group-title">Account</div>
         <div class="set-item" onclick="openModal('modalProfile');prefillProfile()"><div class="set-left"><i class="fas fa-user-pen"></i><div><div class="set-label">Edit Profile</div><div class="set-sub">Update name and phone</div></div></div><div class="set-right"><i class="fas fa-chevron-right"></i></div></div>
@@ -473,7 +455,7 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
         <div class="set-item" onclick="openModal('modalTerms')"><div class="set-left"><i class="fas fa-file-contract"></i><div><div class="set-label">Terms of Service</div></div></div><div class="set-right"><i class="fas fa-chevron-right"></i></div></div>
       </div>
       <button class="btn btn-red btn-full" onclick="openModal('modalLogout')" style="margin-top:20px"><i class="fas fa-right-from-bracket"></i> Log Out</button>
-      <p style="text-align:center;font-size:11px;color:var(--mut);margin-top:16px">Qumovcoin v2.0.0 | Powered by Plisio</p>
+      <p style="text-align:center;font-size:11px;color:var(--mut);margin-top:16px">Qumovcoin v2.0.0 | Direct Crypto via Plisio</p>
     </div>
   </div>
 
@@ -486,19 +468,8 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
   </nav>
 </div>
 
-<!-- CURRENCY SELECTION MODAL -->
-<div class="modal-bg" id="modalCurrency">
-  <div class="modal-box">
-    <div class="modal-handle"></div>
-    <div class="modal-head"><h3>Select Currency</h3><button class="modal-close" onclick="closeModal('modalCurrency')"><i class="fas fa-times"></i></button></div>
-    <div class="modal-body">
-      <div class="cur-modal-grid" id="curModalGrid"></div>
-      <p class="cur-modal-note"><i class="fas fa-circle-info" style="color:var(--gold);margin-right:4px"></i>Amounts are converted automatically. This changes display only.</p>
-    </div>
-  </div>
-</div>
+<div class="modal-bg" id="modalCurrency"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Select Currency</h3><button class="modal-close" onclick="closeModal('modalCurrency')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="cur-modal-grid" id="curModalGrid"></div><p class="cur-modal-note"><i class="fas fa-circle-info" style="color:var(--gold);margin-right:4px"></i>Display currency only. Crypto payments are in USD.</p></div></div></div>
 
-<!-- DEPOSIT MODAL -->
 <div class="modal-bg" id="modalDeposit">
   <div class="modal-box">
     <div class="modal-handle"></div>
@@ -514,74 +485,86 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
       <div class="pay-tabs" id="payTabs">
         <button class="pay-tab on" data-m="usdt" onclick="switchPay('usdt')"><i class="fab fa-bitcoin" style="color:var(--usdt)"></i>USDT<span class="pt-badge" style="background:var(--green-d);color:var(--green)">TRC20</span></button>
         <button class="pay-tab" data-m="btc" onclick="switchPay('btc')"><i class="fab fa-bitcoin" style="color:var(--btc)"></i>BTC</button>
-        <button class="pay-tab" data-m="bank" onclick="switchPay('bank')"><i class="fas fa-building-columns"></i>Bank</button>
       </div>
-      <div id="payUsdt"><div class="crypto-info"><div class="crypto-network"><i class="fab fa-bitcoin" style="color:var(--usdt)"></i><div><div class="cn-name">Tether (USDT)</div><div class="cn-net">TRC20 — Secured by Plisio</div></div></div><div id="plisioUsdtContainer"><p style="font-size:13px;color:var(--mut);text-align:center;padding:20px 0"><i class="fas fa-shield-halved" style="color:var(--green);margin-right:6px"></i>Secure payment via Plisio gateway</p></div><div class="crypto-warn"><i class="fas fa-triangle-exclamation"></i><span>Only send USDT via TRC20. Other networks = permanent loss.</span></div></div></div>
-      <div id="payBtc" style="display:none"><div class="crypto-info"><div class="crypto-network"><i class="fab fa-bitcoin" style="color:var(--btc)"></i><div><div class="cn-name">Bitcoin (BTC)</div><div class="cn-net">Bitcoin Network — Secured by Plisio</div></div></div><div id="plisioBtcContainer"><p style="font-size:13px;color:var(--mut);text-align:center;padding:20px 0"><i class="fas fa-shield-halved" style="color:var(--green);margin-right:6px"></i>Secure payment via Plisio gateway</p></div><div class="crypto-warn"><i class="fas fa-triangle-exclamation"></i><span>Only send BTC to the generated address.</span></div></div></div>
-      <div id="payBank" style="display:none"><div class="bank-info"><div class="bank-row"><span class="bk-l">Bank</span><span class="bk-v">Access Bank</span></div><div class="bank-row"><span class="bk-l">Account Number</span><span class="bk-v">0123456789 <button class="copy-btn" onclick="copyText('0123456789')"><i class="fas fa-copy"></i></button></span></div><div class="bank-row"><span class="bk-l">Account Name</span><span class="bk-v">Qumovcoin Investments Ltd</span></div><div class="bank-row"><span class="bk-l">Amount</span><span class="bk-v gld" id="bankAmount"></span></div></div><div class="upload-zone" onclick="document.getElementById('proofFile').click()"><i class="fas fa-cloud-arrow-up"></i><p>Upload payment proof</p><div class="file-name" id="proofFileName"></div><input type="file" id="proofFile" accept="image/*,.pdf" style="display:none" onchange="document.getElementById('proofFileName').textContent=this.files[0]?this.files[0].name:''"></div></div>
-      <button class="btn btn-green btn-full btn-big" style="margin-top:18px" onclick="processDeposit()" id="depositBtn"><i class="fas fa-shield-halved"></i> Pay with Plisio</button>
+      <button class="btn btn-green btn-full btn-big" onclick="processDeposit()" id="depositBtn"><i class="fas fa-shield-halved"></i> Pay with Plisio</button>
+      <p style="text-align:center;font-size:11px;color:var(--mut);margin-top:12px"><i class="fas fa-lock" style="margin-right:4px"></i>Secure crypto payment via Plisio gateway.</p>
     </div>
   </div>
 </div>
 
-<!-- WITHDRAW MODAL -->
 <div class="modal-bg center" id="modalWithdraw">
   <div class="modal-box" style="max-width:480px">
     <div class="modal-handle"></div>
     <div class="modal-head"><h3>Withdraw Profits</h3><button class="modal-close" onclick="closeModal('modalWithdraw')"><i class="fas fa-times"></i></button></div>
     <div class="modal-body">
-      <div class="modal-summary"><div class="ms-row"><span class="ms-l">Available Balance</span><span class="ms-v grn" id="wdBalance">€0</span></div><div class="ms-row"><span class="ms-l">Source</span><span class="ms-v gld">Level 1-3 Profits</span></div></div>
-      <div class="fgroup"><label>Withdraw Method</label><div class="fwrap"><select class="finput" id="wdMethod" onchange="updateWithdrawUI()"><option value="usdt">USDT (TRC20)</option><option value="btc">Bitcoin (BTC)</option><option value="bank">Bank Transfer</option></select><i class="fas fa-wallet ico"></i></div></div>
-      <div id="wdCryptoFields"><div class="fgroup"><label>Wallet Address</label><div class="fwrap"><input type="text" class="finput" id="wdWallet" placeholder="Enter your wallet address"><i class="fas fa-link ico"></i></div></div></div>
-      <div id="wdBankFields" style="display:none">
-        <div class="fgroup"><label>Bank Name</label><div class="fwrap"><input type="text" class="finput" id="wdBankName" placeholder="e.g. GTBank"><i class="fas fa-building-columns ico"></i></div></div>
-        <div class="fgroup"><label>Account Number</label><div class="fwrap"><input type="text" class="finput" id="wdAcctNum" placeholder="Account number"><i class="fas fa-hashtag ico"></i></div></div>
-        <div class="fgroup"><label>Account Name</label><div class="fwrap"><input type="text" class="finput" id="wdAcctName" placeholder="Account name"><i class="fas fa-user ico"></i></div></div>
+      <div class="wd-direct-badge"><i class="fas fa-bolt"></i> Direct Withdrawal to Your Wallet</div>
+      <div class="modal-summary">
+        <div class="ms-row"><span class="ms-l">Available Balance</span><span class="ms-v grn" id="wdBalance">₦0</span></div>
+        <div class="ms-row"><span class="ms-l">Source</span><span class="ms-v gld">Level 1-3 Profits</span></div>
       </div>
-      <button class="btn btn-green btn-full btn-big" style="margin-top:8px" onclick="processWithdraw()" id="withdrawBtn"><i class="fas fa-paper-plane"></i> Submit Withdrawal</button>
+      <div class="fgroup">
+        <label>Withdraw Method</label>
+        <div class="fwrap">
+          <select class="finput" id="wdMethod" onchange="updateWithdrawUI()">
+            <option value="usdt">USDT (TRC20)</option>
+            <option value="btc">Bitcoin (BTC)</option>
+          </select>
+          <i class="fas fa-wallet ico"></i>
+        </div>
+      </div>
+      <div class="fgroup">
+        <label>Wallet Address</label>
+        <div class="fwrap">
+          <input type="text" class="finput" id="wdWallet" placeholder="Enter your wallet address">
+          <i class="fas fa-link ico"></i>
+        </div>
+      </div>
+      <div class="min-withdraw-note"><i class="fas fa-info-circle"></i> Minimum withdrawal: ₦5,000</div>
+      <button class="btn btn-green btn-full btn-big" style="margin-top:12px" onclick="processWithdraw()" id="withdrawBtn"><i class="fas fa-paper-plane"></i> Send to Wallet</button>
+      <div class="crypto-warn" style="margin-top:16px"><i class="fas fa-triangle-exclamation"></i><span>Crypto will be sent directly to your wallet. Double-check the address!</span></div>
     </div>
   </div>
 </div>
 
 <div class="modal-bg center" id="modalLogout"><div class="modal-box" style="max-width:380px"><div class="confirm-body"><i class="fas fa-right-from-bracket"></i><h3>Log Out?</h3><p id="logoutMsg">You will need to sign in again.</p><div class="confirm-btns"><button class="btn btn-out" onclick="closeModal('modalLogout')">Cancel</button><button class="btn btn-red" onclick="handleLogout()"><i class="fas fa-right-from-bracket"></i> Log Out</button></div></div></div></div>
-<div class="modal-bg" id="modalPrivacy"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Privacy Policy</h3><button class="modal-close" onclick="closeModal('modalPrivacy')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="legal-content"><h3>Information We Collect</h3><p>Name, email, phone, password, transaction data, and referral information.</p><h3>How We Use Your Data</h3><ul><li>Process investment transactions</li><li>Calculate and distribute profits</li><li>Process withdrawals</li><li>Track and credit referral bonuses</li></ul><h3>Contact</h3><p>privacy@qumovcoin.ng</p></div></div></div></div>
-<div class="modal-bg" id="modalTerms"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Terms of Service</h3><button class="modal-close" onclick="closeModal('modalTerms')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="legal-content"><h3>1. Investment Plans</h3><p>10 levels with varying cycles and profit rates.</p><h3>2. Deposits</h3><p>Via USDT (TRC20), Bitcoin, or bank transfer. Crypto via Plisio gateway.</p><h3>3. Withdrawals</h3><p>Level 1-3 profits withdrawable after each cycle. Higher levels auto-reinvest.</p><h3>4. Referral</h3><p>500 NGN per referred user.</p></div></div></div></div>
+<div class="modal-bg" id="modalPrivacy"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Privacy Policy</h3><button class="modal-close" onclick="closeModal('modalPrivacy')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="legal-content"><h3>Information We Collect</h3><p>Name, email, phone, password, transaction data, and referral information.</p><h3>How We Use Your Data</h3><ul><li>Process investment transactions</li><li>Calculate and distribute profits</li><li>Process direct crypto withdrawals</li><li>Track and credit referral bonuses</li></ul><h3>Contact</h3><p>privacy@qumovcoin.com</p></div></div></div></div>
+<div class="modal-bg" id="modalTerms"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Terms of Service</h3><button class="modal-close" onclick="closeModal('modalTerms')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="legal-content"><h3>1. Investment Plans</h3><p>10 levels with varying cycles and profit rates.</p><h3>2. Deposits</h3><p>USDT (TRC20) or Bitcoin via Plisio crypto payment gateway.</p><h3>3. Withdrawals</h3><p>Direct crypto withdrawal to your wallet via Plisio. Level 1-3 profits withdrawable after each cycle.</p><h3>4. Referral</h3><p>$0.59 USD per referred user (converted to local currency).</p></div></div></div></div>
 <div class="modal-bg" id="modalProfile"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Edit Profile</h3><button class="modal-close" onclick="closeModal('modalProfile')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="fgroup"><label>Full Name</label><div class="fwrap"><input type="text" class="finput" id="editName" placeholder="Your name"><i class="fas fa-user ico"></i></div></div><div class="fgroup"><label>Phone</label><div class="fwrap"><input type="tel" class="finput" id="editPhone" placeholder="08012345678"><i class="fas fa-phone ico"></i></div></div><button class="btn btn-gold btn-full btn-big" onclick="saveProfile()" style="margin-top:8px"><i class="fas fa-check"></i> Save</button></div></div></div>
-<div class="modal-bg" id="modalPassword"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Change Password</h3><button class="modal-close" onclick="closeModal('modalPassword')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="fgroup"><label>Current Password</label><div class="fwrap"><input type="password" class="finput" id="pwCurrent" placeholder="Current password"><i class="fas fa-lock ico"></i></div></div><div class="fgroup"><label>New Password</label><div class="fwrap"><input type="password" class="finput" id="pwNew" placeholder="Min 6 chars"><i class="fas fa-key ico"></i></div></div><div class="fgroup"><label>Confirm</label><div class="fwrap"><input type="password" class="finput" id="pwConfirm" placeholder="Re-enter"><i class="fas fa-key ico"></i></div></div><button class="btn btn-gold btn-full btn-big" onclick="savePassword()" style="margin-top:8px"><i class="fas fa-check"></i> Update</button></div></div></div></div>
-<div class="modal-bg center" id="modalPlisio"><div class="modal-box" style="max-width:500px;max-height:90vh"><div class="modal-head"><h3>Plisio Payment</h3><button class="modal-close" onclick="closeModal('modalPlisio')"><i class="fas fa-times"></i></button></div><div class="modal-body" id="plisioPaymentBody"></div></div></div>
+<div class="modal-bg" id="modalPassword"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Change Password</h3><button class="modal-close" onclick="closeModal('modalPassword')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="fgroup"><label>Current Password</label><div class="fwrap"><input type="password" class="finput" id="pwCurrent" placeholder="Current password"><i class="fas fa-lock ico"></i></div></div><div class="fgroup"><label>New Password</label><div class="fwrap"><input type="password" class="finput" id="pwNew" placeholder="Min 6 chars"><i class="fas fa-key ico"></i></div></div><div class="fgroup"><label>Confirm</label><div class="fwrap"><input type="password" class="finput" id="pwConfirm" placeholder="Re-enter"><i class="fas fa-key ico"></i></div></div><button class="btn btn-gold btn-full btn-big" onclick="savePassword()" style="margin-top:8px"><i class="fas fa-check"></i> Update</button></div></div></div>
+<div class="modal-bg center" id="modalPlisio"><div class="modal-box" style="max-width:500px;max-height:90vh"><div class="modal-head"><h3>Crypto Payment</h3><button class="modal-close" onclick="closeModal('modalPlisio')"><i class="fas fa-times"></i></button></div><div class="modal-body" id="plisioPaymentBody"></div></div></div>
 
 <script>
-/* ── Currency data with USD added ── */
 var CURRENCY_LIST=[
   {code:'EUR',flag:'🇪🇺',name:'Euro',symbol:'€',rate:0.00061,decimals:2},
   {code:'USD',flag:'🇺🇸',name:'US Dollar',symbol:'$',rate:0.00065,decimals:2},
-  {code:'NGN',flag:'🇳🇬',name:'Nigerian Naira',symbol:'₦',rate:1,decimals:0},
-  {code:'GHS',flag:'🇬🇭',name:'Ghanaian Cedi',symbol:'₵',rate:0.0076,decimals:2},
-  {code:'KES',flag:'🇰🇪',name:'Kenyan Shilling',symbol:'KSh',rate:0.876,decimals:0},
-  {code:'ZAR',flag:'🇿🇦',name:'South African Rand',symbol:'R',rate:0.0119,decimals:2},
-  {code:'PHP',flag:'🇵🇭',name:'Philippine Peso',symbol:'₱',rate:0.0347,decimals:0},
-  {code:'INR',flag:'🇮🇳',name:'Indian Rupee',symbol:'₹',rate:0.0533,decimals:0},
-  {code:'IDR',flag:'🇮🇩',name:'Indonesian Rupiah',symbol:'Rp',rate:9.66,decimals:0},
-  {code:'VND',flag:'🇻🇳',name:'Vietnamese Dong',symbol:'₫',rate:15.33,decimals:0}
+  {code:'NGN',flag:'🇳🇬',name:'Nigeria',symbol:'₦',rate:1,decimals:0},
+  {code:'GHS',flag:'🇬🇭',name:'Ghana',symbol:'₵',rate:0.0076,decimals:2},
+  {code:'KES',flag:'🇰🇪',name:'Kenya',symbol:'KSh',rate:0.876,decimals:0},
+  {code:'ZAR',flag:'🇿🇦',name:'South Africa',symbol:'R',rate:0.0119,decimals:2},
+  {code:'PHP',flag:'🇵🇭',name:'Philippines',symbol:'₱',rate:0.0347,decimals:0},
+  {code:'INR',flag:'🇮🇳',name:'India',symbol:'₹',rate:0.0533,decimals:0},
+  {code:'IDR',flag:'🇮🇩',name:'Indonesia',symbol:'Rp',rate:9.66,decimals:0},
+  {code:'VND',flag:'🇻🇳',name:'Vietnam',symbol:'₫',rate:15.33,decimals:0}
 ];
 var CURRENCIES={};
 for(var _ci=0;_ci<CURRENCY_LIST.length;_ci++){CURRENCIES[CURRENCY_LIST[_ci].code]=CURRENCY_LIST[_ci]}
+var activeCurrency='NGN',histFilter='all',isDarkMode=true;
+var MIN_WITHDRAW_NGN = 5000;
 
-var activeCurrency='EUR',histFilter='all',isDarkMode=true;
+/* ═══════ REFERRAL: $0.59 USD BASE ≈ 908 NGN ═══════ */
+var REF_BONUS_USD = 0.59;
+var USD_RATE = 0.00065;
+var REF_BONUS_NGN = Math.round(REF_BONUS_USD / USD_RATE);
 
-function buildCurrencyModal(){
-  var h='';
-  for(var i=0;i<CURRENCY_LIST.length;i++){
-    var c=CURRENCY_LIST[i];
-    var act=c.code===activeCurrency?' active':'';
-    h+='<button class="cur-opt'+act+'" data-code="'+c.code+'" onclick="selectCurrency(\''+c.code+'\')">';
-    h+='<span class="co-flag">'+c.flag+'</span>';
-    h+='<span class="co-info"><span class="co-code">'+c.code+'</span><span class="co-name">'+c.name+'</span><span class="co-sym">'+c.symbol+'</span></span>';
-    h+='<i class="fas fa-circle-check co-check"></i>';
-    h+='</button>';
-  }
-  document.getElementById('curModalGrid').innerHTML=h;
+function getRefBonusInCurrency(){
+  var c = CURRENCIES[activeCurrency] || CURRENCIES.NGN;
+  var val = REF_BONUS_NGN * c.rate;
+  return c.symbol + (c.decimals === 0 ? Math.round(val).toLocaleString('en-US') : val.toFixed(c.decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
 }
+
+function getRefBonusNGN(){ return REF_BONUS_NGN; }
+
+function buildCurrencyModal(){var h='';for(var i=0;i<CURRENCY_LIST.length;i++){var c=CURRENCY_LIST[i];h+='<button class="cur-opt'+(c.code===activeCurrency?' active':'')+'" data-code="'+c.code+'" onclick="selectCurrency(\''+c.code+'\')"><span class="co-flag">'+c.flag+'</span><span class="co-info"><span class="co-code">'+c.code+'</span><span class="co-name">'+c.name+'</span><span class="co-sym">'+c.symbol+'</span></span><i class="fas fa-circle-check co-check"></i></button>'}document.getElementById('curModalGrid').innerHTML=h}
 
 function selectCurrency(code){
   activeCurrency=code;
@@ -589,14 +572,18 @@ function selectCurrency(code){
   var opts=document.querySelectorAll('.cur-opt');
   for(var i=0;i<opts.length;i++) opts[i].classList.toggle('active',opts[i].getAttribute('data-code')===code);
   syncCurButtons();
-  refreshDashboard();renderLevels();refreshReferral();refreshHistoryPage();
-  var cur=CURRENCIES[code]||CURRENCIES.EUR;
-  showToast('Currency changed to '+cur.flag+' '+cur.code+' ('+cur.symbol+')','info');
+  updateReferralDisplay();
+  refreshDashboard();
+  renderLevels();
+  refreshReferral();
+  refreshHistoryPage();
+  var cur=CURRENCIES[code]||CURRENCIES.NGN;
+  showToast('Currency: '+cur.flag+' '+cur.code,'info');
   setTimeout(function(){closeModal('modalCurrency')},350);
 }
 
 function syncCurButtons(){
-  var cur=CURRENCIES[activeCurrency]||CURRENCIES.EUR;
+  var cur=CURRENCIES[activeCurrency]||CURRENCIES.NGN;
   var btns=document.querySelectorAll('.cur-top-btn');
   for(var i=0;i<btns.length;i++){
     btns[i].querySelector('.cur-flag').textContent=cur.flag;
@@ -604,7 +591,21 @@ function syncCurButtons(){
   }
 }
 
-function formatMoney(n){var c=CURRENCIES[activeCurrency]||CURRENCIES.EUR;var v=n*c.rate;return c.symbol+(c.decimals===0?Math.round(v).toLocaleString('en-US'):v.toFixed(c.decimals).replace(/\B(?=(\d{3})+(?!\d))/g,','))}
+function updateReferralDisplay(){
+  var cur=CURRENCIES[activeCurrency]||CURRENCIES.NGN;
+  var flagEl=document.getElementById('refCountryFlag');
+  var nameEl=document.getElementById('refCountryName');
+  var amountEl=document.getElementById('refBonusAmount');
+  if(flagEl) flagEl.textContent=cur.flag;
+  if(nameEl) nameEl.textContent=cur.name;
+  if(amountEl) amountEl.textContent=getRefBonusInCurrency();
+}
+
+function formatMoney(n){
+  var c=CURRENCIES[activeCurrency]||CURRENCIES.NGN;
+  var v=n*c.rate;
+  return c.symbol+(c.decimals===0?Math.round(v).toLocaleString('en-US'):v.toFixed(c.decimals).replace(/\B(?=(\d{3})+(?!\d))/g,','));
+}
 
 function toggleTheme(){
   isDarkMode=!isDarkMode;
@@ -613,43 +614,262 @@ function toggleTheme(){
   else{document.documentElement.classList.add('light-mode');t.classList.remove('on');s.textContent='Currently inactive';ic.className='fas fa-sun'}
   safeSet('qumovcoin_theme',isDarkMode?'dark':'light');
 }
+
 function initTheme(){
   var sv=safeGet('qumovcoin_theme');
   if(sv==='light'){isDarkMode=false;document.documentElement.classList.add('light-mode');document.getElementById('themeToggle').classList.remove('on');document.getElementById('themeSubtext').textContent='Currently inactive';document.querySelector('#themeToggleItem .set-left i').className='fas fa-sun'}
   else{isDarkMode=true;document.documentElement.classList.remove('light-mode');document.getElementById('themeToggle').classList.add('on');document.getElementById('themeSubtext').textContent='Currently active';document.querySelector('#themeToggleItem .set-left i').className='fas fa-moon'}
 }
 
-var PLISIO_CONFIG={apiKey:'YOUR_PLISIO_API_KEY',currencies:{usdt:'USDT_TRC20',btc:'BTC'}};
-var LEVELS=[{level:1,amount:5150,profit:850,rate:16.5,cycle:6,star:false},{level:2,amount:20200,profit:3750,rate:18.6,cycle:6,star:false},{level:3,amount:45000,profit:9450,rate:21.0,cycle:6,star:false},{level:4,amount:79500,profit:18690,rate:23.5,cycle:5,star:false},{level:5,amount:124000,profit:32240,rate:26.0,cycle:5,star:true},{level:6,amount:178000,profit:49840,rate:28.0,cycle:5,star:false},{level:7,amount:242000,profit:72600,rate:30.0,cycle:4,star:false},{level:8,amount:315500,profit:100960,rate:32.0,cycle:4,star:false},{level:9,amount:399000,profit:135660,rate:34.0,cycle:4,star:false},{level:10,amount:492000,profit:177120,rate:36.0,cycle:4,star:true}];
-var REF_BONUS=500,DAY_MS=86400000;
-function getCycleMs(lv){for(var i=0;i<LEVELS.length;i++)if(LEVELS[i].level===lv)return LEVELS[i].cycle*DAY_MS;return 4*DAY_MS}
-function getCycleDays(lv){for(var i=0;i<LEVELS.length;i++)if(LEVELS[i].level===lv)return LEVELS[i].cycle;return 4}
-var currentUser=null,isTempSession=false,tempData=null,selectedLevel=null,payMethod='usdt',plisioInvoiceId=null,plisioCheckInterval=null;
+var PLISIO_CURRENCIES = { usdt: 'USDT_TRC20', btc: 'BTC' };
+
+var LEVELS=[
+  {level:1,amount:5150,profit:850,rate:16.5,cycle:6,star:false},
+  {level:2,amount:20200,profit:3750,rate:18.6,cycle:6,star:false},
+  {level:3,amount:45000,profit:9450,rate:21.0,cycle:6,star:false},
+  {level:4,amount:79500,profit:18690,rate:23.5,cycle:5,star:false},
+  {level:5,amount:124000,profit:32240,rate:26.0,cycle:5,star:true},
+  {level:6,amount:178000,profit:49840,rate:28.0,cycle:5,star:false},
+  {level:7,amount:242000,profit:72600,rate:30.0,cycle:4,star:false},
+  {level:8,amount:315500,profit:100960,rate:32.0,cycle:4,star:false},
+  {level:9,amount:399000,profit:135660,rate:34.0,cycle:4,star:false},
+  {level:10,amount:492000,profit:177120,rate:36.0,cycle:4,star:true}
+];
+
+var DAY_MS=86400000;
+function getCycleMs(lv){for(var i=0;i<LEVELS.length;i++) if(LEVELS[i].level===lv) return LEVELS[i].cycle*DAY_MS; return 4*DAY_MS}
+function getCycleDays(lv){for(var i=0;i<LEVELS.length;i++) if(LEVELS[i].level===lv) return LEVELS[i].cycle; return 4}
+
+var currentUser=null,isTempSession=false,tempData=null,selectedLevel=null,payMethod='usdt',plisioCheckInterval=null,plisioTimerInterval=null;
+
 function safeGet(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
 function safeSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){return false}}
 function safeRemove(k){try{localStorage.removeItem(k)}catch(e){}}
 function getDatabase(){var d=safeGet('qumovcoin_db');return(d&&d.users)?d:{users:[]}}
 function saveDatabase(d){safeSet('qumovcoin_db',d)}
-function getUserData(e){if(isTempSession&&currentUser&&e===currentUser.email)return tempData||{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]};return safeGet('qumovcoin_data_'+e)||{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]}}
+function getUserData(e){if(isTempSession&&currentUser&&e===currentUser.email) return tempData||{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]};return safeGet('qumovcoin_data_'+e)||{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]}}
 function saveUserData(e,d){if(isTempSession&&currentUser&&e===currentUser.email){tempData=d;return}safeSet('qumovcoin_data_'+e,d)}
-function generateRefCode(){var c='QM',ch='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';for(var i=0;i<6;i++)c+=ch.charAt(Math.floor(Math.random()*ch.length));return c}
-function showToast(m,t){var ic={ok:'fa-circle-check',err:'fa-circle-exclamation',info:'fa-circle-info'};var el=document.createElement('div');el.className='toast t-'+(t||'info');el.innerHTML='<i class="fas '+(ic[t]||ic.info)+'"></i><span>'+m+'</span>';document.getElementById('toastArea').appendChild(el);setTimeout(function(){el.classList.add('hiding');setTimeout(function(){el.remove()},300)},3500)}
+function generateRefCode(){var c='QM',ch='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';for(var i=0;i<6;i++) c+=ch.charAt(Math.floor(Math.random()*ch.length));return c}
+
+function showToast(m,t){
+  var ic={ok:'fa-circle-check',err:'fa-circle-exclamation',info:'fa-circle-info'};
+  var el=document.createElement('div');
+  el.className='toast t-'+(t||'info');
+  el.innerHTML='<i class="fas '+(ic[t]||ic.info)+'"></i><span>'+m+'</span>';
+  document.getElementById('toastArea').appendChild(el);
+  setTimeout(function(){el.classList.add('hiding');setTimeout(function(){el.remove()},300)},3500);
+}
+
 var fakeNames=['Adebayo O.','Chioma N.','Emeka I.','Fatima Z.','Tunde A.','Blessing K.','Obinna M.','Aisha B.','Yusuf D.','Ngozi E.'],notifInterval=null;
-function startNotifBar(){document.getElementById('notifBar').classList.add('on');addNotifItem();notifInterval=setInterval(addNotifItem,4000)}
-function addNotifItem(){var tr=document.getElementById('notifTrack'),n=fakeNames[Math.floor(Math.random()*fakeNames.length)],lv=Math.floor(Math.random()*10)+1,a=LEVELS[lv-1].profit,m=Math.floor(Math.random()*30)+1;var it=document.createElement('span');it.className='notif-item';it.innerHTML='<i class="fas fa-circle-check" style="color:#2ecc71;font-size:10px"></i><span class="ni-name">'+n+'</span><span style="color:#7d7a8a">withdrew</span><span class="ni-amount">'+formatMoney(a)+'</span><span class="ni-level">L'+lv+'</span><span class="ni-time">'+m+'m ago</span>';tr.appendChild(it);while(tr.children.length>15)tr.removeChild(tr.firstChild)}
-async function createPlisioInvoice(a,c,n,o){return new Promise(function(r){setTimeout(function(){var da={'USDT_TRC20':'TJxR4f8mVbFZ7oZp9kE3YqHnLmN8aBcD5e','BTC':'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'};r({id:'qm_'+Date.now(),amount:a,currency:c,address:da[c]||da['USDT_TRC20'],expire_utc:Math.floor(Date.now()/1000)+3600,status:'new',qr_code:'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(da[c]||da['USDT_TRC20'])})},1500)})}
-async function checkPlisioInvoice(id){return new Promise(function(r){setTimeout(function(){var s=['new','new','new','new','new','new','completed'];r(s[Math.floor(Math.random()*s.length)])},2000)})}
-async function showPlisioPayment(inv){plisioInvoiceId=inv.id;var cn=inv.currency.replace('_',' ');document.getElementById('plisioPaymentBody').innerHTML='<div class="plisio-status waiting"><i class="fas fa-clock"></i><span>Waiting for Payment</span></div><div class="plisio-amount">$'+inv.amount.toFixed(2)+' '+cn+'</div><div class="plisio-qr-container"><img src="'+inv.qr_code+'" alt="QR"></div><div class="plisio-address-box"><input type="text" value="'+inv.address+'" readonly><button class="copy-btn" onclick="copyText(\''+inv.address+'\')"><i class="fas fa-copy"></i></button></div><div class="plisio-timer">Expires in: <span id="plisioExpiryTimer">--:--</span></div><div class="crypto-warn"><i class="fas fa-triangle-exclamation"></i><span>Only send '+cn+' to this address.</span></div><div style="text-align:center;margin-top:16px"><p style="font-size:12px;color:var(--mut)"><i class="fas fa-shield-halved" style="color:var(--green);margin-right:4px"></i>Secured by Plisio</p></div>';openModal('modalPlisio');var el=document.getElementById('plisioExpiryTimer');if(!el)return;var u=function(){var r=inv.expire_utc-Math.floor(Date.now()/1000);if(r<=0){el.textContent='Expired';el.style.color='var(--red)';if(plisioCheckInterval){clearInterval(plisioCheckInterval);plisioCheckInterval=null}return}el.textContent=String(Math.floor(r/60)).padStart(2,'0')+':'+String(r%60).padStart(2,'0')};u();document.getElementById('modalPlisio').dataset.timerInterval=setInterval(u,1000);if(plisioCheckInterval)clearInterval(plisioCheckInterval);plisioCheckInterval=setInterval(async function(){try{var st=await checkPlisioInvoice(inv.id);if(st==='completed'){clearInterval(plisioCheckInterval);plisioCheckInterval=null;var se=document.querySelector('.plisio-status');if(se){se.className='plisio-status confirmed';se.innerHTML='<i class="fas fa-check-circle"></i><span>Payment Confirmed!</span>'}setTimeout(function(){finalizePlisioDeposit()},2000)}}catch(e){}},10000)}
-function finalizePlisioDeposit(){if(!selectedLevel||!currentUser)return;var ud=getUserData(currentUser.email),now=Date.now();ud.investments.push({id:now,level:selectedLevel.level,amount:selectedLevel.amount,profit:selectedLevel.profit,rate:selectedLevel.rate,startTime:now,nextPayout:now+getCycleMs(selectedLevel.level),cycles:0,earned:0,status:'active',paymentMethod:'plisio_'+payMethod});saveUserData(currentUser.email,ud);closeModal('modalPlisio');closeModal('modalDeposit');showToast('Level '+selectedLevel.level+' invested via Plisio!','ok');var btn=document.getElementById('depositBtn');btn.innerHTML='<i class="fas fa-shield-halved"></i> Pay with Plisio';btn.disabled=false;btn.style.opacity='1';refreshDashboard();setTimeout(function(){navigateTo('pagePortfolio')},300)}
+
+function startNotifBar(){
+  document.getElementById('notifBar').classList.add('on');
+  addNotifItem();
+  notifInterval=setInterval(addNotifItem,4000);
+}
+
+function addNotifItem(){
+  var tr=document.getElementById('notifTrack');
+  var n=fakeNames[Math.floor(Math.random()*fakeNames.length)];
+  var lv=Math.floor(Math.random()*10)+1;
+  var a=LEVELS[lv-1].profit;
+  var m=Math.floor(Math.random()*30)+1;
+  var it=document.createElement('span');
+  it.className='notif-item';
+  it.innerHTML='<i class="fas fa-circle-check" style="color:#2ecc71;font-size:10px"></i><span class="ni-name">'+n+'</span><span style="color:#7d7a8a">withdrew</span><span class="ni-amount">'+formatMoney(a)+'</span><span class="ni-level">L'+lv+'</span><span class="ni-time">'+m+'m ago</span>';
+  tr.appendChild(it);
+  while(tr.children.length>15) tr.removeChild(tr.firstChild);
+}
+
+/* ═══════ BACKEND API CALLS ═══════ */
+async function createInvoice(amountNGN, cryptoType, level, email) {
+  var res = await fetch('/api/create-invoice', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, level: level, amountNGN: amountNGN, cryptoType: cryptoType })
+  });
+  var json = await res.json();
+  if (json.status === 'success' && json.data) return json.data;
+  throw new Error(json.message || 'Could not create invoice');
+}
+
+async function checkInvoiceStatus(txnId) {
+  var res = await fetch('/api/invoice-status?txn_id=' + encodeURIComponent(txnId));
+  var json = await res.json();
+  if (json.status === 'success' && json.data) {
+    var statusMap = { pending: 'new', paid: 'completed', expired: 'expired' };
+    return statusMap[json.data.status] || json.data.status;
+  }
+  return 'error';
+}
+
+async function submitWithdrawal(amountNGN, cryptoType, walletAddress, email, userName) {
+  var res = await fetch('/api/withdraw', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, amountNGN: amountNGN, cryptoType: cryptoType, walletAddress: walletAddress, userName: userName })
+  });
+  var json = await res.json();
+  if (json.status === 'success' && json.data) return json.data;
+  throw new Error(json.message || 'Withdrawal failed');
+}
+
+/* ═══════ Plisio Payment UI + Poll ═══════ */
+async function showPlisioPayment(inv) {
+  var cn = inv.currency.replace('.', ' ');
+  var coinLabel = inv.currency.split('.')[0];
+  var decimals = inv.amount_crypto < 0.001 ? 8 : 6;
+
+  document.getElementById('plisioPaymentBody').innerHTML =
+    '<div class="plisio-loading"><div class="spinner"></div><p style="color:var(--mut);font-size:13px">Generating payment...</p></div>';
+  openModal('modalPlisio');
+
+  await new Promise(function(r){setTimeout(r,600)});
+
+  var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(inv.wallet_hash);
+  
+  document.getElementById('plisioPaymentBody').innerHTML =
+    '<div class="plisio-status waiting" id="plisioStatusBox"><i class="fas fa-clock"></i><span>Waiting for Payment</span></div>' +
+    '<div class="plisio-amount">' + coinLabel + ' ' + parseFloat(inv.amount_crypto).toFixed(decimals) + ' ' + cn + '</div>' +
+    '<div class="plisio-qr-container"><img src="' + qrUrl + '" alt="QR Code"></div>' +
+    '<div class="plisio-address-box"><input type="text" value="' + inv.wallet_hash + '" readonly id="plisioAddrInput"><button class="copy-btn" onclick="copyText(document.getElementById(\'plisioAddrInput\').value)"><i class="fas fa-copy"></i></button></div>' +
+    '<div class="plisio-timer">Expires in: <span id="plisioExpiryTimer">--:--</span></div>' +
+    '<div class="crypto-warn"><i class="fas fa-triangle-exclamation"></i><span>Send exactly ' + coinLabel + ' ' + parseFloat(inv.amount_crypto).toFixed(decimals) + ' via ' + cn + ' to the address above. Wrong network = permanent loss.</span></div>' +
+    '<div style="text-align:center;margin-top:16px"><p style="font-size:12px;color:var(--mut)"><i class="fas fa-shield-halved" style="color:var(--green);margin-right:4px"></i>Secured by Plisio</p></div>';
+
+  var expireTime = Date.now() + (inv.expire_min || 60) * 60 * 1000;
+  if (plisioTimerInterval) clearInterval(plisioTimerInterval);
+  var timerEl = document.getElementById('plisioExpiryTimer');
+  function tick() {
+    if (!document.getElementById('plisioExpiryTimer')) { clearInterval(plisioTimerInterval); return; }
+    var rem = Math.max(0, expireTime - Date.now());
+    if (rem <= 0) { timerEl.textContent = 'Expired'; timerEl.style.color = 'var(--red)'; stopPlisioPolling(); return; }
+    var secs = Math.floor(rem / 1000);
+    timerEl.textContent = String(Math.floor(secs / 60)).padStart(2, '0') + ':' + String(secs % 60).padStart(2, '0');
+  }
+  tick();
+  plisioTimerInterval = setInterval(tick, 1000);
+
+  if (plisioCheckInterval) clearInterval(plisioCheckInterval);
+  plisioCheckInterval = setInterval(async function () {
+    try {
+      var st = await checkInvoiceStatus(inv.txn_id);
+      var box = document.getElementById('plisioStatusBox');
+      if (!box) { stopPlisioPolling(); return; }
+      if (st === 'completed' || st === 'paid') {
+        stopPlisioPolling();
+        box.className = 'plisio-status confirmed';
+        box.innerHTML = '<i class="fas fa-check-circle"></i><span>Payment Confirmed!</span>';
+        showToast('Payment confirmed!', 'ok');
+        setTimeout(finalizePlisioDeposit, 2000);
+      } else if (st === 'expired') {
+        stopPlisioPolling();
+        box.className = 'plisio-status expired';
+        box.innerHTML = '<i class="fas fa-times-circle"></i><span>Invoice Expired</span>';
+        showToast('Invoice expired. Try again.', 'err');
+        resetDepositBtn();
+      }
+    } catch (e) { console.error('Poll error:', e); }
+  }, 8000);
+}
+
+function stopPlisioPolling() {
+  if (plisioCheckInterval) { clearInterval(plisioCheckInterval); plisioCheckInterval = null; }
+  if (plisioTimerInterval) { clearInterval(plisioTimerInterval); plisioTimerInterval = null; }
+}
+
+function resetDepositBtn() {
+  var btn = document.getElementById('depositBtn');
+  if (btn) { btn.innerHTML = '<i class="fas fa-shield-halved"></i> Pay with Plisio'; btn.disabled = false; btn.style.opacity = '1'; }
+}
+
+function finalizePlisioDeposit() {
+  if (!selectedLevel || !currentUser) return;
+  var ud = getUserData(currentUser.email), now = Date.now();
+  ud.investments.push({
+    id: now, level: selectedLevel.level, amount: selectedLevel.amount, profit: selectedLevel.profit, rate: selectedLevel.rate,
+    startTime: now, nextPayout: now + getCycleMs(selectedLevel.level), cycles: 0, earned: 0, status: 'active', paymentMethod: 'plisio_' + payMethod
+  });
+  saveUserData(currentUser.email, ud);
+  closeModal('modalPlisio');
+  closeModal('modalDeposit');
+  showToast('Level ' + selectedLevel.level + ' invested successfully!', 'ok');
+  resetDepositBtn();
+  refreshDashboard();
+  setTimeout(function () { navigateTo('pagePortfolio'); }, 300);
+}
+
+/* ═══════ AUTH ═══════ */
 function showLogin(){document.getElementById('loginBox').style.display='block';document.getElementById('registerBox').style.display='none'}
 function showRegister(){document.getElementById('loginBox').style.display='none';document.getElementById('registerBox').style.display='block'}
 function toggleEye(id,btn){var inp=document.getElementById(id),ic=btn.querySelector('i');inp.type=inp.type==='password'?'text':'password';ic.className=inp.type==='password'?'fas fa-eye':'fas fa-eye-slash'}
-function handleTempLogin(){isTempSession=true;var r=Math.random().toString(36).substring(2,8).toUpperCase();currentUser={name:'Guest_'+r,email:'temp_'+r.toLowerCase()+'@session.local',phone:'0',password:'',refCode:'QM'+r};tempData={investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]};enterApp();showToast('Temporary session started','info')}
-function handleDemoLogin(){isTempSession=false;var db=getDatabase(),u=null;for(var i=0;i<db.users.length;i++)if(db.users[i].email==='chidi@test.com'){u=db.users[i];break}if(!u){u={name:'Chidi Okonkwo',email:'chidi@test.com',phone:'08012345678',password:'123456',refCode:'QMDEMO01'};db.users.push(u);saveDatabase(db);var n=Date.now();safeSet('qumovcoin_data_chidi@test.com',{investments:[{id:n,level:1,amount:5150,profit:850,rate:16.5,startTime:n,nextPayout:n+30*1000,cycles:0,earned:0,status:'active'},{id:n+1,level:2,amount:20200,profit:3750,rate:18.6,startTime:n,nextPayout:n+6*DAY_MS,cycles:1,earned:3750,status:'active',paymentMethod:'plisio_usdt'},{id:n+2,level:5,amount:124000,profit:32240,rate:26.0,startTime:n,nextPayout:n+5*DAY_MS,cycles:0,earned:0,status:'active'}],refBonus:1500,referrals:[{name:'Amina Bello',date:n-86400000,amount:500},{name:'Tunde Adeyemi',date:n-172800000,amount:500}],withdrawn:850,withdrawalHistory:[{id:n-100000000,amount:850,method:'bank',details:{bank:'GTBank',acctNum:'0123456789',acctName:'Chidi Okonkwo'},status:'completed',date:n-100000000}]})}currentUser=u;safeSet('qumovcoin_session','chidi@test.com');enterApp();showToast('Welcome, Chidi!','ok')}
-function validateReferral(){var c=document.getElementById('regReferral').value.trim().toUpperCase(),m=document.getElementById('referralMsg');if(!c){m.style.display='none';return}var db=getDatabase(),f=false;for(var i=0;i<db.users.length;i++)if(db.users[i].refCode===c){f=true;break}m.style.display='block';m.style.color=f?'var(--green)':'var(--red)';m.textContent=f?'Valid! Bonus after first deposit.':'Invalid referral code'}
-function handleRegister(){var nm=document.getElementById('regName').value.trim(),em=document.getElementById('regEmail').value.trim().toLowerCase(),ph=document.getElementById('regPhone').value.trim(),pw=document.getElementById('regPass').value,rf=document.getElementById('regReferral').value.trim().toUpperCase();if(!nm||nm.length<2){showToast('Enter your full name','err');return}if(!em||em.indexOf('@')<1){showToast('Enter a valid email','err');return}if(!ph||ph.length<10){showToast('Enter a valid phone','err');return}if(pw.length<6){showToast('Password min 6 characters','err');return}var db=getDatabase();for(var i=0;i<db.users.length;i++)if(db.users[i].email===em){showToast('Email already registered','err');return}var re=null;if(rf){for(var j=0;j<db.users.length;j++)if(db.users[j].refCode===rf){re=db.users[j].email;break}if(!re){showToast('Invalid referral code','err');return}}var rc=generateRefCode();db.users.push({name:nm,email:em,phone:ph,password:pw,refCode:rc});saveDatabase(db);saveUserData(em,{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]});if(re){var rd=getUserData(re);rd.refBonus+=REF_BONUS;rd.referrals.push({name:nm,date:Date.now(),amount:REF_BONUS});saveUserData(re,rd)}showToast('Account created!','ok');showLogin();document.getElementById('loginEmail').value=em}
-function handleLogin(){var em=document.getElementById('loginEmail').value.trim().toLowerCase(),pw=document.getElementById('loginPass').value;if(!em||!pw){showToast('Enter email and password','err');return}var db=getDatabase(),u=null;for(var i=0;i<db.users.length;i++)if(db.users[i].email===em){u=db.users[i];break}if(!u){showToast('No account found','err');return}if(u.password!==pw){showToast('Incorrect password','err');return}isTempSession=false;currentUser=u;safeSet('qumovcoin_session',em);enterApp();showToast('Welcome back, '+u.name.split(' ')[0]+'!','ok')}
-function handleLogout(){if(isTempSession){tempData=null;isTempSession=false}else safeRemove('qumovcoin_session');if(notifInterval){clearInterval(notifInterval);notifInterval=null}if(plisioCheckInterval){clearInterval(plisioCheckInterval);plisioCheckInterval=null}document.getElementById('notifBar').classList.remove('on');currentUser=null;document.getElementById('mainApp').classList.remove('on');document.getElementById('bottomNav').classList.remove('on');document.getElementById('authScreen').classList.remove('off');document.getElementById('loginEmail').value='';document.getElementById('loginPass').value='';closeModal('modalLogout');showToast('Logged out','info')}
+
+function handleLogin(){
+  var em=document.getElementById('loginEmail').value.trim().toLowerCase(),pw=document.getElementById('loginPass').value;
+  if(!em||!pw){showToast('Enter email and password','err');return}
+  var db=getDatabase(),u=null;
+  for(var i=0;i<db.users.length;i++) if(db.users[i].email===em){u=db.users[i];break}
+  if(!u){showToast('No account found','err');return}
+  if(u.password!==pw){showToast('Incorrect password','err');return}
+  isTempSession=false;currentUser=u;safeSet('qumovcoin_session',em);enterApp();showToast('Welcome back, '+u.name.split(' ')[0]+'!','ok');
+}
+
+function handleRegister(){
+  var nm=document.getElementById('regName').value.trim();
+  var em=document.getElementById('regEmail').value.trim().toLowerCase();
+  var ph=document.getElementById('regPhone').value.trim();
+  var pw=document.getElementById('regPass').value;
+  var rf=document.getElementById('regReferral').value.trim().toUpperCase();
+  if(!nm||nm.length<2){showToast('Enter your full name','err');return}
+  if(!em||em.indexOf('@')<1){showToast('Enter a valid email','err');return}
+  if(!ph||ph.length<10){showToast('Enter a valid phone','err');return}
+  if(pw.length<6){showToast('Password min 6 characters','err');return}
+  var db=getDatabase();
+  for(var i=0;i<db.users.length;i++) if(db.users[i].email===em){showToast('Email already registered','err');return}
+  var referrerEmail = null;
+  if(rf){
+    for(var j=0;j<db.users.length;j++) if(db.users[j].refCode===rf){referrerEmail=db.users[j].email;break}
+    if(!referrerEmail){showToast('Invalid referral code','err');return}
+  }
+  var rc=generateRefCode();
+  db.users.push({name:nm,email:em,phone:ph,password:pw,refCode:rc});
+  saveDatabase(db);
+  saveUserData(em,{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]});
+  if(referrerEmail){
+    var rd=getUserData(referrerEmail);
+    rd.refBonus += getRefBonusNGN();
+    rd.referrals.push({name:nm, date:Date.now(), amount:getRefBonusNGN()});
+    saveUserData(referrerEmail,rd);
+  }
+  showToast('Account created!','ok');showLogin();document.getElementById('loginEmail').value=em;
+}
+
+function validateReferral(){
+  var c=document.getElementById('regReferral').value.trim().toUpperCase(),m=document.getElementById('referralMsg');
+  if(!c){m.style.display='none';return}
+  var db=getDatabase(),f=false;
+  for(var i=0;i<db.users.length;i++) if(db.users[i].refCode===c){f=true;break}
+  m.style.display='block';
+  m.style.color=f?'var(--green)':'var(--red)';
+  m.textContent=f?'Valid! Bonus after first deposit.':'Invalid referral code';
+}
+
+function handleLogout(){
+  if(isTempSession){tempData=null;isTempSession=false}
+  else safeRemove('qumovcoin_session');
+  if(notifInterval){clearInterval(notifInterval);notifInterval=null}
+  stopPlisioPolling();
+  document.getElementById('notifBar').classList.remove('on');
+  currentUser=null;
+  document.getElementById('mainApp').classList.remove('on');
+  document.getElementById('bottomNav').classList.remove('on');
+  document.getElementById('authScreen').classList.remove('off');
+  document.getElementById('loginEmail').value='';
+  document.getElementById('loginPass').value='';
+  closeModal('modalLogout');
+  showToast('Logged out','info');
+}
+
 function enterApp(){
   document.getElementById('authScreen').classList.add('off');
   document.getElementById('mainApp').classList.add('on');
@@ -660,36 +880,361 @@ function enterApp(){
   document.getElementById('settingsName').textContent=currentUser.name;
   document.getElementById('settingsEmail').textContent=currentUser.email;
   document.getElementById('myRefCode').value=currentUser.refCode;
-  document.getElementById('tempBannerBox').style.display=isTempSession?'block':'none';
-  document.getElementById('logoutMsg').textContent=isTempSession?'Temporary session data will be lost.':'You will need to sign in again.';
+  document.getElementById('logoutMsg').textContent='You will need to sign in again.';
   var sc=safeGet('qumovcoin_currency');
-  activeCurrency=(sc&&CURRENCIES[sc])?sc:'EUR';
-  initTheme();buildCurrencyModal();syncCurButtons();renderLevels();refreshDashboard();navigateTo('pageHome');startNotifBar();
+  activeCurrency=(sc&&CURRENCIES[sc])?sc:'NGN';
+  initTheme();
+  buildCurrencyModal();
+  syncCurButtons();
+  updateReferralDisplay();
+  renderLevels();
+  refreshDashboard();
+  navigateTo('pageHome');
+  startNotifBar();
 }
-function navigateTo(pid){var ps=document.querySelectorAll('.page');for(var i=0;i<ps.length;i++)ps[i].classList.remove('on');document.getElementById(pid).classList.add('on');var bs=document.querySelectorAll('.nav-btn');for(var j=0;j<bs.length;j++)bs[j].classList.toggle('on',bs[j].getAttribute('data-page')===pid);window.scrollTo({top:0,behavior:'smooth'});if(pid==='pagePortfolio'||pid==='pageHome')refreshDashboard();if(pid==='pageRefer')refreshReferral();if(pid==='pageHistory')refreshHistoryPage()}
-function renderLevels(){var h='';for(var i=0;i<LEVELS.length;i++){var l=LEVELS[i];h+='<div class="lv-card '+(l.star?'star':'')+'" onclick="openDeposit('+l.level+')"><div class="lv-bg">'+String(l.level).padStart(2,'0')+'</div><span class="lv-tag">Level '+l.level+'</span><div class="lv-inv-label">Investment Amount</div><div class="lv-inv-amt"><span class="cur-sym">'+(CURRENCIES[activeCurrency]||CURRENCIES.EUR).symbol+'</span>'+formatMoney(l.amount)+'</div><div class="lv-details"><div class="lv-det"><div class="det-label">Profit / Cycle</div><div class="det-val">'+formatMoney(l.profit)+'</div></div><div class="lv-det"><div class="det-label">Rate</div><div class="det-val gd">'+l.rate+'%</div></div><div class="lv-det"><div class="det-label">Monthly Est.</div><div class="det-val">'+formatMoney(Math.round(l.profit*(30/l.cycle)))+'</div></div></div><div class="lv-cycle"><i class="fas fa-clock"></i> Payout every '+l.cycle+' days</div><button class="btn btn-gold btn-sm"><i class="fas fa-shield-halved"></i> Invest via Plisio</button></div>'}document.getElementById('levelsGrid').innerHTML=h}
-function openDeposit(lv){for(var i=0;i<LEVELS.length;i++)if(LEVELS[i].level===lv){selectedLevel=LEVELS[i];break}if(!selectedLevel)return;document.getElementById('depPlan').textContent='Level '+selectedLevel.level;document.getElementById('depAmount').textContent=formatMoney(selectedLevel.amount);document.getElementById('depProfit').textContent=formatMoney(selectedLevel.profit);document.getElementById('depCycle').textContent=selectedLevel.cycle+' days';document.getElementById('depRate').textContent=selectedLevel.rate+'%';document.getElementById('bankAmount').textContent=formatMoney(selectedLevel.amount);document.getElementById('proofFileName').textContent='';document.getElementById('proofFile').value='';switchPay('usdt');openModal('modalDeposit')}
-function switchPay(m){payMethod=m;var ts=document.querySelectorAll('#payTabs .pay-tab');for(var i=0;i<ts.length;i++)ts[i].classList.toggle('on',ts[i].getAttribute('data-m')===m);document.getElementById('payUsdt').style.display=m==='usdt'?'block':'none';document.getElementById('payBtc').style.display=m==='btc'?'block':'none';document.getElementById('payBank').style.display=m==='bank'?'block':'none';document.getElementById('depositBtn').innerHTML=m==='bank'?'<i class="fas fa-lock"></i> Confirm Payment':'<i class="fas fa-shield-halved"></i> Pay with Plisio'}
-async function processDeposit(){if(!selectedLevel||!currentUser)return;var btn=document.getElementById('depositBtn');btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Processing...';btn.disabled=true;btn.style.opacity='0.7';if(payMethod==='bank'){if(!document.getElementById('proofFile').files.length){showToast('Upload payment proof','err');btn.innerHTML='<i class="fas fa-lock"></i> Confirm Payment';btn.disabled=false;btn.style.opacity='1';return}setTimeout(function(){var ud=getUserData(currentUser.email),now=Date.now();ud.investments.push({id:now,level:selectedLevel.level,amount:selectedLevel.amount,profit:selectedLevel.profit,rate:selectedLevel.rate,startTime:now,nextPayout:now+getCycleMs(selectedLevel.level),cycles:0,earned:0,status:'active',paymentMethod:'bank'});saveUserData(currentUser.email,ud);closeModal('modalDeposit');showToast('Level '+selectedLevel.level+' invested!','ok');btn.innerHTML='<i class="fas fa-lock"></i> Confirm Payment';btn.disabled=false;btn.style.opacity='1';refreshDashboard();setTimeout(function(){navigateTo('pagePortfolio')},300)},2200)}else{try{var usd=Math.max(selectedLevel.amount*0.00065,1);var pc=PLISIO_CONFIG.currencies[payMethod]||'USDT_TRC20';var inv=await createPlisioInvoice(usd,pc,'Qumovcoin L'+selectedLevel.level,'QM_'+Date.now());await showPlisioPayment(inv)}catch(e){showToast('Payment failed. Try again.','err');btn.innerHTML='<i class="fas fa-shield-halved"></i> Pay with Plisio';btn.disabled=false;btn.style.opacity='1'}}}
-function getWithdrawableProfit(){if(!currentUser)return 0;var ud=getUserData(currentUser.email),t=0;for(var i=0;i<ud.investments.length;i++){var inv=ud.investments[i];if(inv.level<=3&&inv.earned>0)t+=inv.earned}return t-(ud.withdrawn||0)}
-function updateWithdrawUI(){var m=document.getElementById('wdMethod').value;document.getElementById('wdCryptoFields').style.display=(m==='usdt'||m==='btc')?'block':'none';document.getElementById('wdBankFields').style.display=m==='bank'?'block':'none';document.getElementById('wdWallet').placeholder=m==='usdt'?'USDT TRC20 address':'BTC address'}
-function processWithdraw(){var av=getWithdrawableProfit();if(av<=0){showToast('No withdrawable profit','err');return}var m=document.getElementById('wdMethod').value;if(m==='usdt'||m==='btc'){var a=document.getElementById('wdWallet').value.trim();if(!a||a.length<10){showToast('Enter valid wallet address','err');return}}else{if(!document.getElementById('wdBankName').value.trim()||!document.getElementById('wdAcctNum').value.trim()||!document.getElementById('wdAcctName').value.trim()){showToast('Fill all bank details','err');return}}var btn=document.getElementById('withdrawBtn');btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Processing...';btn.disabled=true;btn.style.opacity='0.7';setTimeout(function(){var ud=getUserData(currentUser.email);var dt=m==='usdt'||m==='btc'?{address:document.getElementById('wdWallet').value.trim()}:{bank:document.getElementById('wdBankName').value.trim(),acctNum:document.getElementById('wdAcctNum').value.trim(),acctName:document.getElementById('wdAcctName').value.trim()};if(!ud.withdrawalHistory)ud.withdrawalHistory=[];ud.withdrawalHistory.unshift({id:Date.now(),type:'withdraw',amount:av,method:m,details:dt,status:'pending',date:Date.now()});ud.withdrawn=(ud.withdrawn||0)+av;saveUserData(currentUser.email,ud);closeModal('modalWithdraw');showToast('Withdrawal of '+formatMoney(av)+' submitted!','ok');btn.innerHTML='<i class="fas fa-paper-plane"></i> Submit Withdrawal';btn.disabled=false;btn.style.opacity='1';refreshDashboard();refreshHistoryPage()},2500)}
-function setHistFilter(f){histFilter=f;var fs=document.querySelectorAll('.hist-filter');for(var i=0;i<fs.length;i++)fs[i].classList.toggle('on',fs[i].getAttribute('data-filter')===f);refreshHistoryPage()}
-function refreshHistoryPage(){if(!currentUser)return;var ud=getUserData(currentUser.email);var av=getWithdrawableProfit();document.getElementById('histWdBalance').textContent=formatMoney(Math.max(0,av));var wdBtn=document.getElementById('histWdBtn');wdBtn.style.display=av>0?'inline-flex':'none';wdBtn.style.opacity=av>0?'1':'0.4';wdBtn.style.pointerEvents=av>0?'auto':'none';var txns=[];for(var i=0;i<ud.investments.length;i++){var inv=ud.investments[i];var pm=inv.paymentMethod||'plisio_usdt';var pmLabel=pm==='bank'?'Bank Transfer':pm==='plisio_usdt'?'USDT (Plisio)':pm==='plisio_btc'?'BTC (Plisio)':'Crypto';txns.push({type:'deposit',date:inv.startTime,amount:inv.amount,label:'Level '+inv.level+' Investment',sub:pmLabel,status:'completed',level:inv.level})}if(ud.withdrawalHistory){for(var j=0;j<ud.withdrawalHistory.length;j++){var w=ud.withdrawalHistory[j];w.type='withdraw';var wL={usdt:'USDT (TRC20)',btc:'Bitcoin',bank:'Bank Transfer'};w.label='Withdrawal';w.sub=wL[w.method]||w.method;txns.push(w)}}for(var k=0;k<ud.investments.length;k++){var inv2=ud.investments[k];if(inv2.cycles>0){for(var c=1;c<=inv2.cycles;c++){txns.push({type:'payout',date:inv2.startTime+(getCycleMs(inv2.level)*c),amount:inv2.profit,label:'Level '+inv2.level+' Payout #'+c,sub:'Cycle '+c+' of '+getCycleDays(inv2.level)+'d',status:'completed',level:inv2.level})}}}txns.sort(function(a,b){return b.date-a.date});var filtered=histFilter==='all'?txns:txns.filter(function(t){return t.type===histFilter});var el=document.getElementById('txnList');if(!filtered.length){el.innerHTML='<div class="empty-state" style="padding:40px 16px"><i class="fas fa-clock-rotate-left"></i><p>No transactions yet.</p></div>';return}var icons={deposit:'fa-arrow-down',withdraw:'fa-arrow-up',payout:'fa-rotate'};var h='';for(var m=0;m<filtered.length;m++){var t=filtered[m];var isPos=t.type==='deposit'||t.type==='payout';var amtClass=isPos?'positive':'negative';var amtSign=isPos?'+':'-';var iconClass=t.type==='deposit'?'deposit':t.type==='withdraw'?(t.status==='pending'?'withdraw-pending':'withdraw-done'):'payout';var badgeClass=t.type;var ds=new Date(t.date).toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'});var ts=new Date(t.date).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});h+='<div class="txn-item"><div class="txn-icon '+iconClass+'"><i class="fas '+(icons[t.type]||'fa-circle')+'"></i></div><div class="txn-info"><h4>'+t.label+'</h4><p>'+t.sub+' &middot; '+ds+' '+ts+'</p><span class="txn-badge '+badgeClass+'">'+t.type+'</span></div><div class="txn-right"><div class="txn-amount '+amtClass+'">'+amtSign+formatMoney(t.amount)+'</div><div class="txn-status '+(t.status==='pending'?'pending':'completed')+'">'+(t.status==='pending'?'Pending':'Completed')+'</div></div></div>'}el.innerHTML=h}
-function refreshDashboard(){if(!currentUser)return;var ud=getUserData(currentUser.email);if(!ud)return;var tI=0,tE=0;for(var i=0;i<ud.investments.length;i++){tI+=ud.investments[i].amount;tE+=ud.investments[i].earned}document.getElementById('homeBalance').textContent=formatMoney(tI+tE+ud.refBonus);document.getElementById('homeInvested').textContent=formatMoney(tI);document.getElementById('homeEarned').textContent=formatMoney(tE);document.getElementById('homeRefBonus').textContent=formatMoney(ud.refBonus);document.getElementById('portInvested').textContent=formatMoney(tI);document.getElementById('portEarned').textContent=formatMoney(tE);var ac=0;for(var j=0;j<ud.investments.length;j++)if(ud.investments[j].status==='active')ac++;document.getElementById('portDot').style.display=ac>0?'block':'none';renderInvestmentList('homeInvestList',ud.investments.slice(0,3));renderInvestmentList('portInvestList',ud.investments)}
-function renderInvestmentList(cid,list){var el=document.getElementById(cid);if(!list.length){el.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>'+(cid==='homeInvestList'?'No active investments yet.<br>Choose a plan to get started.':'You haven\'t invested yet.')+'</p></div>';return}var h='<div class="inv-list">';for(var i=0;i<list.length;i++){var inv=list[i],rem=Math.max(0,inv.nextPayout-Date.now());var d=Math.floor(rem/86400000),hh=Math.floor((rem%86400000)/3600000),mm=Math.floor((rem%3600000)/60000),ss=Math.floor((rem%60000)/1000);var timer=d+'d '+String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')+':'+String(ss).padStart(2,'0');var cd=getCycleDays(inv.level);var pb=inv.paymentMethod==='plisio_usdt'?' <span style="font-size:9px;color:var(--usdt)"><i class="fas fa-shield-halved"></i></span>':'';h+='<div class="inv-item"><div class="inv-left"><div class="inv-ico">L'+inv.level+'</div><div class="inv-info"><h4>Level '+inv.level+' Plan'+pb+'</h4><p>'+formatMoney(inv.amount)+' &middot; '+inv.cycles+' cycles &middot; '+cd+'d cycle</p></div></div><div class="inv-right"><div class="inv-profit">+'+formatMoney(inv.earned)+'</div><div class="inv-timer" data-end="'+inv.nextPayout+'">'+timer+'</div><span class="status-active"><span class="status-dot"></span> Active</span></div></div>'}h+='</div>';el.innerHTML=h}
-function tickCountdowns(){if(!currentUser)return;var ud=getUserData(currentUser.email);if(!ud)return;var ch=false;for(var i=0;i<ud.investments.length;i++){var inv=ud.investments[i];if(inv.status!=='active')continue;if(inv.nextPayout-Date.now()<=0){inv.cycles++;inv.earned+=inv.profit;inv.nextPayout=Date.now()+getCycleMs(inv.level);ch=true;showToast('Level '+inv.level+' payout: +'+formatMoney(inv.profit),'ok')}}if(ch){saveUserData(currentUser.email,ud);refreshDashboard()}var ts=document.querySelectorAll('.inv-timer[data-end]');for(var j=0;j<ts.length;j++){var r=Math.max(0,parseInt(ts[j].getAttribute('data-end'))-Date.now());var dd=Math.floor(r/86400000),hh=Math.floor((r%86400000)/3600000),mm=Math.floor((r%3600000)/60000),ss=Math.floor((r%60000)/1000);ts[j].textContent=r>0?dd+'d '+String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')+':'+String(ss).padStart(2,'0'):'Claiming...'}}
-function refreshReferral(){if(!currentUser)return;var ud=getUserData(currentUser.email);if(!ud)return;document.getElementById('refCount').textContent=ud.referrals.length;document.getElementById('refEarnings').textContent=formatMoney(ud.refBonus);var el=document.getElementById('refHistoryList');if(!ud.referrals.length){el.innerHTML='<div class="empty-state" style="padding:32px 16px"><i class="fas fa-users"></i><p>No referrals yet.</p></div>';return}var h='';for(var i=ud.referrals.length-1;i>=0;i--){var r=ud.referrals[i];h+='<div class="ref-hist-item"><div><div class="rh-name">'+r.name+'</div><div class="rh-date">'+new Date(r.date).toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'})+'</div></div><div class="rh-amt">+'+formatMoney(r.amount)+'</div></div>'}el.innerHTML=h}
-function copyText(t){if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){showToast('Copied!','ok')}).catch(function(){showToast('Copy failed','err')});else showToast('Copy not supported','err')}
-function shareReferral(){var c=document.getElementById('myRefCode').value,t='Join Qumovcoin and earn! Code: '+c;if(navigator.share)navigator.share({title:'Qumovcoin',text:t}).catch(function(){});else copyText(t)}
-function prefillProfile(){if(!currentUser)return;document.getElementById('editName').value=currentUser.name;document.getElementById('editPhone').value=currentUser.phone}
-function saveProfile(){var n=document.getElementById('editName').value.trim(),p=document.getElementById('editPhone').value.trim();if(!n||n.length<2){showToast('Name required','err');return}if(!p||p.length<10){showToast('Valid phone required','err');return}if(!isTempSession){var db=getDatabase();for(var i=0;i<db.users.length;i++)if(db.users[i].email===currentUser.email){db.users[i].name=n;db.users[i].phone=p;break}saveDatabase(db)}currentUser.name=n;currentUser.phone=p;var ini=n.charAt(0).toUpperCase();document.getElementById('avatarHome').textContent=ini;document.getElementById('avatarSettings').textContent=ini;document.getElementById('settingsName').textContent=n;closeModal('modalProfile');showToast('Profile updated','ok')}
-function savePassword(){var c=document.getElementById('pwCurrent').value,n=document.getElementById('pwNew').value,f=document.getElementById('pwConfirm').value;if(!c){showToast('Enter current password','err');return}if(c!==currentUser.password){showToast('Incorrect password','err');return}if(n.length<6){showToast('Min 6 characters','err');return}if(n!==f){showToast('Passwords don\'t match','err');return}if(!isTempSession){var db=getDatabase();for(var i=0;i<db.users.length;i++)if(db.users[i].email===currentUser.email){db.users[i].password=n;break}saveDatabase(db)}currentUser.password=n;closeModal('modalPassword');showToast('Password changed','ok')}
-function openModal(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';if(id==='modalCurrency'){var opts=document.querySelectorAll('.cur-opt');for(var i=0;i<opts.length;i++)opts[i].classList.toggle('active',opts[i].getAttribute('data-code')===activeCurrency)}}
-function closeModal(id){document.getElementById(id).classList.remove('on');if(!document.querySelector('.modal-bg.on'))document.body.style.overflow='';if(id==='modalPlisio'){if(plisioCheckInterval){clearInterval(plisioCheckInterval);plisioCheckInterval=null}var ti=document.getElementById('modalPlisio').dataset.timerInterval;if(ti)clearInterval(parseInt(ti));var btn=document.getElementById('depositBtn');if(btn.disabled){btn.innerHTML='<i class="fas fa-shield-halved"></i> Pay with Plisio';btn.disabled=false;btn.style.opacity='1'}}}
-var am=document.querySelectorAll('.modal-bg');for(var mi=0;mi<am.length;mi++){(function(m){m.addEventListener('click',function(e){if(e.target===m)closeModal(m.id)})})(am[mi])}
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){var o=document.querySelector('.modal-bg.on');if(o)closeModal(o.id)}});
-(function(){setInterval(tickCountdowns,1000);var s=safeGet('qumovcoin_session');if(s&&typeof s==='string'){var db=getDatabase();for(var i=0;i<db.users.length;i++)if(db.users[i].email===s){isTempSession=false;currentUser=db.users[i];enterApp();return}}document.getElementById('authScreen').classList.remove('off')})();
+
+function navigateTo(pid){
+  var ps=document.querySelectorAll('.page');
+  for(var i=0;i<ps.length;i++) ps[i].classList.remove('on');
+  document.getElementById(pid).classList.add('on');
+  var bs=document.querySelectorAll('.nav-btn');
+  for(var j=0;j<bs.length;j++) bs[j].classList.toggle('on',bs[j].getAttribute('data-page')===pid);
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(pid==='pagePortfolio'||pid==='pageHome') refreshDashboard();
+  if(pid==='pageRefer') refreshReferral();
+  if(pid==='pageHistory') refreshHistoryPage();
+}
+
+function renderLevels(){
+  var h='';
+  for(var i=0;i<LEVELS.length;i++){
+    var l=LEVELS[i];
+    h+='<div class="lv-card '+(l.star?'star':'')+'" onclick="openDeposit('+l.level+')"><div class="lv-bg">'+String(l.level).padStart(2,'0')+'</div><span class="lv-tag">Level '+l.level+'</span><div class="lv-inv-label">Investment Amount</div><div class="lv-inv-amt"><span class="cur-sym">'+(CURRENCIES[activeCurrency]||CURRENCIES.NGN).symbol+'</span>'+formatMoney(l.amount)+'</div><div class="lv-details"><div class="lv-det"><div class="det-label">Profit / Cycle</div><div class="det-val">'+formatMoney(l.profit)+'</div></div><div class="lv-det"><div class="det-label">Rate</div><div class="det-val gd">'+l.rate+'%</div></div><div class="lv-det"><div class="det-label">Monthly Est.</div><div class="det-val">'+formatMoney(Math.round(l.profit*(30/l.cycle)))+'</div></div></div><div class="lv-cycle"><i class="fas fa-clock"></i> Payout every '+l.cycle+' days</div><button class="btn btn-gold btn-sm"><i class="fas fa-shield-halved"></i> Invest via Plisio</button></div>';
+  }
+  document.getElementById('levelsGrid').innerHTML=h;
+}
+
+function openDeposit(lv){
+  for(var i=0;i<LEVELS.length;i++) if(LEVELS[i].level===lv){selectedLevel=LEVELS[i];break}
+  if(!selectedLevel) return;
+  document.getElementById('depPlan').textContent='Level '+selectedLevel.level;
+  document.getElementById('depAmount').textContent=formatMoney(selectedLevel.amount);
+  document.getElementById('depProfit').textContent=formatMoney(selectedLevel.profit);
+  document.getElementById('depCycle').textContent=selectedLevel.cycle+' days';
+  document.getElementById('depRate').textContent=selectedLevel.rate+'%';
+  switchPay('usdt');
+  openModal('modalDeposit');
+}
+
+function switchPay(m){
+  payMethod=m;
+  var ts=document.querySelectorAll('#payTabs .pay-tab');
+  for(var i=0;i<ts.length;i++) ts[i].classList.toggle('on',ts[i].getAttribute('data-m')===m);
+}
+
+async function processDeposit(){
+  if(!selectedLevel||!currentUser) return;
+  var btn=document.getElementById('depositBtn');
+  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Creating invoice...';
+  btn.disabled=true;btn.style.opacity='0.7';
+  try{
+    var inv = await createInvoice(selectedLevel.amount, payMethod, selectedLevel.level, currentUser.email);
+    btn.innerHTML='<i class="fas fa-shield-halved"></i> Pay with Plisio';
+    btn.disabled=false;btn.style.opacity='1';
+    await showPlisioPayment(inv);
+  }catch(e){
+    console.error('Deposit error:',e);
+    showToast('Error: '+e.message,'err');
+    resetDepositBtn();
+  }
+}
+
+function getWithdrawableProfit(){
+  if(!currentUser) return 0;
+  var ud=getUserData(currentUser.email),t=0;
+  for(var i=0;i<ud.investments.length;i++){
+    var inv=ud.investments[i];
+    if(inv.level<=3&&inv.earned>0) t+=inv.earned;
+  }
+  return t-(ud.withdrawn||0);
+}
+
+function updateWithdrawUI(){
+  var m=document.getElementById('wdMethod').value;
+  document.getElementById('wdWallet').placeholder=m==='usdt'?'USDT TRC20 address (starts with T...)':'BTC address (starts with 1, 3, or bc1...)';
+}
+
+async function processWithdraw(){
+  var av=getWithdrawableProfit();
+  if(av<=0){showToast('No withdrawable profit','err');return}
+  if(av<MIN_WITHDRAW_NGN){showToast('Minimum withdrawal is ₦'+MIN_WITHDRAW_NGN.toLocaleString(),'err');return}
+  var m=document.getElementById('wdMethod').value;
+  var a=document.getElementById('wdWallet').value.trim();
+  if(!a||a.length<10){showToast('Enter valid wallet address','err');return}
+  var btn=document.getElementById('withdrawBtn');
+  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending to wallet...';
+  btn.disabled=true;btn.style.opacity='0.7';
+  try{
+    var result = await submitWithdrawal(av, m, a, currentUser.email, currentUser.name);
+    var ud=getUserData(currentUser.email);
+    if(!ud.withdrawalHistory) ud.withdrawalHistory=[];
+    ud.withdrawalHistory.unshift({id:Date.now(),type:'withdraw',amount:av,method:m,details:{address:a},status:'processing',date:Date.now(),withdrawalId:result.withdrawal_id,plisioTxnId:result.plisio_txn_id});
+    ud.withdrawn=(ud.withdrawn||0)+av;
+    saveUserData(currentUser.email,ud);
+    closeModal('modalWithdraw');
+    showToast('Withdrawal of '+formatMoney(av)+' sent to your wallet!','ok');
+    btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to Wallet';
+    btn.disabled=false;btn.style.opacity='1';
+    refreshDashboard();
+    refreshHistoryPage();
+  }catch(e){
+    console.error('Withdrawal error:',e);
+    showToast('Withdrawal failed: '+e.message,'err');
+    btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to Wallet';
+    btn.disabled=false;btn.style.opacity='1';
+  }
+}
+
+function setHistFilter(f){
+  histFilter=f;
+  var fs=document.querySelectorAll('.hist-filter');
+  for(var i=0;i<fs.length;i++) fs[i].classList.toggle('on',fs[i].getAttribute('data-filter')===f);
+  refreshHistoryPage();
+}
+
+function refreshHistoryPage(){
+  if(!currentUser) return;
+  var ud=getUserData(currentUser.email);
+  var av=getWithdrawableProfit();
+  document.getElementById('histWdBalance').textContent=formatMoney(Math.max(0,av));
+  var wdBtn=document.getElementById('histWdBtn');
+  wdBtn.style.display=av>0?'inline-flex':'none';
+  wdBtn.style.opacity=av>0?'1':'0.4';
+  wdBtn.style.pointerEvents=av>0?'auto':'none';
+
+  var txns=[];
+  for(var i=0;i<ud.investments.length;i++){
+    var inv=ud.investments[i];
+    var pm=inv.paymentMethod||'plisio_usdt';
+    var pmLabel=pm==='plisio_usdt'?'USDT (Plisio)':pm==='plisio_btc'?'BTC (Plisio)':'Crypto';
+    txns.push({type:'deposit',date:inv.startTime,amount:inv.amount,label:'Level '+inv.level+' Investment',sub:pmLabel,status:'completed',level:inv.level});
+  }
+  if(ud.withdrawalHistory){
+    for(var j=0;j<ud.withdrawalHistory.length;j++){
+      var w=ud.withdrawalHistory[j];
+      w.type='withdraw';
+      var wL={usdt:'USDT (TRC20)',btc:'Bitcoin'};
+      w.label='Withdrawal';w.sub=wL[w.method]||w.method;
+      txns.push(w);
+    }
+  }
+  for(var k=0;k<ud.investments.length;k++){
+    var inv2=ud.investments[k];
+    if(inv2.cycles>0){
+      for(var c=1;c<=inv2.cycles;c++){
+        txns.push({type:'payout',date:inv2.startTime+(getCycleMs(inv2.level)*c),amount:inv2.profit,label:'Level '+inv2.level+' Payout #'+c,sub:'Cycle '+c+' of '+getCycleDays(inv2.level)+'d',status:'completed',level:inv2.level});
+      }
+    }
+  }
+  txns.sort(function(a,b){return b.date-a.date});
+  var filtered=histFilter==='all'?txns:txns.filter(function(t){return t.type===histFilter});
+  var el=document.getElementById('txnList');
+  if(!filtered.length){
+    el.innerHTML='<div class="empty-state" style="padding:40px 16px"><i class="fas fa-clock-rotate-left"></i><p>No transactions yet.</p></div>';
+    return;
+  }
+  var icons={deposit:'fa-arrow-down',withdraw:'fa-arrow-up',payout:'fa-rotate'};
+  var h='';
+  for(var m=0;m<filtered.length;m++){
+    var t=filtered[m];
+    var isPos=t.type==='deposit'||t.type==='payout';
+    var amtClass=isPos?'positive':'negative';
+    var amtSign=isPos?'+':'-';
+    var iconClass=t.type==='deposit'?'deposit':t.type==='withdraw'?'withdraw-'+(t.status||'pending'):'payout';
+    var ds=new Date(t.date).toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'});
+    var ts=new Date(t.date).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+    h+='<div class="txn-item"><div class="txn-icon '+iconClass+'"><i class="fas '+(icons[t.type]||'fa-circle')+'"></i></div><div class="txn-info"><h4>'+t.label+'</h4><p>'+t.sub+' &middot; '+ds+' '+ts+'</p><span class="txn-badge '+t.type+'">'+t.type+'</span></div><div class="txn-right"><div class="txn-amount '+amtClass+'">'+amtSign+formatMoney(t.amount)+'</div><div class="txn-status '+(t.status||'pending')+'">'+(t.status==='processing'?'Processing':t.status==='completed'?'Completed':t.status==='failed'?'Failed':t.status==='pending'?'Pending':'Unknown')+'</div></div></div>';
+  }
+  el.innerHTML=h;
+}
+
+function refreshDashboard(){
+  if(!currentUser) return;
+  var ud=getUserData(currentUser.email);
+  if(!ud) return;
+  var tI=0,tE=0;
+  for(var i=0;i<ud.investments.length;i++){tI+=ud.investments[i].amount;tE+=ud.investments[i].earned}
+  document.getElementById('homeBalance').textContent=formatMoney(tI+tE+ud.refBonus);
+  document.getElementById('homeInvested').textContent=formatMoney(tI);
+  document.getElementById('homeEarned').textContent=formatMoney(tE);
+  document.getElementById('homeRefBonus').textContent=formatMoney(ud.refBonus);
+  document.getElementById('portInvested').textContent=formatMoney(tI);
+  document.getElementById('portEarned').textContent=formatMoney(tE);
+  var ac=0;
+  for(var j=0;j<ud.investments.length;j++) if(ud.investments[j].status==='active') ac++;
+  document.getElementById('portDot').style.display=ac>0?'block':'none';
+  renderInvestmentList('homeInvestList',ud.investments.slice(0,3));
+  renderInvestmentList('portInvestList',ud.investments);
+}
+
+function renderInvestmentList(cid,list){
+  var el=document.getElementById(cid);
+  if(!list.length){
+    el.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>'+(cid==='homeInvestList'?'No active investments yet.<br>Choose a plan to get started.':'You haven\'t invested yet.')+'</p></div>';
+    return;
+  }
+  var h='<div class="inv-list">';
+  for(var i=0;i<list.length;i++){
+    var inv=list[i],rem=Math.max(0,inv.nextPayout-Date.now());
+    var d=Math.floor(rem/86400000),hh=Math.floor((rem%86400000)/3600000),mm=Math.floor((rem%3600000)/60000),ss=Math.floor((rem%60000)/1000);
+    var timer=d+'d '+String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')+':'+String(ss).padStart(2,'0');
+    var cd=getCycleDays(inv.level);
+    var pm=inv.paymentMethod||'';
+    var shield=pm.indexOf('plisio')===0?' <span style="font-size:9px;color:var(--usdt)"><i class="fas fa-shield-halved"></i></span>':'';
+    h+='<div class="inv-item"><div class="inv-left"><div class="inv-ico">L'+inv.level+'</div><div class="inv-info"><h4>Level '+inv.level+' Plan'+shield+'</h4><p>'+formatMoney(inv.amount)+' &middot; '+inv.cycles+' cycles &middot; '+cd+'d cycle</p></div></div><div class="inv-right"><div class="inv-profit">+'+formatMoney(inv.earned)+'</div><div class="inv-timer" data-end="'+inv.nextPayout+'">'+timer+'</div><span class="status-active"><span class="status-dot"></span> Active</span></div></div></div>';
+  }
+  h+='</div>';
+  el.innerHTML=h;
+}
+
+function tickCountdowns(){
+  if(!currentUser) return;
+  var ud=getUserData(currentUser.email);
+  if(!ud) return;
+  var ch=false;
+  for(var i=0;i<ud.investments.length;i++){
+    var inv=ud.investments[i];
+    if(inv.status!=='active') continue;
+    if(inv.nextPayout-Date.now()<=0){
+      inv.cycles++;
+      inv.earned+=inv.profit;
+      inv.nextPayout=Date.now()+getCycleMs(inv.level);
+      ch=true;
+      showToast('Level '+inv.level+' payout: +'+formatMoney(inv.profit),'ok');
+    }
+  }
+  if(ch){saveUserData(currentUser.email,ud);refreshDashboard()}
+  var ts=document.querySelectorAll('.inv-timer[data-end]');
+  for(var j=0;j<ts.length;j++){
+    var r=Math.max(0,parseInt(ts[j].getAttribute('data-end'))-Date.now());
+    var dd=Math.floor(r/86400000),hh=Math.floor((r%86400000)/3600000),mm=Math.floor((r%3600000)/60000),ss=Math.floor((r%60000)/1000);
+    ts[j].textContent=r>0?dd+'d '+String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')+':'+String(ss).padStart(2,'0'):'Claiming...';
+  }
+}
+
+function refreshReferral(){
+  if(!currentUser) return;
+  var ud=getUserData(currentUser.email);
+  if(!ud) return;
+  document.getElementById('refCount').textContent=ud.referrals.length;
+  document.getElementById('refEarnings').textContent=formatMoney(ud.refBonus);
+  var el=document.getElementById('refHistoryList');
+  if(!ud.referrals.length){
+    el.innerHTML='<div class="empty-state" style="padding:32px 16px"><i class="fas fa-users"></i><p>No referrals yet.</p></div>';
+    return;
+  }
+  var h='';
+  for(var i=ud.referrals.length-1;i>=0;i--){
+    var r=ud.referrals[i];
+    h+='<div class="ref-hist-item"><div><div class="rh-name">'+r.name+'</div><div class="rh-date">'+new Date(r.date).toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'})+'</div></div><div class="rh-amt">+'+getRefBonusInCurrency()+'</div></div>';
+  }
+  el.innerHTML=h;
+}
+
+function copyText(t){
+  if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){showToast('Copied!','ok')}).catch(function(){showToast('Copy failed','err')});
+  else showToast('Copy not supported','err');
+}
+
+function shareReferral(){
+  var c=document.getElementById('myRefCode').value;
+  var t='Join Qumovcoin and earn '+getRefBonusInCurrency()+' per referral! Code: '+c;
+  if(navigator.share) navigator.share({title:'Qumovcoin',text:t}).catch(function(){});
+  else copyText(t);
+}
+
+function prefillProfile(){
+  if(!currentUser) return;
+  document.getElementById('editName').value=currentUser.name;
+  document.getElementById('editPhone').value=currentUser.phone;
+}
+
+function saveProfile(){
+  var n=document.getElementById('editName').value.trim(),p=document.getElementById('editPhone').value.trim();
+  if(!n||n.length<2){showToast('Name required','err');return}
+  if(!p||p.length<10){showToast('Valid phone required','err');return}
+  if(!isTempSession){
+    var db=getDatabase();
+    for(var i=0;i<db.users.length;i++) if(db.users[i].email===currentUser.email){db.users[i].name=n;db.users[i].phone=p;break}
+    saveDatabase(db);
+  }
+  currentUser.name=n;currentUser.phone=p;
+  var ini=n.charAt(0).toUpperCase();
+  document.getElementById('avatarHome').textContent=ini;
+  document.getElementById('avatarSettings').textContent=ini;
+  document.getElementById('settingsName').textContent=n;
+  closeModal('modalProfile');
+  showToast('Profile updated','ok');
+}
+
+function savePassword(){
+  var c=document.getElementById('pwCurrent').value,n=document.getElementById('pwNew').value,f=document.getElementById('pwConfirm').value;
+  if(!c){showToast('Enter current password','err');return}
+  if(c!==currentUser.password){showToast('Incorrect password','err');return}
+  if(n.length<6){showToast('Min 6 characters','err');return}
+  if(n!==f){showToast('Passwords don\'t match','err');return}
+  if(!isTempSession){
+    var db=getDatabase();
+    for(var i=0;i<db.users.length;i++) if(db.users[i].email===currentUser.email){db.users[i].password=n;break}
+    saveDatabase(db);
+  }
+  currentUser.password=n;
+  closeModal('modalPassword');
+  showToast('Password changed','ok');
+}
+
+function openModal(id){
+  document.getElementById(id).classList.add('on');
+  document.body.style.overflow='hidden';
+  if(id==='modalCurrency'){
+    var opts=document.querySelectorAll('.cur-opt');
+    for(var i=0;i<opts.length;i++) opts[i].classList.toggle('active',opts[i].getAttribute('data-code')===activeCurrency);
+  }
+  if(id==='modalWithdraw'){
+    var av=getWithdrawableProfit();
+    document.getElementById('wdBalance').textContent=formatMoney(Math.max(0,av));
+    document.getElementById('wdWallet').value='';
+    updateWithdrawUI();
+  }
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove('on');
+  if(!document.querySelector('.modal-bg.on')) document.body.style.overflow='';
+  if(id==='modalPlisio'){stopPlisioPolling();resetDepositBtn();}
+}
+
+var am=document.querySelectorAll('.modal-bg');
+for(var mi=0;mi<am.length;mi++){
+  (function(m){m.addEventListener('click',function(e){if(e.target===m) closeModal(m.id)})})(am[mi]);
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){var o=document.querySelector('.modal-bg.on');if(o) closeModal(o.id)}});
+
+(function(){
+  setInterval(tickCountdowns,1000);
+  var s=safeGet('qumovcoin_session');
+  if(s&&typeof s==='string'){
+    var db=getDatabase();
+    for(var i=0;i<db.users.length;i++){
+      if(db.users[i].email===s){
+        isTempSession=false;currentUser=db.users[i];
+        enterApp();
+        return;
+      }
+    }
+  }
+  document.getElementById('authScreen').classList.remove('off');
+})();
 </script>
 </body>
 </html>
