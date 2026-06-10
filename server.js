@@ -5,7 +5,7 @@ const https = require('https');
 const crypto = require('crypto');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5500;
 const PLISIO_KEY = process.env.PLISIO_SECRET_KEY || '';
 const NGN_TO_USD = parseFloat(process.env.NGN_TO_USD) || 0.00067;
 const INVOICES_FILE = path.join(__dirname, 'invoices.json');
@@ -59,9 +59,9 @@ app.post('/api/create-invoice', async (req, res) => {
   if (!pc) return res.json({ status: 'error', message: 'Unsupported crypto' });
   const usd = (parseFloat(amountNGN) * NGN_TO_USD).toFixed(2);
   const on = 'QM_' + Date.now() + '_' + crypto.randomBytes(4).toString('hex').toUpperCase();
-  const cb = (process.env.RAILWAY_STATIC_URL || 'http://localhost:' + PORT) + '/api/webhook';
+  const webhookUrl = (process.env.RAILWAY_STATIC_URL || 'http://localhost:' + PORT) + '/api/webhook';
   try {
-    const r = await plisioRequest({ source_currency:'USD', source_amount:usd, order_name:'Qumovcoin Level '+level, order_number:on, currency:pc, callback_url:cb, email:email, expire_min:'120' });
+    const r = await plisioRequest({ source_currency:'USD', source_amount:usd, order_name:'Qumovcoin Level '+level, order_number:on, currency:pc, callback_url:webhookUrl, email:email, expire_min:'120' });
     if (r.status === 'success' && r.data) {
       const inv = readInvoices();
       inv[r.data.txn_id] = { txn_id:r.data.txn_id, email, level:parseInt(level), amountNGN:parseFloat(amountNGN), cryptoType, wallet_hash:r.data.wallet_hash, invoice_url:r.data.invoice_url, amount_crypto:r.data.amount, status:'pending', created:Date.now() };
