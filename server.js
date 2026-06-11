@@ -5,7 +5,6 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const crypto = require('crypto');
-const { Domain } = require('domain');
 
 const app = express();
 const PORT = process.env.PORT || 5500;
@@ -35,7 +34,14 @@ const activeTokens = new Set();
 
 function adminAuth(req, res, next) {
     const token = req.headers['x-admin-key'];
-    if (!token || token.length < 32) return res.status(401).json({ status: 'error', message: 'Invalid or missing admin token' });
+    if (!token || token.length < 32) {
+        console.log('[AUTH] Failed: Missing or invalid token');
+        return res.status(401).json({ status: 'error', message: 'Invalid or missing admin token' });
+    }
+    if (!activeTokens.has(token)) {
+        console.log('[AUTH] Failed: Token not found in active tokens');
+        return res.status(401).json({ status: 'error', message: 'Token expired or invalid' });
+    }
     next();
 }
 
@@ -237,11 +243,28 @@ app.post('/api/plisio-callback', (req, res) => {
 // ═══════ ADMIN ROUTES ═══════
 app.post('/api/admin/login', (req, res) => {
     const { password } = req.body;
-    if (!password) return res.status(400).json({ status: 'error', message: 'Password required' });
-    if (password !== ADMIN_PASSWORD) return res.status(401).json({ status: 'error', message: 'Incorrect password' });
+    
+    console.log('[ADMIN LOGIN] Attempt received');
+    console.log('[ADMIN LOGIN] Password provided:', password ? password.substring(0, 2) + '***' : 'EMPTY');
+    console.log('[ADMIN LOGIN] Expected password:', ADMIN_PASSWORD ? ADMIN_PASSWORD.substring(0, 2) + '***' : 'NOT SET');
+    console.log('[ADMIN LOGIN] Match:', password === ADMIN_PASSWORD);
+    
+    if (!password) {
+        console.log('[ADMIN LOGIN] FAILED: No password provided');
+        return res.status(400).json({ status: 'error', message: 'Password required' });
+    }
+    
+    if (password !== ADMIN_PASSWORD) {
+        console.log('[ADMIN LOGIN] FAILED: Incorrect password');
+        return res.status(401).json({ status: 'error', message: 'Incorrect password' });
+    }
+    
     const token = crypto.randomBytes(32).toString('hex');
     activeTokens.add(token);
     if (activeTokens.size > 20) { Array.from(activeTokens).slice(0, -20).forEach(t => activeTokens.delete(t)); }
+    
+    console.log('[ADMIN LOGIN] SUCCESS: Token generated');
+    
     res.json({ status: 'success', data: { token } });
 });
 
@@ -582,7 +605,7 @@ app.listen(PORT, () => {
     console.log('║        QUMOVCOIN SERVER RUNNING              ║');
     console.log('╠═══════════════════════════════════════════════╣');
     console.log('║  Port:     http://localhost:' + String(PORT).padEnd(31) + '║');
-    console.log('║  Admin:    http://localhost:' + String(PORT) + '/    ║');
+    console.log('║  Admin:    http://localhost:' + String(PORT) + '/admin.html    ║');
 
     if (c.ok) {
         console.log('║  Plisio:   ✅ CONNECTED                       ║');
@@ -593,28 +616,7 @@ app.listen(PORT, () => {
     }
 
     console.log('║  Test Mode: ' + (TEST_MODE ? 'YES (simulated)' : 'NO (real crypto)').padEnd(35) + '║');
-    console.log('╚═══════════════════════════════════════════════╝');
-    console.log('');
-});
-
-// ═══════ START ═══════
-app.listen(Domain, () => {
-    const c = plisioReady();
-    console.log('');
-    console.log('╔═══════════════════════════════════════════════╗');
-    console.log('║        QUMOVCOIN SERVER RUNNING              ║');
-    console.log('╠═══════════════════════════════════════════════╣');
-    console.log('║  Domain:     http://qumovcoin.com' + String(Domain).padEnd(31) + '║');
-    console.log('║  Admin:    http://qumovcoin.com' + '/admin.html    ║');
-    if (c.ok) {
-        console.log('║  Plisio:   ✅ CONNECTED                       ║');
-        console.log('║  Key:      ' + PLISIO_KEY.substring(0, 8) + '...' + PLISIO_KEY.substring(PLISIO_KEY.length - 4).padEnd(29) + '║');
-    } else {
-        console.log('║  Plisio:   ❌ NOT CONFIGURED                  ║');
-        console.log('║  Reason:   ' + c.reason.substring(0, 33).padEnd(29) + '║');
-    }
-
-    console.log('║  Test Mode: ' + (TEST_MODE ? 'YES (simulated)' : 'NO (real crypto)').padEnd(35) + '║');
+    console.log('║  Admin PW: ' + (ADMIN_PASSWORD.length > 0 ? '✅ SET (' + ADMIN_PASSWORD.length + ' chars)' : '❌ NOT SET').padEnd(35) + '║');
     console.log('╚═══════════════════════════════════════════════╝');
     console.log('');
 });
