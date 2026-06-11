@@ -24,7 +24,6 @@ html.light-mode{
 --bdr:rgba(0,0,0,.1);--bdr2:rgba(0,0,0,.2);
 --btc:#e67e22;--usdt:#16a085;--eth:#5b6abf;--blue:#2471a3
 }
-/* ═══════ BALANCE VISIBILITY TOGGLE ═══════ */
 .bal-eye{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(212,168,67,.15);color:var(--mut);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .25s;z-index:2}
 html.light-mode .bal-eye{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1)}
 .bal-eye:hover{border-color:var(--gold);color:var(--gold);background:rgba(212,168,67,.08)}
@@ -33,8 +32,6 @@ html.light-mode .bal-eye{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1)}
 .bal-hidden .bs-val{filter:blur(12px);user-select:none;-webkit-user-select:none;transition:filter .3s}
 .bal-hidden .bal-amount::after,
 .bal-hidden .bs-val::after{content:'';position:absolute;inset:0;background:inherit;border-radius:inherit}
-
-/* ═══════ INCREASE TEXT BRIGHTNESS 20% ═══════ */
 html:not(.light-mode) body,
 html:not(.light-mode) .auth-title,
 html:not(.light-mode) .modal-head h3,
@@ -65,8 +62,8 @@ html:not(.light-mode) div,
 html:not(.light-mode) input,
 html:not(.light-mode) textarea,
 html:not(.light-mode) select{
-  color: color-mix(in srgb, #f0ece4 100%, transparent 0%) !important;
-  text-shadow: 0 0 8px rgba(240,236,228,.08);
+  color:color-mix(in srgb,#f0ece4 100%,transparent 0%)!important;
+  text-shadow:0 0 8px rgba(240,236,228,.08);
 }
 html:not(.light-mode) .mut,
 html:not(.light-mode) [style*="color:var(--mut)"],
@@ -92,7 +89,7 @@ html:not(.light-mode) .plisio-timer,
 html:not(.light-mode) .empty-state p,
 html:not(.light-mode) .legal-content p,
 html:not(.light-mode) .legal-content li{
-  color: color-mix(in srgb, #9e9baa 100%, transparent 0%) !important;
+  color:color-mix(in srgb,#9e9baa 100%,transparent 0%)!important;
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);overflow-x:hidden;min-height:100vh;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
@@ -420,8 +417,8 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
     <div class="logo-row"><div class="logo-icon"><i class="fas fa-coins"></i></div><span>Qumovcoin</span></div>
     <h1 class="auth-title">Welcome Back</h1>
     <p class="auth-sub">Sign in to manage your investments and track earnings.</p>
-    <div class="fgroup"><label>Email Address</label><div class="fwrap"><input type="email" class="finput" id="loginEmail" placeholder="you@example.com"><i class="fas fa-envelope ico"></i></div></div>
-    <div class="fgroup"><label>Password</label><div class="fwrap"><input type="password" class="finput" id="loginPass" placeholder="Enter password"><i class="fas fa-lock ico"></i><button class="eyebtn" onclick="toggleEye('loginPass',this)"><i class="fas fa-eye"></i></button></div></div>
+    <div class="fgroup"><label>Email Address</label><div class="fwrap"><input type="email" class="finput" id="loginEmail" placeholder="you@example.com" autocomplete="email"><i class="fas fa-envelope ico"></i></div></div>
+    <div class="fgroup"><label>Password</label><div class="fwrap"><input type="password" class="finput" id="loginPass" placeholder="Enter password" autocomplete="current-password"><i class="fas fa-lock ico"></i><button class="eyebtn" onclick="toggleEye('loginPass',this)"><i class="fas fa-eye"></i></button></div></div>
     <button class="btn btn-gold btn-full btn-big" onclick="handleLogin()"><i class="fas fa-arrow-right-to-bracket"></i> Sign In</button>
     <div class="auth-footer">Don't have an account? <a onclick="showRegister()">Create one</a></div>
   </div>
@@ -429,10 +426,10 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
     <div class="logo-row"><div class="logo-icon"><i class="fas fa-coins"></i></div><span>Qumovcoin</span></div>
     <h1 class="auth-title">Create Account</h1>
     <p class="auth-sub">Join Qumovcoin and start earning.</p>
-    <div class="fgroup"><label>Full Name</label><div class="fwrap"><input type="text" class="finput" id="regName" placeholder="John Doe"><i class="fas fa-user ico"></i></div></div>
-    <div class="fgroup"><label>Email</label><div class="fwrap"><input type="email" class="finput" id="regEmail" placeholder="you@example.com"><i class="fas fa-envelope ico"></i></div></div>
-    <div class="fgroup"><label>Phone</label><div class="fwrap"><input type="tel" class="finput" id="regPhone" placeholder="08012345678"><i class="fas fa-phone ico"></i></div></div>
-    <div class="fgroup"><label>Password</label><div class="fwrap"><input type="password" class="finput" id="regPass" placeholder="Min 6 characters"><i class="fas fa-lock ico"></i><button class="eyebtn" onclick="toggleEye('regPass',this)"><i class="fas fa-eye"></i></button></div></div>
+    <div class="fgroup"><label>Full Name</label><div class="fwrap"><input type="text" class="finput" id="regName" placeholder="John Doe" autocomplete="name"><i class="fas fa-user ico"></i></div></div>
+    <div class="fgroup"><label>Email</label><div class="fwrap"><input type="email" class="finput" id="regEmail" placeholder="you@example.com" autocomplete="email"><i class="fas fa-envelope ico"></i></div></div>
+    <div class="fgroup"><label>Phone</label><div class="fwrap"><input type="tel" class="finput" id="regPhone" placeholder="08012345678" autocomplete="tel"><i class="fas fa-phone ico"></i></div></div>
+    <div class="fgroup"><label>Password</label><div class="fwrap"><input type="password" class="finput" id="regPass" placeholder="Min 6 characters" autocomplete="new-password"><i class="fas fa-lock ico"></i><button class="eyebtn" onclick="toggleEye('regPass',this)"><i class="fas fa-eye"></i></button></div></div>
     <div class="fgroup"><label>Referral Code (Optional)</label><div style="display:flex;gap:0"><div class="fwrap" style="flex:1"><input type="text" class="finput noicon" id="regReferral" placeholder="Enter code"></div><button class="btn btn-out btn-sm" onclick="validateReferral()" style="border-top-left-radius:0;border-bottom-left-radius:0"><i class="fas fa-check"></i></button></div><p id="referralMsg" style="font-size:11px;margin-top:6px;display:none"></p></div>
     <button class="btn btn-gold btn-full btn-big" onclick="handleRegister()" style="margin-top:8px"><i class="fas fa-user-plus"></i> Create Account</button>
     <div class="auth-footer">Already have an account? <a onclick="showLogin()">Sign in</a></div>
@@ -526,7 +523,7 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
         <div class="set-item" onclick="openModal('modalTerms')"><div class="set-left"><i class="fas fa-file-contract"></i><div><div class="set-label">Terms of Service</div></div></div><div class="set-right"><i class="fas fa-chevron-right"></i></div></div>
       </div>
       <button class="btn btn-red btn-full" onclick="openModal('modalLogout')" style="margin-top:20px"><i class="fas fa-right-from-bracket"></i> Log Out</button>
-      <p style="text-align:center;font-size:11px;color:var(--mut);margin-top:16px">Qumovcoin v3.0.0 | 20 Levels | Plisio Crypto</p>
+      <p style="text-align:center;font-size:11px;color:var(--mut);margin-top:16px">Qumovcoin v2.0.8 | 20 Levels | Crypto</p>
     </div>
   </div>
 
@@ -540,11 +537,11 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
 </div>
 
 <div class="modal-bg" id="modalCurrency"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Select Currency</h3><button class="modal-close" onclick="closeModal('modalCurrency')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="cur-modal-grid" id="curModalGrid"></div><p class="cur-modal-note"><i class="fas fa-circle-info" style="color:var(--gold);margin-right:4px"></i>Display currency only. Crypto payments are in USD.</p></div></div></div>
-<div class="modal-bg" id="modalDeposit"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Invest Now</h3><button class="modal-close" onclick="closeModal('modalDeposit')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="modal-summary"><div class="ms-row"><span class="ms-l">Plan</span><span class="ms-v gld" id="depPlan"></span></div><div class="ms-row"><span class="ms-l">Amount</span><span class="ms-v gld" id="depAmount"></span></div><div class="ms-row"><span class="ms-l">Profit / Cycle</span><span class="ms-v grn" id="depProfit"></span></div><div class="ms-row"><span class="ms-l">Cycle Duration</span><span class="ms-v gld" id="depCycle"></span></div><div class="ms-row"><span class="ms-l">Return Rate</span><span class="ms-v grn" id="depRate"></span></div></div><div class="pay-tabs" id="payTabs"><button class="pay-tab on" data-m="usdt" onclick="switchPay('usdt')"><i class="fab fa-bitcoin" style="color:var(--usdt)"></i>USDT<span class="pt-badge" style="background:var(--green-d);color:var(--green)">TRC-20</span></button><button class="pay-tab" data-m="btc" onclick="switchPay('btc')"><i class="fab fa-bitcoin" style="color:var(--btc)"></i>BTC</button></div><button class="btn btn-green btn-full btn-big" onclick="processDeposit()" id="depositBtn"><i class="fas fa-shield-halved"></i> Pay with Plisio</button><p style="text-align:center;font-size:11px;color:var(--mut);margin-top:12px"><i class="fas fa-lock" style="margin-right:4px"></i>Secure crypto payment via Plisio gateway.</p></div></div></div>
-<div class="modal-bg center" id="modalWithdraw"><div class="modal-box" style="max-width:480px"><div class="modal-handle"></div><div class="modal-head"><h3>Withdraw Profits</h3><button class="modal-close" onclick="closeModal('modalWithdraw')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="wd-direct-badge"><i class="fas fa-bolt"></i> Direct Withdrawal to Your Wallet</div><div class="modal-summary"><div class="ms-row"><span class="ms-l">Available Balance</span><span class="ms-v grn" id="wdBalance">₦0</span></div><div class="ms-row"><span class="ms-l">Source</span><span class="ms-v gld">Level 1-3 Profits</span></div></div><div class="fgroup"><label>Withdraw Method</label><div class="fwrap"><select class="finput" id="wdMethod" onchange="updateWithdrawUI()"><option value="usdt">USDT (TRC-20)</option><option value="btc">Bitcoin (BTC)</option></select><i class="fas fa-wallet ico"></i></div></div><div class="fgroup"><label>Wallet Address</label><div class="fwrap"><input type="text" class="finput" id="wdWallet" placeholder="Enter your wallet address"><i class="fas fa-link ico"></i></div></div><div class="min-withdraw-note"><i class="fas fa-info-circle"></i> Minimum withdrawal: $10</div><button class="btn btn-green btn-full btn-big" style="margin-top:12px" onclick="processWithdraw()" id="withdrawBtn"><i class="fas fa-paper-plane"></i> Send to Wallet</button><div class="crypto-warn" style="margin-top:16px"><i class="fas fa-triangle-exclamation"></i><span>Crypto will be sent directly to your wallet. Double-check the address!</span></div></div></div></div>
+<div class="modal-bg" id="modalDeposit"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Invest Now</h3><button class="modal-close" onclick="closeModal('modalDeposit')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="modal-summary"><div class="ms-row"><span class="ms-l">Plan</span><span class="ms-v gld" id="depPlan"></span></div><div class="ms-row"><span class="ms-l">Amount</span><span class="ms-v gld" id="depAmount"></span></div><div class="ms-row"><span class="ms-l">Profit / Cycle</span><span class="ms-v grn" id="depProfit"></span></div><div class="ms-row"><span class="ms-l">Cycle Duration</span><span class="ms-v gld" id="depCycle"></span></div><div class="ms-row"><span class="ms-l">Return Rate</span><span class="ms-v grn" id="depRate"></span></div></div><div class="pay-tabs" id="payTabs"><button class="pay-tab on" data-m="usdt" onclick="switchPay('usdt')"><i class="fab fa-bitcoin" style="color:var(--usdt)"></i>USDT<span class="pt-badge" style="background:var(--green-d);color:var(--green)">TRC-20</span></button><button class="pay-tab" data-m="btc" onclick="switchPay('btc')"><i class="fab fa-bitcoin" style="color:var(--btc)"></i>BTC</button></div><button class="btn btn-green btn-full btn-big" onclick="processDeposit()" id="depositBtn"><i class="fas fa-shield-halved"></i> Pay </button><p style="text-align:center;font-size:11px;color:var(--mut);margin-top:12px"><i class="fas fa-lock" style="margin-right:4px"></i>Secure crypto payment gateway.</p></div></div></div>
+<div class="modal-bg center" id="modalWithdraw"><div class="modal-box" style="max-width:480px"><div class="modal-handle"></div><div class="modal-head"><h3>Withdraw Profits</h3><button class="modal-close" onclick="closeModal('modalWithdraw')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="wd-direct-badge"><i class="fas fa-bolt"></i> Direct Withdrawal to Your Wallet</div><div class="modal-summary"><div class="ms-row"><span class="ms-l">Available Balance</span><span class="ms-v grn" id="wdBalance">₦0</span></div><div class="ms-row"><span class="ms-l">Source</span><span class="ms-v gld">Level 1-3 Profits</span></div></div><div class="fgroup"><label>Withdraw Method</label><div class="fwrap"><select class="finput" id="wdMethod" onchange="updateWithdrawUI()"><option value="usdt">USDT (TRC-20)</option><option value="btc">Bitcoin (BTC)</option></select><i class="fas fa-wallet ico"></i></div></div><div class="fgroup"><label>Wallet Address</label><div class="fwrap"><input type="text" class="finput" id="wdWallet" placeholder="Enter your wallet address"><i class="fas fa-link ico"></i></div></div><div class="min-withdraw-note"><i class="fas fa-info-circle"></i> Minimum withdrawal: $5</div><button class="btn btn-green btn-full btn-big" style="margin-top:12px" onclick="processWithdraw()" id="withdrawBtn"><i class="fas fa-paper-plane"></i> Send to Wallet</button><div class="crypto-warn" style="margin-top:16px"><i class="fas fa-triangle-exclamation"></i><span>Crypto will be sent directly to your wallet. Double-check the address!</span></div></div></div></div>
 <div class="modal-bg center" id="modalLogout"><div class="modal-box" style="max-width:380px"><div class="confirm-body"><i class="fas fa-right-from-bracket"></i><h3>Log Out?</h3><p>You will need to sign in again.</p><div class="confirm-btns"><button class="btn btn-out" onclick="closeModal('modalLogout')">Cancel</button><button class="btn btn-red" onclick="handleLogout()"><i class="fas fa-right-from-bracket"></i> Log Out</button></div></div></div></div>
 <div class="modal-bg" id="modalPrivacy"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Privacy Policy</h3><button class="modal-close" onclick="closeModal('modalPrivacy')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="legal-content"><h3>Information We Collect</h3><p>Name, email, phone, password, transaction data, and referral information.</p><h3>How We Use Your Data</h3><ul><li>Process investment transactions</li><li>Calculate and distribute profits</li><li>Process direct crypto withdrawals</li><li>Track and credit referral bonuses</li></ul></div></div></div></div>
-<div class="modal-bg" id="modalTerms"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Terms of Service</h3><button class="modal-close" onclick="closeModal('modalTerms')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="legal-content"><h3>1. Investment Plans</h3><p>20 levels from $10 to $250,000 with varying cycles and profit rates.</p><h3>2. Deposits</h3><p>USDT (TRC-20) or Bitcoin via Plisio crypto payment gateway.</p><h3>3. Withdrawals</h3><p>Direct crypto withdrawal to your wallet via Plisio.</p><h3>4. Referral</h3><p>$0.59 USD per referred user.</p></div></div></div></div>
+<div class="modal-bg" id="modalTerms"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Terms of Service</h3><button class="modal-close" onclick="closeModal('modalTerms')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="legal-content"><h3>1. Investment Plans</h3><p>20 levels from $10 to $250,000 with varying cycles and profit rates.</p><h3>2. Deposits</h3><p>USDT (TRC-20) or Bitcoin via crypto payment gateway.</p><h3>3. Withdrawals</h3><p>Direct crypto withdrawal to your wallet via crypto.</p><h3>4. Referral</h3><p>$0.59 USD per referred user.</p></div></div></div></div>
 <div class="modal-bg" id="modalProfile"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Edit Profile</h3><button class="modal-close" onclick="closeModal('modalProfile')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="fgroup"><label>Full Name</label><div class="fwrap"><input type="text" class="finput" id="editName" placeholder="Your name"><i class="fas fa-user ico"></i></div></div><div class="fgroup"><label>Phone</label><div class="fwrap"><input type="tel" class="finput" id="editPhone" placeholder="08012345678"><i class="fas fa-phone ico"></i></div></div><button class="btn btn-gold btn-full btn-big" onclick="saveProfile()" style="margin-top:8px"><i class="fas fa-check"></i> Save</button></div></div></div>
 <div class="modal-bg" id="modalPassword"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Change Password</h3><button class="modal-close" onclick="closeModal('modalPassword')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="fgroup"><label>Current Password</label><div class="fwrap"><input type="password" class="finput" id="pwCurrent" placeholder="Current password"><i class="fas fa-lock ico"></i></div></div><div class="fgroup"><label>New Password</label><div class="fwrap"><input type="password" class="finput" id="pwNew" placeholder="Min 6 chars"><i class="fas fa-key ico"></i></div></div><div class="fgroup"><label>Confirm</label><div class="fwrap"><input type="password" class="finput" id="pwConfirm" placeholder="Re-enter"><i class="fas fa-key ico"></i></div></div><button class="btn btn-gold btn-full btn-big" onclick="savePassword()" style="margin-top:8px"><i class="fas fa-check"></i> Update</button></div></div></div>
 <div class="modal-bg center" id="modalPlisio"><div class="modal-box" style="max-width:500px;max-height:90vh"><div class="modal-head"><h3>Crypto Payment</h3><button class="modal-close" onclick="closeModal('modalPlisio')"><i class="fas fa-times"></i></button></div><div class="modal-body" id="plisioPaymentBody"></div></div></div>
@@ -568,7 +565,6 @@ for(var _ci=0;_ci<CURRENCY_LIST.length;_ci++){CURRENCIES[CURRENCY_LIST[_ci].code
 var activeCurrency='NGN',histFilter='all',isDarkMode=true;
 var MIN_WITHDRAW_NGN=5000,REF_BONUS_USD=0.59,USD_RATE=0.00065,REF_BONUS_NGN=Math.round(REF_BONUS_USD/USD_RATE);
 
-/* ═══════ 20 LEVELS: $10 → $3,000 (L1-10), $5,000 → $250,000 (L11-20) ═══════ */
 var LEVELS=[
   {level:1,  amount:15385,  profit:2462,   rate:16, cycle:6, star:false, usd:10},
   {level:2,  amount:30769,  profit:5538,   rate:18, cycle:6, star:false, usd:20},
@@ -602,9 +598,9 @@ var plisioCheckInterval=null,plisioTimerInterval=null,pollCount=0,currentInvoice
 function safeGet(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
 function safeSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function safeRemove(k){try{localStorage.removeItem(k)}catch(e){}}
-function getDatabase(){var d=safeGet('qumovcoin_db');return(d&&d.users)?d:{users:[]}}
+function getDatabase(){var d=safeGet('qumovcoin_db');if(!d) d={users:[]};if(!d.users) d.users=[];return d}
 function saveDatabase(d){safeSet('qumovcoin_db',d)}
-function getUserData(e){if(isTempSession&&currentUser&&e===currentUser.email) return tempData||{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]};return safeGet('qumovcoin_data_'+e)||{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]}}
+function getUserData(e){if(isTempSession&&currentUser&&e===currentUser.email) return tempData||{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]};var d=safeGet('qumovcoin_data_'+e);if(!d) d={investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]};return d}
 function saveUserData(e,d){if(isTempSession&&currentUser&&e===currentUser.email){tempData=d;return}safeSet('qumovcoin_data_'+e,d)}
 function generateRefCode(){var c='QM',ch='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';for(var i=0;i<6;i++) c+=ch.charAt(Math.floor(Math.random()*ch.length));return c}
 
@@ -619,6 +615,24 @@ async function apiFetch(endpoint,options){var url=API_BASE+endpoint;try{var res=
 async function createInvoice(amountNGN,cryptoType,level,email){var json=await apiFetch('/api/create-invoice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,level:level,amountNGN:amountNGN,cryptoType:cryptoType})});if(json.status==='success'&&json.data) return json.data;throw new Error(json.message||'Could not create invoice')}
 async function checkInvoiceStatus(txnId){var json=await apiFetch('/api/invoice-status?txn_id='+encodeURIComponent(txnId));if(json.status==='success'&&json.data){var raw=json.data.status;return raw==='completed'||raw==='paid'?'completed':raw==='expired'?'expired':raw}return 'error'}
 async function submitWithdrawal(amountNGN,cryptoType,walletAddress,email,userName){var json=await apiFetch('/api/withdraw',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,amountNGN:amountNGN,cryptoType:cryptoType,walletAddress:walletAddress,userName:userName})});if(json.status==='success'&&json.data) return json.data;throw new Error(json.message||'Withdrawal failed')}
+
+/* ═══════ USER SYNC TO SERVER ═══════ */
+function syncUserToServer(){
+  if(!currentUser) return;
+  var apiUrl=window.location.origin;
+  if(!apiUrl||apiUrl.indexOf('file:')===0) return;
+  fetch(apiUrl+'/api/sync-user',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      name:currentUser.name,
+      email:currentUser.email,
+      phone:currentUser.phone,
+      refCode:currentUser.refCode,
+      joined:currentUser.joined||Date.now()
+    })
+  }).catch(function(){});
+}
 
 /* ═══════ PLISIO PAYMENT UI ═══════ */
 async function showPlisioPayment(inv){
@@ -664,11 +678,65 @@ function finalizePlisioDeposit(){if(!selectedLevel||!currentUser) return;var ud=
 function showLogin(){document.getElementById('loginBox').style.display='block';document.getElementById('registerBox').style.display='none'}
 function showRegister(){document.getElementById('loginBox').style.display='none';document.getElementById('registerBox').style.display='block'}
 function toggleEye(id,btn){var inp=document.getElementById(id),ic=btn.querySelector('i');inp.type=inp.type==='password'?'text':'password';ic.className=inp.type==='password'?'fas fa-eye':'fas fa-eye-slash'}
-function handleLogin(){var em=document.getElementById('loginEmail').value.trim().toLowerCase(),pw=document.getElementById('loginPass').value;if(!em||!pw){showToast('Enter email and password','err');return}var db=getDatabase(),u=null;for(var i=0;i<db.users.length;i++) if(db.users[i].email===em){u=db.users[i];break}if(!u){showToast('No account found','err');return}if(u.password!==pw){showToast('Incorrect password','err');return}isTempSession=false;currentUser=u;safeSet('qumovcoin_session',em);enterApp();showToast('Welcome back, '+u.name.split(' ')[0]+'!','ok')}
-function handleRegister(){var nm=document.getElementById('regName').value.trim(),em=document.getElementById('regEmail').value.trim().toLowerCase(),ph=document.getElementById('regPhone').value.trim(),pw=document.getElementById('regPass').value,rf=document.getElementById('regReferral').value.trim().toUpperCase();if(!nm||nm.length<2){showToast('Enter your full name','err');return}if(!em||em.indexOf('@')<1){showToast('Enter a valid email','err');return}if(!ph||ph.length<10){showToast('Enter a valid phone','err');return}if(pw.length<6){showToast('Password min 6 characters','err');return}var db=getDatabase();for(var i=0;i<db.users.length;i++) if(db.users[i].email===em){showToast('Email already registered','err');return}var referrerEmail=null;if(rf){for(var j=0;j<db.users.length;j++) if(db.users[j].refCode===rf){referrerEmail=db.users[j].email;break}if(!referrerEmail){showToast('Invalid referral code','err');return}}var rc=generateRefCode();db.users.push({name:nm,email:em,phone:ph,password:pw,refCode:rc});saveDatabase(db);saveUserData(em,{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]});if(referrerEmail){var rd=getUserData(referrerEmail);rd.refBonus+=REF_BONUS_NGN;rd.referrals.push({name:nm,date:Date.now(),amount:REF_BONUS_NGN});saveUserData(referrerEmail,rd)}showToast('Account created!','ok');showLogin();document.getElementById('loginEmail').value=em}
-function validateReferral(){var c=document.getElementById('regReferral').value.trim().toUpperCase(),m=document.getElementById('referralMsg');if(!c){m.style.display='none';return}var db=getDatabase(),f=false;for(var i=0;i<db.users.length;i++) if(db.users[i].refCode===c){f=true;break}m.style.display='block';m.style.color=f?'var(--green)':'var(--red)';m.textContent=f?'Valid!':'Invalid referral code'}
+
+function handleLogin(){
+  var em=document.getElementById('loginEmail').value.trim().toLowerCase();
+  var pw=document.getElementById('loginPass').value;
+  if(!em){showToast('Please enter your email address','err');document.getElementById('loginEmail').focus();return}
+  if(!pw){showToast('Please enter your password','err');document.getElementById('loginPass').focus();return}
+  if(em.indexOf('@')<1||em.indexOf('.')<2){showToast('Please enter a valid email address','err');return}
+  var db=getDatabase(),u=null;
+  for(var i=0;i<db.users.length;i++) if(db.users[i].email===em){u=db.users[i];break}
+  if(!u){showToast('Account not found. Please register first.','err');setTimeout(function(){showRegister();document.getElementById('regEmail').value=em},1200);return}
+  if(u.password!==pw){showToast('Incorrect password. Try again.','err');document.getElementById('loginPass').value='';document.getElementById('loginPass').focus();return}
+  isTempSession=false;currentUser=u;safeSet('qumovcoin_session',em);enterApp();showToast('Welcome back, '+u.name.split(' ')[0]+'!','ok');
+}
+
+function handleRegister(){
+  var nm=document.getElementById('regName').value.trim();
+  var em=document.getElementById('regEmail').value.trim().toLowerCase();
+  var ph=document.getElementById('regPhone').value.trim();
+  var pw=document.getElementById('regPass').value;
+  var rf=document.getElementById('regReferral').value.trim().toUpperCase();
+  if(!nm||nm.length<2){showToast('Please enter your full name','err');document.getElementById('regName').focus();return}
+  if(!em||em.indexOf('@')<1||em.indexOf('.')<2){showToast('Please enter a valid email address','err');document.getElementById('regEmail').focus();return}
+  if(!ph||ph.length<10){showToast('Please enter a valid phone number','err');document.getElementById('regPhone').focus();return}
+  if(pw.length<6){showToast('Password must be at least 6 characters','err');document.getElementById('regPass').focus();return}
+  var db=getDatabase();
+  for(var i=0;i<db.users.length;i++) if(db.users[i].email===em){showToast('This email is already registered. Please log in.','err');showLogin();document.getElementById('loginEmail').value=em;return}
+  var referrerEmail=null;
+  if(rf){for(var j=0;j<db.users.length;j++) if(db.users[j].refCode===rf){referrerEmail=db.users[j].email;break}if(!referrerEmail){showToast('Invalid referral code. Leave blank if none.','err');return}}
+  var rc=generateRefCode();
+  var newUser={name:nm,email:em,phone:ph,password:pw,refCode:rc,joined:Date.now()};
+  db.users.push(newUser);saveDatabase(db);
+  saveUserData(em,{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]});
+  if(referrerEmail){var rd=getUserData(referrerEmail);rd.refBonus+=REF_BONUS_NGN;rd.referrals.push({name:nm,date:Date.now(),amount:REF_BONUS_NGN});saveUserData(referrerEmail,rd)}
+  isTempSession=false;currentUser=newUser;safeSet('qumovcoin_session',em);
+  syncUserToServer();
+  showToast('Account created! Welcome, '+nm.split(' ')[0]+'!','ok');
+  enterApp();
+}
+
+function validateReferral(){var c=document.getElementById('regReferral').value.trim().toUpperCase(),m=document.getElementById('referralMsg');if(!c){m.style.display='none';return}var db=getDatabase(),f=false;for(var i=0;i<db.users.length;i++) if(db.users[i].refCode===c){f=true;break}m.style.display='block';m.style.color=f?'var(--green)':'var(--red)';m.textContent=f?'Valid referral code':'Invalid referral code'}
 function handleLogout(){if(isTempSession){tempData=null;isTempSession=false}else safeRemove('qumovcoin_session');if(notifInterval){clearInterval(notifInterval);notifInterval=null}stopPlisioPolling();document.getElementById('notifBar').classList.remove('on');currentUser=null;document.getElementById('mainApp').classList.remove('on');document.getElementById('bottomNav').classList.remove('on');document.getElementById('authScreen').classList.remove('off');document.getElementById('loginEmail').value='';document.getElementById('loginPass').value='';closeModal('modalLogout');showToast('Logged out','info')}
-function enterApp(){document.getElementById('authScreen').classList.add('off');document.getElementById('mainApp').classList.add('on');document.getElementById('bottomNav').classList.add('on');var ini=currentUser.name.charAt(0).toUpperCase();document.getElementById('avatarHome').textContent=ini;document.getElementById('avatarSettings').textContent=ini;document.getElementById('settingsName').textContent=currentUser.name;document.getElementById('settingsEmail').textContent=currentUser.email;document.getElementById('myRefCode').value=currentUser.refCode;var sc=safeGet('qumovcoin_currency');activeCurrency=(sc&&CURRENCIES[sc])?sc:'NGN';initTheme();buildCurrencyModal();syncCurButtons();updateReferralDisplay();renderLevels();refreshDashboard();navigateTo('pageHome');startNotifBar()}
+
+function enterApp(){
+  document.getElementById('authScreen').classList.add('off');
+  document.getElementById('mainApp').classList.add('on');
+  document.getElementById('bottomNav').classList.add('on');
+  var ini=currentUser.name.charAt(0).toUpperCase();
+  document.getElementById('avatarHome').textContent=ini;
+  document.getElementById('avatarSettings').textContent=ini;
+  document.getElementById('settingsName').textContent=currentUser.name;
+  document.getElementById('settingsEmail').textContent=currentUser.email;
+  document.getElementById('myRefCode').value=currentUser.refCode;
+  var sc=safeGet('qumovcoin_currency');
+  activeCurrency=(sc&&CURRENCIES[sc])?sc:'NGN';
+  initTheme();buildCurrencyModal();syncCurButtons();updateReferralDisplay();renderLevels();refreshDashboard();navigateTo('pageHome');
+  syncUserToServer();
+  startNotifBar();
+  if(safeGet('qumovcoin_bal_hidden')==='1'){var card=document.getElementById('balCard');var btn=document.getElementById('balEye');if(card) card.classList.add('bal-hidden');if(btn){btn.classList.add('off');btn.querySelector('i').className='fas fa-eye-slash'}}
+}
 
 /* ═══════ NAVIGATION ═══════ */
 function navigateTo(pid){var ps=document.querySelectorAll('.page');for(var i=0;i<ps.length;i++) ps[i].classList.remove('on');document.getElementById(pid).classList.add('on');var bs=document.querySelectorAll('.nav-btn');for(var j=0;j<bs.length;j++) bs[j].classList.toggle('on',bs[j].getAttribute('data-page')===pid);window.scrollTo({top:0,behavior:'smooth'});if(pid==='pagePortfolio'||pid==='pageHome') refreshDashboard();if(pid==='pageRefer') refreshReferral();if(pid==='pageHistory') refreshHistoryPage()}
@@ -686,29 +754,10 @@ function toggleTheme(){isDarkMode=!isDarkMode;var t=document.getElementById('the
 function initTheme(){var sv=safeGet('qumovcoin_theme');if(sv==='light'){isDarkMode=false;document.documentElement.classList.add('light-mode');document.getElementById('themeToggle').classList.remove('on');document.getElementById('themeSubtext').textContent='Currently inactive';document.querySelector('#themeToggleItem .set-left i').className='fas fa-sun'}else{isDarkMode=true;document.documentElement.classList.remove('light-mode');document.getElementById('themeToggle').classList.add('on');document.getElementById('themeSubtext').textContent='Currently active';document.querySelector('#themeToggleItem .set-left i').className='fas fa-moon'}}
 
 /* ═══════ BALANCE VISIBILITY TOGGLE ═══════ */
-function toggleBalanceVisibility(){
-  var card = document.getElementById('balCard');
-  var btn = document.getElementById('balEye');
-  var isHidden = card.classList.toggle('bal-hidden');
-  btn.classList.toggle('off', isHidden);
-  btn.querySelector('i').className = isHidden ? 'fas fa-eye-slash' : 'fas fa-eye';
-  safeSet('qumovcoin_bal_hidden', isHidden ? '1' : '0');
-}
-
-// Restore saved state on login
-var _origEnterApp = enterApp;
-enterApp = function(){
-  _origEnterApp();
-  if(safeGet('qumovcoin_bal_hidden') === '1'){
-    var card = document.getElementById('balCard');
-    var btn = document.getElementById('balEye');
-    if(card){ card.classList.add('bal-hidden'); }
-    if(btn){ btn.classList.add('off'); btn.querySelector('i').className = 'fas fa-eye-slash'; }
-  }
-};
+function toggleBalanceVisibility(){var card=document.getElementById('balCard');var btn=document.getElementById('balEye');var isHidden=card.classList.toggle('bal-hidden');btn.classList.toggle('off',isHidden);btn.querySelector('i').className=isHidden?'fas fa-eye-slash':'fas fa-eye';safeSet('qumovcoin_bal_hidden',isHidden?'1':'0')}
 
 /* ═══════ RENDER LEVELS ═══════ */
-function renderLevels(){var h='',cur=CURRENCIES[activeCurrency]||CURRENCIES.NGN;for(var i=0;i<LEVELS.length;i++){var l=LEVELS[i];h+='<div class="lv-card '+(l.star?'star':'')+'" onclick="openDeposit('+l.level+')"><div class="lv-bg">'+String(l.level).padStart(2,'0')+'</div><span class="lv-tag">Level '+l.level+'</span><div class="lv-inv-label">Investment Amount</div><div class="lv-inv-amt"><span class="cur-sym">'+cur.symbol+'</span>'+formatMoney(l.amount)+'</div><div class="lv-inv-usd">≈ $'+l.usd.toLocaleString()+'</div><div class="lv-details"><div class="lv-det"><div class="det-label">Profit / Cycle</div><div class="det-val">'+formatMoney(l.profit)+'</div></div><div class="lv-det"><div class="det-label">Rate</div><div class="det-val gd">'+l.rate+'%</div></div><div class="lv-det"><div class="det-label">Monthly Est.</div><div class="det-val">'+formatMoney(Math.round(l.profit*(30/l.cycle)))+'</div></div></div><div class="lv-cycle"><i class="fas fa-clock"></i> Payout every '+l.cycle+' days</div><button class="btn btn-gold btn-sm"><i class="fas fa-shield-halved"></i> Invest via Plisio</button></div>'}document.getElementById('levelsGrid').innerHTML=h}
+function renderLevels(){var h='',cur=CURRENCIES[activeCurrency]||CURRENCIES.NGN;for(var i=0;i<LEVELS.length;i++){var l=LEVELS[i];h+='<div class="lv-card '+(l.star?'star':'')+'" onclick="openDeposit('+l.level+')"><div class="lv-bg">'+String(l.level).padStart(2,'0')+'</div><span class="lv-tag">Level '+l.level+'</span><div class="lv-inv-label">Investment Amount</div><div class="lv-inv-amt"><span class="cur-sym">'+cur.symbol+'</span>'+formatMoney(l.amount)+'</div><div class="lv-inv-usd">≈ $'+l.usd.toLocaleString()+'</div><div class="lv-details"><div class="lv-det"><div class="det-label">Profit / Cycle</div><div class="det-val">'+formatMoney(l.profit)+'</div></div><div class="lv-det"><div class="det-label">Rate</div><div class="det-val gd">'+l.rate+'%</div></div><div class="lv-det"><div class="det-label">Monthly Est.</div><div class="det-val">'+formatMoney(Math.round(l.profit*(30/l.cycle)))+'</div></div></div><div class="lv-cycle"><i class="fas fa-clock"></i> Payout every '+l.cycle+' days</div><button class="btn btn-gold btn-sm"><i class="fas fa-shield-halved"></i> Invest </button></div>'}document.getElementById('levelsGrid').innerHTML=h}
 
 /* ═══════ DEPOSIT ═══════ */
 function openDeposit(lv){for(var i=0;i<LEVELS.length;i++) if(LEVELS[i].level===lv){selectedLevel=LEVELS[i];break}if(!selectedLevel) return;document.getElementById('depPlan').textContent='Level '+selectedLevel.level;document.getElementById('depAmount').textContent=formatMoney(selectedLevel.amount);document.getElementById('depProfit').textContent=formatMoney(selectedLevel.profit);document.getElementById('depCycle').textContent=selectedLevel.cycle+' days';document.getElementById('depRate').textContent=selectedLevel.rate+'%';switchPay('usdt');openModal('modalDeposit')}
@@ -718,7 +767,7 @@ async function processDeposit(){if(!selectedLevel||!currentUser) return;var btn=
 /* ═══════ WITHDRAW ═══════ */
 function getWithdrawableProfit(){if(!currentUser) return 0;var ud=getUserData(currentUser.email),t=0;for(var i=0;i<ud.investments.length;i++){var inv=ud.investments[i];if(inv.level<=3&&inv.earned>0) t+=inv.earned}return Math.max(0,t-(ud.withdrawn||0))}
 function updateWithdrawUI(){var m=document.getElementById('wdMethod').value;document.getElementById('wdWallet').placeholder=m==='usdt'?'USDT TRC-20 address (starts with T...)':'BTC address (starts with 1, 3, or bc1...)'}
-async function processWithdraw(){var av=getWithdrawableProfit();if(av<=0){showToast('No withdrawable profit','err');return}if(av<MIN_WITHDRAW_NGN){showToast('Minimum withdrawal is ₦'+MIN_WITHDRAW_NGN.toLocaleString(),'err');return}var m=document.getElementById('wdMethod').value,a=document.getElementById('wdWallet').value.trim();if(!a||a.length<10){showToast('Enter valid wallet address','err');return}var btn=document.getElementById('withdrawBtn');btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...';btn.disabled=true;try{var result=await submitWithdrawal(av,m,a,currentUser.email,currentUser.name);var ud=getUserData(currentUser.email);if(!ud.withdrawalHistory) ud.withdrawalHistory=[];ud.withdrawalHistory.unshift({id:Date.now(),type:'withdraw',amount:av,method:m,details:{address:a},status:'processing',date:Date.now(),withdrawalId:result.withdrawal_id,plisioTxnId:result.plisio_txn_id});ud.withdrawn=(ud.withdrawn||0)+av;saveUserData(currentUser.email,ud);closeModal('modalWithdraw');showToast('Withdrawal of '+formatMoney(av)+' submitted!','ok');btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to Wallet';btn.disabled=false;refreshDashboard();refreshHistoryPage()}catch(e){console.error('Withdrawal error:',e);showToast(e.message,'err');btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to Wallet';btn.disabled=false}}
+async function processWithdraw(){var av=getWithdrawableProfit();if(av<=0){showToast('No withdrawable profit','err');return}if(av<MIN_WITHDRAW_NGN){showToast('Minimum withdrawal is '+formatMoney(MIN_WITHDRAW_NGN),'err');return}var m=document.getElementById('wdMethod').value,a=document.getElementById('wdWallet').value.trim();if(!a||a.length<10){showToast('Enter valid wallet address','err');return}var btn=document.getElementById('withdrawBtn');btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...';btn.disabled=true;try{var result=await submitWithdrawal(av,m,a,currentUser.email,currentUser.name);var ud=getUserData(currentUser.email);if(!ud.withdrawalHistory) ud.withdrawalHistory=[];ud.withdrawalHistory.unshift({id:Date.now(),type:'withdraw',amount:av,method:m,details:{address:a},status:'processing',date:Date.now(),withdrawalId:result.withdrawal_id,plisioTxnId:result.plisio_txn_id});ud.withdrawn=(ud.withdrawn||0)+av;saveUserData(currentUser.email,ud);closeModal('modalWithdraw');showToast('Withdrawal of '+formatMoney(av)+' submitted!','ok');btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to Wallet';btn.disabled=false;refreshDashboard();refreshHistoryPage()}catch(e){console.error('Withdrawal error:',e);showToast(e.message,'err');btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to Wallet';btn.disabled=false}}
 
 /* ═══════ HISTORY ═══════ */
 function setHistFilter(f){histFilter=f;var fs=document.querySelectorAll('.hist-filter');for(var i=0;i<fs.length;i++) fs[i].classList.toggle('on',fs[i].getAttribute('data-filter')===f);refreshHistoryPage()}
@@ -732,7 +781,7 @@ function renderInvestmentList(cid,list){var el=document.getElementById(cid);if(!
 function tickCountdowns(){if(!currentUser) return;var ud=getUserData(currentUser.email);if(!ud) return;var ch=false;for(var i=0;i<ud.investments.length;i++){var inv=ud.investments[i];if(inv.status!=='active') continue;if(inv.nextPayout-Date.now()<=0){inv.cycles++;inv.earned+=inv.profit;inv.nextPayout=Date.now()+getCycleMs(inv.level);ch=true;showToast('Level '+inv.level+' payout: +'+formatMoney(inv.profit),'ok')}}if(ch){saveUserData(currentUser.email,ud);refreshDashboard()}var ts=document.querySelectorAll('.inv-timer[data-end]');for(var j=0;j<ts.length;j++){var r=Math.max(0,parseInt(ts[j].getAttribute('data-end'))-Date.now());var dd=Math.floor(r/86400000),hh=Math.floor((r%86400000)/3600000),mm=Math.floor((r%3600000)/60000),ss=Math.floor((r%60000)/1000);ts[j].textContent=r>0?dd+'d '+String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')+':'+String(ss).padStart(2,'0'):'Claiming...'}}
 
 /* ═══════ REFERRAL ═══════ */
-function refreshReferral(){if(!currentUser) return;var ud=getUserData(currentUser.email);if(!ud) return;document.getElementById('refCount').textContent=ud.referrals.length;document.getElementById('refEarnings').textContent=formatMoney(ud.refBonus);var el=document.getElementById('refHistoryList');if(!ud.referrals.length){el.innerHTML='<div class="empty-state" style="padding:32px 16px"><i class="fas fa-users"></i><p>No referrals yet.</p></div>';return}var h='';for(var i=ud.referrals.length-1;i>=0;i--){var r=ud.referrals[i];h+='<div class="ref-hist-item"><div><div class="rh-name">'+r.name+'</div><div class="rh-date">'+new Date(r.date).toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'})+'</</div>'}el.innerHTML=h}
+function refreshReferral(){if(!currentUser) return;var ud=getUserData(currentUser.email);if(!ud) return;document.getElementById('refCount').textContent=ud.referrals.length;document.getElementById('refEarnings').textContent=formatMoney(ud.refBonus);var el=document.getElementById('refHistoryList');if(!ud.referrals.length){el.innerHTML='<div class="empty-state" style="padding:32px 16px"><i class="fas fa-users"></i><p>No referrals yet.</p></div>';return}var h='';for(var i=ud.referrals.length-1;i>=0;i--){var r=ud.referrals[i];h+='<div class="ref-hist-item"><div><div class="rh-name">'+r.name+'</div><div class="rh-date">'+new Date(r.date).toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'})+'</div></div><div class="rh-amt">+'+formatMoney(r.amount)+'</div></div>'}el.innerHTML=h}
 
 /* ═══════ PROFILE / PASSWORD ═══════ */
 function prefillProfile(){if(!currentUser) return;document.getElementById('editName').value=currentUser.name;document.getElementById('editPhone').value=currentUser.phone}
@@ -757,7 +806,12 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var o=docum
   if(s&&typeof s==='string'){
     var db=getDatabase();
     for(var i=0;i<db.users.length;i++){
-      if(db.users[i].email===s){isTempSession=false;currentUser=db.users[i];enterApp();return}
+      if(db.users[i].email===s){
+        isTempSession=false;
+        currentUser=db.users[i];
+        enterApp();
+        return;
+      }
     }
   }
   document.getElementById('authScreen').classList.remove('off');
