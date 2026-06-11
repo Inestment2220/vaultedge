@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const crypto = require('crypto');
+const { Domain } = require('domain');
 
 const app = express();
 const PORT = process.env.PORT || 5500;
@@ -581,8 +582,30 @@ app.listen(PORT, () => {
     console.log('║        QUMOVCOIN SERVER RUNNING              ║');
     console.log('╠═══════════════════════════════════════════════╣');
     console.log('║  Port:     http://localhost:' + String(PORT).padEnd(31) + '║');
-    console.log('║  Admin:    http://localhost:' + String(PORT) + '/admin.html    ║');
+    console.log('║  Admin:    http://localhost:' + String(PORT) + '/    ║');
 
+    if (c.ok) {
+        console.log('║  Plisio:   ✅ CONNECTED                       ║');
+        console.log('║  Key:      ' + PLISIO_KEY.substring(0, 8) + '...' + PLISIO_KEY.substring(PLISIO_KEY.length - 4).padEnd(29) + '║');
+    } else {
+        console.log('║  Plisio:   ❌ NOT CONFIGURED                  ║');
+        console.log('║  Reason:   ' + c.reason.substring(0, 33).padEnd(29) + '║');
+    }
+
+    console.log('║  Test Mode: ' + (TEST_MODE ? 'YES (simulated)' : 'NO (real crypto)').padEnd(35) + '║');
+    console.log('╚═══════════════════════════════════════════════╝');
+    console.log('');
+});
+
+// ═══════ START ═══════
+app.listen(Domain, () => {
+    const c = plisioReady();
+    console.log('');
+    console.log('╔═══════════════════════════════════════════════╗');
+    console.log('║        QUMOVCOIN SERVER RUNNING              ║');
+    console.log('╠═══════════════════════════════════════════════╣');
+    console.log('║  Domain:     http://qumovcoin.com' + String(Domain).padEnd(31) + '║');
+    console.log('║  Admin:    http://qumovcoin.com' + '/admin.html    ║');
     if (c.ok) {
         console.log('║  Plisio:   ✅ CONNECTED                       ║');
         console.log('║  Key:      ' + PLISIO_KEY.substring(0, 8) + '...' + PLISIO_KEY.substring(PLISIO_KEY.length - 4).padEnd(29) + '║');
