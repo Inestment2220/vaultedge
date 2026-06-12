@@ -7,6 +7,19 @@
   },
   "dependencies": {
     "dotenv": "^17.4.2",
-    "express": "^4.18.2"
-  }
+    "express": "^4.22.2",
+    "pg": "^8.21.0"
+  },
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Inestment2220/vaultedge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Inestment2220/vaultedge/issues"
+  },
+  "homepage": "https://github.com/Inestment2220/vaultedge#readme"
 }

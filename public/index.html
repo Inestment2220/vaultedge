@@ -509,7 +509,7 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
   <div class="page" id="pageRefer">
     <div class="wrap">
       <div class="topbar"><h2>Referral Program</h2><div class="topbar-right"><button class="cur-top-btn" id="curBtnRefer" onclick="openModal('modalCurrency')"><span class="cur-flag">🇪🇺</span><span class="cur-sym">€</span><i class="fas fa-chevron-down" style="font-size:8px;opacity:.6"></i></button><button class="icon-btn" onclick="navigateTo('pageHome')"><i class="fas fa-arrow-left"></i></button></div></div>
-      <div class="ref-hero"><h2>Invite & Earn</h2><p>Share your code and earn per referral.</p><div class="ref-country-row"><span class="ref-country-flag" id="refCountryFlag">🇪🇺</span><span class="ref-country-name" id="refCountryName">Euro</span></div><div class="ref-badge-big"><i class="fas fa-gift"></i> <span id="refBonusAmount">€0.36</span> Per Referral</div></div>
+      <div class="ref-hero"><h2>Invite & Earn</h2><p>Share your code and earn per referral.</p><div class="ref-country-row"><span class="ref-country-flag" id="refCountryFlag">🇪🇺</span><span class="ref-country-name" id="refCountryName">Euro</span></div><div class="ref-badge-big"><i class="fas fa-gift"></i> <span id="refBonusAmount">$2.00</span> Per Referral</div></div>
       <div class="ref-code-box"><label>Your Referral Code</label><div class="ref-code-row"><input type="text" id="myRefCode" readonly><button class="btn btn-gold btn-sm" onclick="copyText(document.getElementById('myRefCode').value)"><i class="fas fa-copy"></i> Copy</button></div></div>
       <button class="btn btn-green btn-full" onclick="shareReferral()" style="margin-bottom:20px"><i class="fas fa-share-nodes"></i> Share Link</button>
       <div class="ref-stats"><div class="ref-stat"><div class="rs-val" id="refCount">0</div><div class="rs-lbl">Total Referrals</div></div><div class="ref-stat"><div class="rs-val" id="refEarnings">€0</div><div class="rs-lbl">Total Earned</div></div></div>
@@ -547,7 +547,25 @@ html.light-mode .toast{background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1)}
   </nav>
 </div>
 
-<div class="modal-bg" id="modalCurrency"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Select Currency</h3><button class="modal-close" onclick="closeModal('modalCurrency')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="cur-modal-grid" id="curModalGrid"></div><p class="cur-modal-note"><i class="fas fa-circle-info" style="color:var(--gold);margin-right:4px"></i>Display currency only. Crypto payments are in USD.</p></div></div></div>
+<div class="modal-bg" id="modalCurrency">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <h3>Select Currency</h3>
+      <button class="modal-close" onclick="closeModal('modalCurrency')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="cur-modal-grid" id="curModalGrid">
+        <!-- Populated by JavaScript -->
+      </div>
+      <div class="cur-modal-note">
+        <i class="fas fa-info-circle" style="color:var(--gold);margin-right:4px"></i>
+        Referral bonus: $2.00 USD per referral<br>
+        Amounts auto-convert to your selected currency
+      </div>
+    </div>
+  </div>
+</div>
 <div class="modal-bg" id="modalDeposit"><div class="modal-box"><div class="modal-handle"></div><div class="modal-head"><h3>Invest Now</h3><button class="modal-close" onclick="closeModal('modalDeposit')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="modal-summary"><div class="ms-row"><span class="ms-l">Plan</span><span class="ms-v gld" id="depPlan"></span></div><div class="ms-row"><span class="ms-l">Amount</span><span class="ms-v gld" id="depAmount"></span></div><div class="ms-row"><span class="ms-l">Profit / Cycle</span><span class="ms-v grn" id="depProfit"></span></div><div class="ms-row"><span class="ms-l">Cycle Duration</span><span class="ms-v gld" id="depCycle"></span></div><div class="ms-row"><span class="ms-l">Return Rate</span><span class="ms-v grn" id="depRate"></span></div></div><div class="pay-tabs" id="payTabs"><button class="pay-tab on" data-m="usdt" onclick="switchPay('usdt')"><i class="fab fa-bitcoin" style="color:var(--usdt)"></i>USDT<span class="pt-badge" style="background:var(--green-d);color:var(--green)">TRC-20</span></button><button class="pay-tab" data-m="btc" onclick="switchPay('btc')"><i class="fab fa-bitcoin" style="color:var(--btc)"></i>BTC</button></div><button class="btn btn-green btn-full btn-big" onclick="processDeposit()" id="depositBtn"><i class="fas fa-shield-halved"></i> Pay </button><p style="text-align:center;font-size:11px;color:var(--mut);margin-top:12px"><i class="fas fa-lock" style="margin-right:4px"></i>Secure crypto payment gateway.</p></div></div></div>
 <div class="modal-bg center" id="modalWithdraw"><div class="modal-box" style="max-width:480px"><div class="modal-handle"></div><div class="modal-head"><h3>Withdraw Profits</h3><button class="modal-close" onclick="closeModal('modalWithdraw')"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="wd-direct-badge"><i class="fas fa-bolt"></i> Direct Withdrawal to Your Wallet</div><div class="modal-summary"><div class="ms-row"><span class="ms-l">Available Balance</span><span class="ms-v grn" id="wdBalance">€0</span></div><div class="ms-row"><span class="ms-l">Source</span><span class="ms-v gld">Level 1-3 Profits</span></div></div><div class="fgroup"><label>Withdraw Method</label><div class="fwrap"><select class="finput" id="wdMethod" onchange="updateWithdrawUI()"><option value="usdt">USDT (TRC-20)</option><option value="btc">Bitcoin (BTC)</option></select><i class="fas fa-wallet ico"></i></div></div><div class="fgroup"><label>Wallet Address</label><div class="fwrap"><input type="text" class="finput" id="wdWallet" placeholder="Enter your wallet address"><i class="fas fa-link ico"></i></div></div><div class="min-withdraw-note"><i class="fas fa-info-circle"></i> Minimum withdrawal: $5</div><button class="btn btn-green btn-full btn-big" style="margin-top:12px" onclick="processWithdraw()" id="withdrawBtn"><i class="fas fa-paper-plane"></i> Send to Wallet</button><div class="crypto-warn" style="margin-top:16px"><i class="fas fa-triangle-exclamation"></i><span>Crypto will be sent directly to your wallet. Double-check the address!</span></div></div></div></div>
 <div class="modal-bg center" id="modalLogout"><div class="modal-box" style="max-width:380px"><div class="confirm-body"><i class="fas fa-right-from-bracket"></i><h3>Log Out?</h3><p>You will need to sign in again.</p><div class="confirm-btns"><button class="btn btn-out" onclick="closeModal('modalLogout')">Cancel</button><button class="btn btn-red" onclick="handleLogout()"><i class="fas fa-right-from-bracket"></i> Log Out</button></div></div></div></div>
@@ -567,8 +585,12 @@ var CURRENCY_LIST=[
 ];
 var CURRENCIES={};
 for(var _ci=0;_ci<CURRENCY_LIST.length;_ci++){CURRENCIES[CURRENCY_LIST[_ci].code]=CURRENCY_LIST[_ci]}
+
+/* ═══════ FIAT TO USD RATES FOR REFERRAL CONVERSION ═══════ */
+var FIAT_TO_USD={USD:1.00,EUR:0.92,KYD:0.83,CHF:0.88};
+
 var activeCurrency='EUR',histFilter='all',isDarkMode=true;
-var MIN_WITHDRAW_USD=5,REF_BONUS_USD=0.59,REF_BONUS_EUR=0.36;
+var MIN_WITHDRAW_USD=10,REF_BONUS_USD=2;
 
 var LEVELS=[
   {level:1,  amount:15385,  profit:2462,   rate:16, cycle:6, star:false, usd:10},
@@ -611,9 +633,142 @@ function generateRefCode(){var c='QM',ch='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 function showToast(m,t){var ic={ok:'fa-circle-check',err:'fa-circle-exclamation',info:'fa-circle-info'};var el=document.createElement('div');el.className='toast t-'+(t||'info');el.innerHTML='<i class="fas '+(ic[t]||ic.info)+'"></i><span>'+m+'</span>';document.getElementById('toastArea').appendChild(el);setTimeout(function(){el.classList.add('hiding');setTimeout(function(){el.remove()},300)},3500)}
 
-var fakeNames=['Adebayo O.','Chioma N.','Emeka I.','Fatima Z.','Tunde A.','Blessing K.','Obinna M.','Aisha B.','Yusuf D.','Ngozi E.'],notifInterval=null;
+/* ═══════ LIVE WITHDRAWAL FEED — 200 NAMES ═══════ */
+var fakePeople=[
+  /* ═══ USD — 40 ═══ */
+  {name:'James W.',flag:'🇺🇸',cur:'USD'},{name:'Sarah J.',flag:'🇺🇸',cur:'USD'},
+  {name:'Michael B.',flag:'🇺🇸',cur:'USD'},{name:'Emily D.',flag:'🇺🇸',cur:'USD'},
+  {name:'Robert T.',flag:'🇺🇸',cur:'USD'},{name:'Jessica A.',flag:'🇺🇸',cur:'USD'},
+  {name:'David M.',flag:'🇺🇸',cur:'USD'},{name:'Ashley T.',flag:'🇺🇸',cur:'USD'},
+  {name:'Chris G.',flag:'🇺🇸',cur:'USD'},{name:'Amanda M.',flag:'🇺🇸',cur:'USD'},
+  {name:'Daniel K.',flag:'🇺🇸',cur:'USD'},{name:'Rachel P.',flag:'🇺🇸',cur:'USD'},
+  {name:'Brandon L.',flag:'🇺🇸',cur:'USD'},{name:'Nicole H.',flag:'🇺🇸',cur:'USD'},
+  {name:'Kevin R.',flag:'🇺🇸',cur:'USD'},{name:'Lauren S.',flag:'🇺🇸',cur:'USD'},
+  {name:'Justin C.',flag:'🇺🇸',cur:'USD'},{name:'Megan F.',flag:'🇺🇸',cur:'USD'},
+  {name:'Ryan N.',flag:'🇺🇸',cur:'USD'},{name:'Stephanie V.',flag:'🇺🇸',cur:'USD'},
+  {name:'Tyler O.',flag:'🇺🇸',cur:'USD'},{name:'Brittany E.',flag:'🇺🇸',cur:'USD'},
+  {name:'Andrew Z.',flag:'🇺🇸',cur:'USD'},{name:'Samantha Q.',flag:'🇺🇸',cur:'USD'},
+  {name:'Nathan I.',flag:'🇺🇸',cur:'USD'},{name:'Kayla U.',flag:'🇺🇸',cur:'USD'},
+  {name:'Brian Y.',flag:'🇺🇸',cur:'USD'},{name:'Heather W.',flag:'🇺🇸',cur:'USD'},
+  {name:'Eric X.',flag:'🇺🇸',cur:'USD'},{name:'Chelsea R.',flag:'🇺🇸',cur:'USD'},
+  {name:'Marcus J.',flag:'🇺🇸',cur:'USD'},{name:'Diana L.',flag:'🇺🇸',cur:'USD'},
+  {name:'Cody F.',flag:'🇺🇸',cur:'USD'},{name:'Alyssa B.',flag:'🇺🇸',cur:'USD'},
+  {name:'Derek H.',flag:'🇺🇸',cur:'USD'},{name:'Natalie G.',flag:'🇺🇸',cur:'USD'},
+  {name:'Trevor S.',flag:'🇺🇸',cur:'USD'},{name:'Vanessa M.',flag:'🇺🇸',cur:'USD'},
+  {name:'Caleb P.',flag:'🇺🇸',cur:'USD'},{name:'Tiffany K.',flag:'🇺🇸',cur:'USD'},
+
+  /* ═══ EUR — 40 ═══ */
+  {name:'Hans M.',flag:'🇪🇺',cur:'EUR'},{name:'Marie D.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Giovanni R.',flag:'🇪🇺',cur:'EUR'},{name:'Ana S.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Jan V.',flag:'🇪🇺',cur:'EUR'},{name:'Sofia P.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Erik J.',flag:'🇪🇺',cur:'EUR'},{name:'Isabella F.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Lukas N.',flag:'🇪🇺',cur:'EUR'},{name:'Katarina H.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Pierre B.',flag:'🇪🇺',cur:'EUR'},{name:'Clara W.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Matteo L.',flag:'🇪🇺',cur:'EUR'},{name:'Elena G.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Felix K.',flag:'🇪🇺',cur:'EUR'},{name:'Amelie R.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Stefan T.',flag:'🇪🇺',cur:'EUR'},{name:'Lena M.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Olivier D.',flag:'🇪🇺',cur:'EUR'},{name:'Ingrid S.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Niklas A.',flag:'🇪🇺',cur:'EUR'},{name:'Petra V.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Ricardo F.',flag:'🇪🇺',cur:'EUR'},{name:'Monika H.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Henrik J.',flag:'🇪🇺',cur:'EUR'},{name:'Sabine K.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Alain P.',flag:'🇪🇺',cur:'EUR'},{name:'Brigitte L.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Wolfgang R.',flag:'🇪🇺',cur:'EUR'},{name:'Christine B.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Emilio C.',flag:'🇪🇺',cur:'EUR'},{name:'Franziska N.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Lars E.',flag:'🇪🇺',cur:'EUR'},{name:'Yvonne Z.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Marco I.',flag:'🇪🇺',cur:'EUR'},{name:'Heike O.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Dieter U.',flag:'🇪🇺',cur:'EUR'},{name:'Susanne Q.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Jorge T.',flag:'🇪🇺',cur:'EUR'},{name:'Annette W.',flag:'🇪🇺',cur:'EUR'},
+  {name:'Rolf G.',flag:'🇪🇺',cur:'EUR'},{name:'Katrin S.',flag:'🇪🇺',cur:'EUR'},
+
+  /* ═══ KYD — 40 ═══ */
+  {name:'Dwayne S.',flag:'🇰🇾',cur:'KYD'},{name:'Tanya E.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Jamal W.',flag:'🇰🇾',cur:'KYD'},{name:'Keisha B.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Ricardo D.',flag:'🇰🇾',cur:'KYD'},{name:'Shania H.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Malcolm F.',flag:'🇰🇾',cur:'KYD'},{name:'Crystal W.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Trevor B.',flag:'🇰🇾',cur:'KYD'},{name:'Latoya H.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Desmond C.',flag:'🇰🇾',cur:'KYD'},{name:'Tamika J.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Orlando P.',flag:'🇰🇾',cur:'KYD'},{name:'Roshanda L.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Kirk N.',flag:'🇰🇾',cur:'KYD'},{name:'Shanice M.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Terrence R.',flag:'🇰🇾',cur:'KYD'},{name:'Anika V.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Clive G.',flag:'🇰🇾',cur:'KYD'},{name:'Destiny K.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Winston A.',flag:'🇰🇾',cur:'KYD'},{name:'Jasmine F.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Devon T.',flag:'🇰🇾',cur:'KYD'},{name:'Tanesha S.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Baron O.',flag:'🇰🇾',cur:'KYD'},{name:'Latrice Q.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Leonard I.',flag:'🇰🇾',cur:'KYD'},{name:'Monique U.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Nigel E.',flag:'🇰🇾',cur:'KYD'},{name:'Candace Z.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Sheldon Y.',flag:'🇰🇾',cur:'KYD'},{name:'Veronica X.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Eldon H.',flag:'🇰🇾',cur:'KYD'},{name:'Patrice W.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Cedric D.',flag:'🇰🇾',cur:'KYD'},{name:'Lashonda R.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Rupert J.',flag:'🇰🇾',cur:'KYD'},{name:'Tameka B.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Alton K.',flag:'🇰🇾',cur:'KYD'},{name:'Shaquanda N.',flag:'🇰🇾',cur:'KYD'},
+  {name:'Fitzgerald L.',flag:'🇰🇾',cur:'KYD'},{name:'Yolanda G.',flag:'🇰🇾',cur:'KYD'},
+
+  /* ═══ CHF — 40 ═══ */
+  {name:'Lukas M.',flag:'🇨🇭',cur:'CHF'},{name:'Elena W.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Marco R.',flag:'🇨🇭',cur:'CHF'},{name:'Sophie M.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Thomas F.',flag:'🇨🇭',cur:'CHF'},{name:'Laura B.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Simon W.',flag:'🇨🇭',cur:'CHF'},{name:'Anna B.',flag:'🇨🇭',cur:'CHF'},
+  {name:'David S.',flag:'🇨🇭',cur:'CHF'},{name:'Michelle F.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Andreas K.',flag:'🇨🇭',cur:'CHF'},{name:'Julia H.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Raphael Z.',flag:'🇨🇭',cur:'CHF'},{name:'Nadia T.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Fabian L.',flag:'🇨🇭',cur:'CHF'},{name:'Sandra P.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Philipp A.',flag:'🇨🇭',cur:'CHF'},{name:'Miriam C.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Adrian E.',flag:'🇨🇭',cur:'CHF'},{name:'Ruth D.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Moritz G.',flag:'🇨🇭',cur:'CHF'},{name:'Hannah J.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Sebastian I.',flag:'🇨🇭',cur:'CHF'},{name:'Elisabeth N.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Yannick V.',flag:'🇨🇭',cur:'CHF'},{name:'Corinne O.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Florian R.',flag:'🇨🇭',cur:'CHF'},{name:'Regina U.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Leandro Q.',flag:'🇨🇭',cur:'CHF'},{name:'Beatrice S.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Dominik X.',flag:'🇨🇭',cur:'CHF'},{name:'Verena Y.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Niklaus B.',flag:'🇨🇭',cur:'CHF'},{name:'Madeleine F.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Joel M.',flag:'🇨🇭',cur:'CHF'},{name:'Priska H.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Damian W.',flag:'🇨🇭',cur:'CHF'},{name:'Liselotte K.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Roman T.',flag:'🇨🇭',cur:'CHF'},{name:'Gertrude Z.',flag:'🇨🇭',cur:'CHF'},
+  {name:'Valentin E.',flag:'🇨🇭',cur:'CHF'},{name:'Rosa L.',flag:'🇨🇭',cur:'CHF'},
+
+  /* ═══ NIGERIA 🇳🇬 — 5 ═══ */
+  {name:'Chinedu O.',flag:'🇳🇬',cur:'USD'},{name:'Adebayo A.',flag:'🇳🇬',cur:'USD'},
+  {name:'Olumide K.',flag:'🇳🇬',cur:'USD'},{name:'Ngozi E.',flag:'🇳🇬',cur:'USD'},
+  {name:'Chukwuma N.',flag:'🇳🇬',cur:'USD'},
+
+  /* ═══ SOUTH AFRICA 🇿🇦 — 5 ═══ */
+  {name:'Thabo M.',flag:'🇿🇦',cur:'USD'},{name:'Naledi Z.',flag:'🇿🇦',cur:'USD'},
+  {name:'Sipho N.',flag:'🇿🇦',cur:'USD'},{name:'Zanele K.',flag:'🇿🇦',cur:'USD'},
+  {name:'Bongani D.',flag:'🇿🇦',cur:'USD'},
+
+  /* ═══ KENYA 🇰🇪 — 5 ═══ */
+  {name:'Kamau W.',flag:'🇰🇪',cur:'USD'},{name:'Wanjiku M.',flag:'🇰🇪',cur:'USD'},
+  {name:'Otieno O.',flag:'🇰🇪',cur:'USD'},{name:'Akinyi K.',flag:'🇰🇪',cur:'USD'},
+  {name:'Mwangi N.',flag:'🇰🇪',cur:'USD'},
+
+  /* ═══ GHANA 🇬🇭 — 5 ═══ */
+  {name:'Kwame A.',flag:'🇬🇭',cur:'USD'},{name:'Abena M.',flag:'🇬🇭',cur:'USD'},
+  {name:'Kofi O.',flag:'🇬🇭',cur:'USD'},{name:'Ama S.',flag:'🇬🇭',cur:'USD'},
+  {name:'Yaw K.',flag:'🇬🇭',cur:'USD'},
+
+  /* ═══ INDIA 🇮🇳 — 5 ═══ */
+  {name:'Rajesh K.',flag:'🇮🇳',cur:'USD'},{name:'Priya S.',flag:'🇮🇳',cur:'USD'},
+  {name:'Arjun M.',flag:'🇮🇳',cur:'USD'},{name:'Ananya R.',flag:'🇮🇳',cur:'USD'},
+  {name:'Vikram P.',flag:'🇮🇳',cur:'USD'},
+
+  /* ═══ PHILIPPINES 🇵🇭 — 5 ═══ */
+  {name:'Juan D.',flag:'🇵🇭',cur:'USD'},{name:'Maria C.',flag:'🇵🇭',cur:'USD'},
+  {name:'Jose R.',flag:'🇵🇭',cur:'USD'},{name:'Rosario S.',flag:'🇵🇭',cur:'USD'},
+  {name:'Carlos M.',flag:'🇵🇭',cur:'USD'},
+
+  /* ═══ INDONESIA 🇮🇩 — 5 ═══ */
+  {name:'Budi S.',flag:'🇮🇩',cur:'USD'},{name:'Siti N.',flag:'🇮🇩',cur:'USD'},
+  {name:'Agus W.',flag:'🇮🇩',cur:'USD'},{name:'Dewi L.',flag:'🇮🇩',cur:'USD'},
+  {name:'Rizky P.',flag:'🇮🇩',cur:'USD'},
+
+  /* ═══ VIETNAM 🇻🇳 — 5 ═══ */
+  {name:'Nguyen T.',flag:'🇻🇳',cur:'USD'},{name:'Tran V.',flag:'🇻🇳',cur:'USD'},
+  {name:'Le H.',flag:'🇻🇳',cur:'USD'},{name:'Pham M.',flag:'🇻🇳',cur:'USD'},
+  {name:'Hoang D.',flag:'🇻🇳',cur:'USD'}
+];
+var notifInterval=null;
 function startNotifBar(){document.getElementById('notifBar').classList.add('on');addNotifItem();notifInterval=setInterval(addNotifItem,4000)}
-function addNotifItem(){var tr=document.getElementById('notifTrack');var n=fakeNames[Math.floor(Math.random()*fakeNames.length)];var lv=Math.floor(Math.random()*20)+1;var a=LEVELS[lv-1].profit;var m=Math.floor(Math.random()*30)+1;var it=document.createElement('span');it.className='notif-item';it.innerHTML='<i class="fas fa-circle-check" style="color:#2ecc71;font-size:10px"></i><span class="ni-name">'+n+'</span><span style="color:#7d7a8a">withdrew</span><span class="ni-amount">'+formatMoney(a)+'</span><span class="ni-level">L'+lv+'</span><span class="ni-time">'+m+'m ago</span>';tr.appendChild(it);while(tr.children.length>15) tr.removeChild(tr.firstChild)}
+function addNotifItem(){var tr=document.getElementById('notifTrack');var p=fakePeople[Math.floor(Math.random()*fakePeople.length)];var lv=Math.floor(Math.random()*20)+1;var a=LEVELS[lv-1].profit;var m=Math.floor(Math.random()*30)+1;var amtStr=formatMoneyCur(a,p.cur);var it=document.createElement('span');it.className='notif-item';it.innerHTML='<span>'+p.flag+'</span><span class="ni-name">'+p.name+'</span><span style="color:#7d7a8a">withdrew</span><span class="ni-amount">'+amtStr+'</span><span class="ni-level">L'+lv+'</span><span class="ni-time">'+m+'m ago</span>';tr.appendChild(it);while(tr.children.length>15) tr.removeChild(tr.firstChild)}
 
 async function apiFetch(endpoint,options){var url=API_BASE+endpoint;try{var res=await fetch(url,options);var json=await res.json();if(json.status==='error') throw new Error(json.message||'Request failed');return json}catch(err){if(err.message==='Failed to fetch'||err.name==='TypeError') throw new Error('Cannot reach server.');throw err}}
 async function createInvoice(amountNGN,cryptoType,level,email){var json=await apiFetch('/api/create-invoice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,level:level,amountNGN:amountNGN,cryptoType:cryptoType})});if(json.status==='success'&&json.data) return json.data;throw new Error(json.message||'Could not create invoice')}
@@ -774,7 +929,7 @@ function startPaymentPolling(coinLabel,decimals,investAmt,investLabel){
   },8000);
 }
 function stopPlisioPolling(){if(plisioCheckInterval){clearInterval(plisioCheckInterval);plisioCheckInterval=null}if(plisioTimerInterval){clearInterval(plisioTimerInterval);plisioTimerInterval=null}currentInvoiceData=null}
-function resetDepositBtn(){var btn=document.getElementById('depositBtn');if(btn){btn.innerHTML='<i class="fas fa-shield-halved"></i> Pay with Plisio';btn.disabled=false}}
+function resetDepositBtn(){var btn=document.getElementById('depositBtn');if(btn){btn.innerHTML='<i class="fas fa-shield-halved"></i> Pay ';btn.disabled=false}}
 function finalizePlisioDeposit(){if(!selectedLevel||!currentUser) return;var ud=getUserData(currentUser.email),now=Date.now();ud.investments.push({id:now,level:selectedLevel.level,amount:selectedLevel.amount,profit:selectedLevel.profit,rate:selectedLevel.rate,startTime:now,nextPayout:now+getCycleMs(selectedLevel.level),cycles:0,earned:0,status:'active',paymentMethod:'plisio_'+payMethod});saveUserData(currentUser.email,ud);closeModal('modalPlisio');closeModal('modalDeposit');showToast('Level '+selectedLevel.level+' investment active!','ok');resetDepositBtn();refreshDashboard();setTimeout(function(){navigateTo('pagePortfolio')},300)}
 
 function showLogin(){document.getElementById('loginBox').style.display='block';document.getElementById('registerBox').style.display='none'}
@@ -812,7 +967,16 @@ function handleRegister(){
   var newUser={name:nm,email:em,phone:ph,password:pw,refCode:rc,joined:Date.now()};
   db.users.push(newUser);saveDatabase(db);
   saveUserData(em,{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]});
-  if(referrerEmail){var rd=getUserData(referrerEmail);rd.refBonus+=REF_BONUS_EUR*100;rd.referrals.push({name:nm,date:Date.now(),amount:REF_BONUS_EUR*100});saveUserData(referrerEmail,rd)}
+  if(referrerEmail){
+    var rd=getUserData(referrerEmail);
+    /* ═══════ $2 REFERRAL BONUS — CONVERTED USING FIAT RATE ═══════ */
+    var refCurCode=activeCurrency||'EUR';
+    var fiatRate=FIAT_TO_USD[refCurCode]||1;
+    var _rb=REF_BONUS_USD*fiatRate;
+    rd.refBonus+=_rb;
+    rd.referrals.push({name:nm,date:Date.now(),amount:_rb});
+    saveUserData(referrerEmail,rd);
+  }
   isTempSession=false;currentUser=newUser;safeSet('qumovcoin_session',em);
   showToast('Account created! Welcome, '+nm.split(' ')[0]+'!','ok');
   enterApp();
@@ -840,15 +1004,62 @@ function enterApp(){
 
 function navigateTo(pid){var ps=document.querySelectorAll('.page');for(var i=0;i<ps.length;i++) ps[i].classList.remove('on');document.getElementById(pid).classList.add('on');var bs=document.querySelectorAll('.nav-btn');for(var j=0;j<bs.length;j++) bs[j].classList.toggle('on',bs[j].getAttribute('data-page')===pid);window.scrollTo({top:0,behavior:'smooth'});if(pid==='pagePortfolio'||pid==='pageHome') refreshDashboard();if(pid==='pageRefer') refreshReferral();if(pid==='pageHistory') refreshHistoryPage()}
 
-function buildCurrencyModal(){var h='';for(var i=0;i<CURRENCY_LIST.length;i++){var c=CURRENCY_LIST[i];h+='<button class="cur-opt'+(c.code===activeCurrency?' active':'')+'" data-code="'+c.code+'" onclick="selectCurrency(\''+c.code+'\')"><span class="co-flag">'+c.flag+'</span><span class="co-info"><span class="co-code">'+c.code+'</span><span class="co-name">'+c.name+'</span><span class="co-sym">'+c.symbol+'</span></span><i class="fas fa-circle-check co-check"></i></button>'}document.getElementById('curModalGrid').innerHTML=h}
-function selectCurrency(code){activeCurrency=code;safeSet('qumovcoin_currency',code);var opts=document.querySelectorAll('.cur-opt');for(var i=0;i<opts.length;i++) opts[i].classList.toggle('active',opts[i].getAttribute('data-code')===code);syncCurButtons();updateReferralDisplay();refreshDashboard();renderLevels();refreshReferral();refreshHistoryPage();var cur=CURRENCIES[code]||CURRENCIES.EUR;showToast('Currency: '+cur.flag+' '+cur.code,'info');setTimeout(function(){closeModal('modalCurrency')},350)}
-function syncCurButtons(){var cur=CURRENCIES[activeCurrency]||CURRENCIES.EUR;var btns=document.querySelectorAll('.cur-top-btn');for(var i=0;i<btns.length;i++){btns[i].querySelector('.cur-flag').textContent=cur.flag;btns[i].querySelector('.cur-sym').textContent=cur.symbol}}
-function updateReferralDisplay(){var cur=CURRENCIES[activeCurrency]||CURRENCIES.EUR;var f=document.getElementById('refCountryFlag'),n=document.getElementById('refCountryName'),a=document.getElementById('refBonusAmount');if(f) f.textContent=cur.flag;if(n) n.textContent=cur.name;if(a) a.textContent=getRefBonusInCurrency()}
-function getRefBonusInCurrency(){var c=CURRENCIES[activeCurrency]||CURRENCIES.EUR;var val=REF_BONUS_EUR*100*c.rate;return c.symbol+(c.decimals===0?Math.round(val).toLocaleString('en-US'):val.toFixed(c.decimals).replace(/\B(?=(\d{3})+(?!\d))/g,','))}
+/* ═══════ CURRENCY MODAL — SHOWS $2 BONUS PER CURRENCY ═══════ */
+function buildCurrencyModal(){
+  var h='';
+  for(var i=0;i<CURRENCY_LIST.length;i++){
+    var c=CURRENCY_LIST[i];
+    var fiatRate=FIAT_TO_USD[c.code]||1;
+    var bonusDisplay=c.symbol+(REF_BONUS_USD*fiatRate).toFixed(c.decimals);
+    h+='<button class="cur-opt'+(c.code===activeCurrency?' active':'')+'" data-code="'+c.code+'" onclick="selectCurrency(\''+c.code+'\')"><span class="co-flag">'+c.flag+'</span><span class="co-info"><span class="co-code">'+c.code+'</span><span class="co-name">'+c.name+'</span><span class="co-sym">'+c.symbol+' '+bonusDisplay+' / referral</span></span><i class="fas fa-circle-check co-check"></i></button>';
+  }
+  document.getElementById('curModalGrid').innerHTML=h;
+}
+function selectCurrency(code){
+  activeCurrency=code;
+  safeSet('qumovcoin_currency',code);
+  var opts=document.querySelectorAll('.cur-opt');
+  for(var i=0;i<opts.length;i++) opts[i].classList.toggle('active',opts[i].getAttribute('data-code')===code);
+  syncCurButtons();
+  updateReferralDisplay();
+  refreshDashboard();
+  renderLevels();
+  refreshReferral();
+  refreshHistoryPage();
+  var cur=CURRENCIES[code]||CURRENCIES.EUR;
+  showToast('Currency: '+cur.flag+' '+cur.code,'info');
+  setTimeout(function(){closeModal('modalCurrency')},350);
+}
+function syncCurButtons(){
+  var cur=CURRENCIES[activeCurrency]||CURRENCIES.EUR;
+  var btns=document.querySelectorAll('.cur-top-btn');
+  for(var i=0;i<btns.length;i++){
+    btns[i].querySelector('.cur-flag').textContent=cur.flag;
+    btns[i].querySelector('.cur-sym').textContent=cur.symbol;
+  }
+}
+
+/* ═══════ REFERRAL DISPLAY — $2 AUTO-CONVERTED ═══════ */
+function updateReferralDisplay(){
+  var cur=CURRENCIES[activeCurrency]||CURRENCIES.EUR;
+  var f=document.getElementById('refCountryFlag');
+  var n=document.getElementById('refCountryName');
+  var a=document.getElementById('refBonusAmount');
+  if(f) f.textContent=cur.flag;
+  if(n) n.textContent=cur.name;
+  if(a) a.textContent=getRefBonusInCurrency();
+}
+function getRefBonusInCurrency(){
+  var c=CURRENCIES[activeCurrency]||CURRENCIES.EUR;
+  var fiatRate=FIAT_TO_USD[c.code]||1;
+  var v=REF_BONUS_USD*fiatRate;
+  return c.symbol+v.toFixed(c.decimals).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+}
 function formatMoney(n){var c=CURRENCIES[activeCurrency]||CURRENCIES.EUR;var v=n*c.rate;return c.symbol+(c.decimals===0?Math.round(v).toLocaleString('en-US'):v.toFixed(c.decimals).replace(/\B(?=(\d{3})+(?!\d))/g,','))}
+function formatMoneyCur(n,curCode){var c=CURRENCIES[curCode]||CURRENCIES[activeCurrency]||CURRENCIES.EUR;var v=n*c.rate;return c.symbol+(c.decimals===0?Math.round(v).toLocaleString('en-US'):v.toFixed(c.decimals).replace(/\B(?=(\d{3})+(?!\d))/g,','))}
 
 function toggleTheme(){isDarkMode=!isDarkMode;var t=document.getElementById('themeToggle'),s=document.getElementById('themeSubtext'),ic=document.querySelector('#themeToggleItem .set-left i');if(isDarkMode){document.documentElement.classList.remove('light-mode');t.classList.add('on');s.textContent='Currently active';ic.className='fas fa-moon'}else{document.documentElement.classList.add('light-mode');t.classList.remove('on');s.textContent='Currently inactive';ic.className='fas fa-sun'}safeSet('qumovcoin_theme',isDarkMode?'dark':'light')}
-function initTheme(){var sv=safeGet('qumovcoin_theme');if(sv==='light'){isDarkMode=false;document.documentElement.classList.add('light-mode');document.getElementById('themeToggle').classList.remove('on');document.getElementById('themeSubtext').textContent='Currently inactive';document.querySelector('#themeToggleItem .set-left i').className='fas fa-sun'}else{isDarkMode=true;document.documentElement.classList.remove('light-mode');document.getElementById('themeToggle').classList.add('on');document.getElementById('themeSubtext').textContent='Currently active';document.querySelector('#themeToggleItem .set-left i').className='fas fa-moon'}}
+function initTheme(){var sv=safeGet('qumovcoin_theme');if(sv==='light'){isDarkMode=false;document.documentElement.classList.add('light-mode');document.getElementById('themeToggle').classList.remove('on');document.getElementById('themeSubtext').textContent='Currently inactive';document.querySelector('#themeToggleItem .set-left i').className='fas fa-sun'}else{isDarkMode=true;document.documentElement.classList.remove('light-mode');document.getElementById('themeToggle').classList.add('on');document.getElementById('themeSubtext').textContent='Currently active';document.querySelector('#themeToggleItem .set-left i').className='fas fa-moon'}};
 
 function toggleBalanceVisibility(){var card=document.getElementById('balCard');var btn=document.getElementById('balEye');var isHidden=card.classList.toggle('bal-hidden');btn.classList.toggle('off',isHidden);btn.querySelector('i').className=isHidden?'fas fa-eye-slash':'fas fa-eye';safeSet('qumovcoin_bal_hidden',isHidden?'1':'0')}
 
@@ -856,7 +1067,7 @@ function renderLevels(){var h='',cur=CURRENCIES[activeCurrency]||CURRENCIES.EUR;
 
 function openDeposit(lv){for(var i=0;i<LEVELS.length;i++) if(LEVELS[i].level===lv){selectedLevel=LEVELS[i];break}if(!selectedLevel) return;document.getElementById('depPlan').textContent='Level '+selectedLevel.level;document.getElementById('depAmount').textContent=formatMoney(selectedLevel.amount);document.getElementById('depProfit').textContent=formatMoney(selectedLevel.profit);document.getElementById('depCycle').textContent=selectedLevel.cycle+' days';document.getElementById('depRate').textContent=selectedLevel.rate+'%';switchPay('usdt');openModal('modalDeposit')}
 function switchPay(m){payMethod=m;var ts=document.querySelectorAll('#payTabs .pay-tab');for(var i=0;i<ts.length;i++) ts[i].classList.toggle('on',ts[i].getAttribute('data-m')===m)}
-async function processDeposit(){if(!selectedLevel||!currentUser) return;var btn=document.getElementById('depositBtn');btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Creating invoice...';btn.disabled=true;try{var inv=await createInvoice(selectedLevel.amount,payMethod,selectedLevel.level,currentUser.email);btn.innerHTML='<i class="fas fa-shield-halved"></i> Pay with Plisio';btn.disabled=false;await showPlisioPayment(inv)}catch(e){console.error('Deposit error:',e);showToast(e.message,'err');resetDepositBtn()}};
+async function processDeposit(){if(!selectedLevel||!currentUser) return;var btn=document.getElementById('depositBtn');btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Creating invoice...';btn.disabled=true;try{var inv=await createInvoice(selectedLevel.amount,payMethod,selectedLevel.level,currentUser.email);btn.innerHTML='<i class="fas fa-shield-halved"></i> Pay ';btn.disabled=false;await showPlisioPayment(inv)}catch(e){console.error('Deposit error:',e);showToast(e.message,'err');resetDepositBtn()}};
 
 function getWithdrawableProfit(){if(!currentUser) return 0;var ud=getUserData(currentUser.email),t=0;for(var i=0;i<ud.investments.length;i++){var inv=ud.investments[i];if(inv.level<=3&&inv.earned>0) t+=inv.earned}return Math.max(0,t-(ud.withdrawn||0))}
 function updateWithdrawUI(){var m=document.getElementById('wdMethod').value;document.getElementById('wdWallet').placeholder=m==='usdt'?'USDT TRC-20 address (starts with T...)':'BTC address (starts with 1, 3, or bc1...)'}
@@ -877,7 +1088,7 @@ function saveProfile(){var n=document.getElementById('editName').value.trim(),p=
 function savePassword(){var c=document.getElementById('pwCurrent').value,n=document.getElementById('pwNew').value,f=document.getElementById('pwConfirm').value;if(!c){showToast('Enter current password','err');return}if(c!==currentUser.password){showToast('Incorrect password','err');return}if(n.length<6){showToast('Min 6 characters','err');return}if(n!==f){showToast('Passwords don\'t match','err');return}if(!isTempSession){var db=getDatabase();for(var i=0;i<db.users.length;i++) if(db.users[i].email===currentUser.email){db.users[i].password=n;break}saveDatabase(db)}currentUser.password=n;closeModal('modalPassword');showToast('Password changed','ok')}
 
 function copyText(t){if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){showToast('Copied!','ok')}).catch(function(){showToast('Copy failed','err')});else showToast('Copy not supported','err')}
-function shareReferral(){var c=document.getElementById('myRefCode').value;var t='Join Qumovcoin and earn '+getRefBonusInCurrency()+' per referral! Code: '+c;if(navigator.share) navigator.share({title:'Qumovcoin',text:t}).catch(function(){});else copyText(t)}
+function shareReferral(){var c=document.getElementById('myRefCode').value;if(!c){showToast('No referral code','err');return}var link=window.location.origin+window.location.pathname+'?ref='+c;var t='Join Qumovcoin and earn '+getRefBonusInCurrency()+' per referral! Use my code: '+c+'\n'+link;if(navigator.share){navigator.share({title:'Qumovcoin',text:t,url:link}).catch(function(){})}else{copyText(link);showToast('Referral link copied!','ok')}}
 
 function openModal(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';if(id==='modalCurrency'){var opts=document.querySelectorAll('.cur-opt');for(var i=0;i<opts.length;i++) opts[i].classList.toggle('active',opts[i].getAttribute('data-code')===activeCurrency)}if(id==='modalWithdraw'){var av=getWithdrawableProfit();document.getElementById('wdBalance').textContent=formatMoney(Math.max(0,av));document.getElementById('wdWallet').value='';updateWithdrawUI()}}
 function closeModal(id){document.getElementById(id).classList.remove('on');if(!document.querySelector('.modal-bg.on')) document.body.style.overflow='';if(id==='modalPlisio'){stopPlisioPolling();resetDepositBtn()}}
@@ -886,6 +1097,20 @@ for(var mi=0;mi<am.length;mi++){(function(m){m.addEventListener('click',function
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){var o=document.querySelector('.modal-bg.on');if(o) closeModal(o.id)}});
 
 (function(){
+  /* ═══════ AUTO-APPLY REFERRAL CODE FROM URL ═══════ */
+  var urlP=new URLSearchParams(window.location.search);
+  var urlRef=urlP.get('ref');
+  if(urlRef){
+    var rfInput=document.getElementById('regReferral');
+    if(rfInput){rfInput.value=urlRef}
+    var regBox=document.getElementById('registerBox');
+    var loginBox=document.getElementById('loginBox');
+    if(regBox&&loginBox&&regBox.style.display==='none'){
+      showRegister();
+      setTimeout(function(){if(rfInput) rfInput.value=urlRef},100);
+    }
+  }
+
   setInterval(tickCountdowns,1000);
   var s=safeGet('qumovcoin_session');
   if(s&&typeof s==='string'){
