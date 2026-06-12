@@ -585,39 +585,36 @@ var CURRENCY_LIST=[
 ];
 var CURRENCIES={};
 for(var _ci=0;_ci<CURRENCY_LIST.length;_ci++){CURRENCIES[CURRENCY_LIST[_ci].code]=CURRENCY_LIST[_ci]}
-
-/* ═══════ FIAT TO USD RATES FOR REFERRAL CONVERSION ═══════ */
 var FIAT_TO_USD={USD:1.00,EUR:0.92,KYD:0.83,CHF:0.88};
-
 var activeCurrency='EUR',histFilter='all',isDarkMode=true;
 var MIN_WITHDRAW_USD=10,REF_BONUS_USD=2;
 
 var LEVELS=[
-  {level:1,  amount:15385,  profit:2462,   rate:16, cycle:6, star:false, usd:10},
-  {level:2,  amount:30769,  profit:5538,   rate:18, cycle:6, star:false, usd:20},
-  {level:3,  amount:76923,  profit:15385,  rate:20, cycle:6, star:false, usd:50},
-  {level:4,  amount:153846, profit:33846,  rate:22, cycle:5, star:false, usd:100},
-  {level:5,  amount:307692, profit:73846,  rate:24, cycle:5, star:true,  usd:200},
-  {level:6,  amount:615385, profit:160000, rate:26, cycle:5, star:false, usd:400},
-  {level:7,  amount:1076923,profit:301538, rate:28, cycle:4, star:false, usd:700},
-  {level:8,  amount:1692308,profit:507692, rate:30, cycle:4, star:false, usd:1100},
-  {level:9,  amount:2769231,profit:886154, rate:32, cycle:4, star:false, usd:1800},
-  {level:10, amount:4615385,profit:1569231,rate:34, cycle:4, star:true,  usd:3000},
-  {level:11, amount:7692308,profit:2769231,rate:36, cycle:3, star:false, usd:5000},
-  {level:12, amount:12307692,profit:4676923,rate:38, cycle:3, star:false, usd:8000},
-  {level:13, amount:20000000,profit:8000000,rate:40, cycle:3, star:true,  usd:13000},
-  {level:14, amount:30769231,profit:12923077,rate:42, cycle:3, star:false, usd:20000},
-  {level:15, amount:46153846,profit:20307692,rate:44, cycle:3, star:true,  usd:30000},
-  {level:16, amount:69230769,profit:31846154,rate:46, cycle:3, star:false, usd:45000},
-  {level:17, amount:100000000,profit:48000000,rate:48, cycle:3, star:false, usd:65000},
-  {level:18, amount:146153846,profit:73076923,rate:50, cycle:2, star:true,  usd:95000},
-  {level:19, amount:230769231,profit:120000000,rate:52,cycle:2, star:false, usd:150000},
-  {level:20, amount:384615385,profit:211538462,rate:55,cycle:2, star:true,  usd:250000}
+  {level:1,amount:15385,profit:2462,rate:16,cycle:6,star:false,usd:10},
+  {level:2,amount:30769,profit:5538,rate:18,cycle:6,star:false,usd:20},
+  {level:3,amount:76923,profit:15385,rate:20,cycle:6,star:false,usd:50},
+  {level:4,amount:153846,profit:33846,rate:22,cycle:5,star:false,usd:100},
+  {level:5,amount:307692,profit:73846,rate:24,cycle:5,star:true,usd:200},
+  {level:6,amount:615385,profit:160000,rate:26,cycle:5,star:false,usd:400},
+  {level:7,amount:1076923,profit:301538,rate:28,cycle:4,star:false,usd:700},
+  {level:8,amount:1692308,profit:507692,rate:30,cycle:4,star:false,usd:1100},
+  {level:9,amount:2769231,profit:886154,rate:32,cycle:4,star:false,usd:1800},
+  {level:10,amount:4615385,profit:1569231,rate:34,cycle:4,star:true,usd:3000},
+  {level:11,amount:7692308,profit:2769231,rate:36,cycle:3,star:false,usd:5000},
+  {level:12,amount:12307692,profit:4676923,rate:38,cycle:3,star:false,usd:8000},
+  {level:13,amount:20000000,profit:8000000,rate:40,cycle:3,star:true,usd:13000},
+  {level:14,amount:30769231,profit:12923077,rate:42,cycle:3,star:false,usd:20000},
+  {level:15,amount:46153846,profit:20307692,rate:44,cycle:3,star:true,usd:30000},
+  {level:16,amount:69230769,profit:31846154,rate:46,cycle:3,star:false,usd:45000},
+  {level:17,amount:100000000,profit:48000000,rate:48,cycle:3,star:false,usd:65000},
+  {level:18,amount:146153846,profit:73076923,rate:50,cycle:2,star:true,usd:95000},
+  {level:19,amount:230769231,profit:120000000,rate:52,cycle:2,star:false,usd:150000},
+  {level:20,amount:384615385,profit:211538462,rate:55,cycle:2,star:true,usd:250000}
 ];
 
 var DAY_MS=86400000;
-function getCycleMs(lv){for(var i=0;i<LEVELS.length;i++) if(LEVELS[i].level===lv) return LEVELS[i].cycle*DAY_MS; return 4*DAY_MS}
-function getCycleDays(lv){for(var i=0;i<LEVELS.length;i++) if(LEVELS[i].level===lv) return LEVELS[i].cycle; return 4}
+function getCycleMs(lv){for(var i=0;i<LEVELS.length;i++)if(LEVELS[i].level===lv)return LEVELS[i].cycle*DAY_MS;return 4*DAY_MS}
+function getCycleDays(lv){for(var i=0;i<LEVELS.length;i++)if(LEVELS[i].level===lv)return LEVELS[i].cycle;return 4}
 
 var currentUser=null,isTempSession=false,tempData=null,selectedLevel=null,payMethod='usdt';
 var plisioCheckInterval=null,plisioTimerInterval=null,pollCount=0,currentInvoiceData=null;
@@ -625,17 +622,15 @@ var plisioCheckInterval=null,plisioTimerInterval=null,pollCount=0,currentInvoice
 function safeGet(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
 function safeSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function safeRemove(k){try{localStorage.removeItem(k)}catch(e){}}
-function getDatabase(){var d=safeGet('qumovcoin_db');if(!d) d={users:[]};if(!d.users) d.users=[];return d}
+function getDatabase(){var d=safeGet('qumovcoin_db');if(!d)d={users:[]};if(!d.users)d.users=[];return d}
 function saveDatabase(d){safeSet('qumovcoin_db',d)}
-function getUserData(e){if(isTempSession&&currentUser&&e===currentUser.email) return tempData||{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]};var d=safeGet('qumovcoin_data_'+e);if(!d) d={investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]};return d}
-function saveUserData(e,d){if(isTempSession&&currentUser&&e===currentUser.email){tempData=d;return}safeSet('qumovcoin_data_'+e,d)}
-function generateRefCode(){var c='QM',ch='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';for(var i=0;i<6;i++) c+=ch.charAt(Math.floor(Math.random()*ch.length));return c}
+function getUserData(e){if(isTempSession&&currentUser&&e===currentUser.email)return tempData||{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]};var d=safeGet('qumovcoin_data_'+e);if(!d)d={investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]};return d}
+function saveUserData(e,d){if(isTempSession&&currentUser&&e===currentUser.email){tempData=d;return}safeSet('qumovcoin_data_'+e,d);if(API_BASE){fetch(API_BASE+'/api/save-user-data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,userData:d})}).catch(function(err){})}}
+function generateRefCode(){var c='QM',ch='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';for(var i=0;i<6;i++)c+=ch.charAt(Math.floor(Math.random()*ch.length));return c}
 
 function showToast(m,t){var ic={ok:'fa-circle-check',err:'fa-circle-exclamation',info:'fa-circle-info'};var el=document.createElement('div');el.className='toast t-'+(t||'info');el.innerHTML='<i class="fas '+(ic[t]||ic.info)+'"></i><span>'+m+'</span>';document.getElementById('toastArea').appendChild(el);setTimeout(function(){el.classList.add('hiding');setTimeout(function(){el.remove()},300)},3500)}
 
-/* ═══════ LIVE WITHDRAWAL FEED — 200 NAMES ═══════ */
 var fakePeople=[
-  /* ═══ USD — 40 ═══ */
   {name:'James W.',flag:'🇺🇸',cur:'USD'},{name:'Sarah J.',flag:'🇺🇸',cur:'USD'},
   {name:'Michael B.',flag:'🇺🇸',cur:'USD'},{name:'Emily D.',flag:'🇺🇸',cur:'USD'},
   {name:'Robert T.',flag:'🇺🇸',cur:'USD'},{name:'Jessica A.',flag:'🇺🇸',cur:'USD'},
@@ -656,8 +651,6 @@ var fakePeople=[
   {name:'Derek H.',flag:'🇺🇸',cur:'USD'},{name:'Natalie G.',flag:'🇺🇸',cur:'USD'},
   {name:'Trevor S.',flag:'🇺🇸',cur:'USD'},{name:'Vanessa M.',flag:'🇺🇸',cur:'USD'},
   {name:'Caleb P.',flag:'🇺🇸',cur:'USD'},{name:'Tiffany K.',flag:'🇺🇸',cur:'USD'},
-
-  /* ═══ EUR — 40 ═══ */
   {name:'Hans M.',flag:'🇪🇺',cur:'EUR'},{name:'Marie D.',flag:'🇪🇺',cur:'EUR'},
   {name:'Giovanni R.',flag:'🇪🇺',cur:'EUR'},{name:'Ana S.',flag:'🇪🇺',cur:'EUR'},
   {name:'Jan V.',flag:'🇪🇺',cur:'EUR'},{name:'Sofia P.',flag:'🇪🇺',cur:'EUR'},
@@ -679,8 +672,6 @@ var fakePeople=[
   {name:'Dieter U.',flag:'🇪🇺',cur:'EUR'},{name:'Susanne Q.',flag:'🇪🇺',cur:'EUR'},
   {name:'Jorge T.',flag:'🇪🇺',cur:'EUR'},{name:'Annette W.',flag:'🇪🇺',cur:'EUR'},
   {name:'Rolf G.',flag:'🇪🇺',cur:'EUR'},{name:'Katrin S.',flag:'🇪🇺',cur:'EUR'},
-
-  /* ═══ KYD — 40 ═══ */
   {name:'Dwayne S.',flag:'🇰🇾',cur:'KYD'},{name:'Tanya E.',flag:'🇰🇾',cur:'KYD'},
   {name:'Jamal W.',flag:'🇰🇾',cur:'KYD'},{name:'Keisha B.',flag:'🇰🇾',cur:'KYD'},
   {name:'Ricardo D.',flag:'🇰🇾',cur:'KYD'},{name:'Shania H.',flag:'🇰🇾',cur:'KYD'},
@@ -702,8 +693,6 @@ var fakePeople=[
   {name:'Rupert J.',flag:'🇰🇾',cur:'KYD'},{name:'Tameka B.',flag:'🇰🇾',cur:'KYD'},
   {name:'Alton K.',flag:'🇰🇾',cur:'KYD'},{name:'Shaquanda N.',flag:'🇰🇾',cur:'KYD'},
   {name:'Fitzgerald L.',flag:'🇰🇾',cur:'KYD'},{name:'Yolanda G.',flag:'🇰🇾',cur:'KYD'},
-
-  /* ═══ CHF — 40 ═══ */
   {name:'Lukas M.',flag:'🇨🇭',cur:'CHF'},{name:'Elena W.',flag:'🇨🇭',cur:'CHF'},
   {name:'Marco R.',flag:'🇨🇭',cur:'CHF'},{name:'Sophie M.',flag:'🇨🇭',cur:'CHF'},
   {name:'Thomas F.',flag:'🇨🇭',cur:'CHF'},{name:'Laura B.',flag:'🇨🇭',cur:'CHF'},
@@ -725,55 +714,39 @@ var fakePeople=[
   {name:'Damian W.',flag:'🇨🇭',cur:'CHF'},{name:'Liselotte K.',flag:'🇨🇭',cur:'CHF'},
   {name:'Roman T.',flag:'🇨🇭',cur:'CHF'},{name:'Gertrude Z.',flag:'🇨🇭',cur:'CHF'},
   {name:'Valentin E.',flag:'🇨🇭',cur:'CHF'},{name:'Rosa L.',flag:'🇨🇭',cur:'CHF'},
-
-  /* ═══ NIGERIA 🇳🇬 — 5 ═══ */
   {name:'Chinedu O.',flag:'🇳🇬',cur:'USD'},{name:'Adebayo A.',flag:'🇳🇬',cur:'USD'},
   {name:'Olumide K.',flag:'🇳🇬',cur:'USD'},{name:'Ngozi E.',flag:'🇳🇬',cur:'USD'},
   {name:'Chukwuma N.',flag:'🇳🇬',cur:'USD'},
-
-  /* ═══ SOUTH AFRICA 🇿🇦 — 5 ═══ */
   {name:'Thabo M.',flag:'🇿🇦',cur:'USD'},{name:'Naledi Z.',flag:'🇿🇦',cur:'USD'},
   {name:'Sipho N.',flag:'🇿🇦',cur:'USD'},{name:'Zanele K.',flag:'🇿🇦',cur:'USD'},
   {name:'Bongani D.',flag:'🇿🇦',cur:'USD'},
-
-  /* ═══ KENYA 🇰🇪 — 5 ═══ */
   {name:'Kamau W.',flag:'🇰🇪',cur:'USD'},{name:'Wanjiku M.',flag:'🇰🇪',cur:'USD'},
   {name:'Otieno O.',flag:'🇰🇪',cur:'USD'},{name:'Akinyi K.',flag:'🇰🇪',cur:'USD'},
   {name:'Mwangi N.',flag:'🇰🇪',cur:'USD'},
-
-  /* ═══ GHANA 🇬🇭 — 5 ═══ */
   {name:'Kwame A.',flag:'🇬🇭',cur:'USD'},{name:'Abena M.',flag:'🇬🇭',cur:'USD'},
   {name:'Kofi O.',flag:'🇬🇭',cur:'USD'},{name:'Ama S.',flag:'🇬🇭',cur:'USD'},
   {name:'Yaw K.',flag:'🇬🇭',cur:'USD'},
-
-  /* ═══ INDIA 🇮🇳 — 5 ═══ */
   {name:'Rajesh K.',flag:'🇮🇳',cur:'USD'},{name:'Priya S.',flag:'🇮🇳',cur:'USD'},
   {name:'Arjun M.',flag:'🇮🇳',cur:'USD'},{name:'Ananya R.',flag:'🇮🇳',cur:'USD'},
   {name:'Vikram P.',flag:'🇮🇳',cur:'USD'},
-
-  /* ═══ PHILIPPINES 🇵🇭 — 5 ═══ */
   {name:'Juan D.',flag:'🇵🇭',cur:'USD'},{name:'Maria C.',flag:'🇵🇭',cur:'USD'},
   {name:'Jose R.',flag:'🇵🇭',cur:'USD'},{name:'Rosario S.',flag:'🇵🇭',cur:'USD'},
   {name:'Carlos M.',flag:'🇵🇭',cur:'USD'},
-
-  /* ═══ INDONESIA 🇮🇩 — 5 ═══ */
   {name:'Budi S.',flag:'🇮🇩',cur:'USD'},{name:'Siti N.',flag:'🇮🇩',cur:'USD'},
   {name:'Agus W.',flag:'🇮🇩',cur:'USD'},{name:'Dewi L.',flag:'🇮🇩',cur:'USD'},
   {name:'Rizky P.',flag:'🇮🇩',cur:'USD'},
-
-  /* ═══ VIETNAM 🇻🇳 — 5 ═══ */
   {name:'Nguyen T.',flag:'🇻🇳',cur:'USD'},{name:'Tran V.',flag:'🇻🇳',cur:'USD'},
   {name:'Le H.',flag:'🇻🇳',cur:'USD'},{name:'Pham M.',flag:'🇻🇳',cur:'USD'},
   {name:'Hoang D.',flag:'🇻🇳',cur:'USD'}
 ];
 var notifInterval=null;
 function startNotifBar(){document.getElementById('notifBar').classList.add('on');addNotifItem();notifInterval=setInterval(addNotifItem,4000)}
-function addNotifItem(){var tr=document.getElementById('notifTrack');var p=fakePeople[Math.floor(Math.random()*fakePeople.length)];var lv=Math.floor(Math.random()*20)+1;var a=LEVELS[lv-1].profit;var m=Math.floor(Math.random()*30)+1;var amtStr=formatMoneyCur(a,p.cur);var it=document.createElement('span');it.className='notif-item';it.innerHTML='<span>'+p.flag+'</span><span class="ni-name">'+p.name+'</span><span style="color:#7d7a8a">withdrew</span><span class="ni-amount">'+amtStr+'</span><span class="ni-level">L'+lv+'</span><span class="ni-time">'+m+'m ago</span>';tr.appendChild(it);while(tr.children.length>15) tr.removeChild(tr.firstChild)}
+function addNotifItem(){var tr=document.getElementById('notifTrack');var p=fakePeople[Math.floor(Math.random()*fakePeople.length)];var lv=Math.floor(Math.random()*20)+1;var a=LEVELS[lv-1].profit;var m=Math.floor(Math.random()*30)+1;var amtStr=formatMoneyCur(a,p.cur);var it=document.createElement('span');it.className='notif-item';it.innerHTML='<span>'+p.flag+'</span><span class="ni-name">'+p.name+'</span><span style="color:#7d7a8a">withdrew</span><span class="ni-amount">'+amtStr+'</span><span class="ni-level">L'+lv+'</span><span class="ni-time">'+m+'m ago</span>';tr.appendChild(it);while(tr.children.length>15)tr.removeChild(tr.firstChild)}
 
-async function apiFetch(endpoint,options){var url=API_BASE+endpoint;try{var res=await fetch(url,options);var json=await res.json();if(json.status==='error') throw new Error(json.message||'Request failed');return json}catch(err){if(err.message==='Failed to fetch'||err.name==='TypeError') throw new Error('Cannot reach server.');throw err}}
-async function createInvoice(amountNGN,cryptoType,level,email){var json=await apiFetch('/api/create-invoice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,level:level,amountNGN:amountNGN,cryptoType:cryptoType})});if(json.status==='success'&&json.data) return json.data;throw new Error(json.message||'Could not create invoice')}
+async function apiFetch(endpoint,options){var url=API_BASE+endpoint;try{var res=await fetch(url,options);var json=await res.json();if(json.status==='error')throw new Error(json.message||'Request failed');return json}catch(err){if(err.message==='Failed to fetch'||err.name==='TypeError')throw new Error('Cannot reach server.');throw err}}
+async function createInvoice(amountNGN,cryptoType,level,email){var json=await apiFetch('/api/create-invoice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,level:level,amountNGN:amountNGN,cryptoType:cryptoType})});if(json.status==='success'&&json.data)return json.data;throw new Error(json.message||'Could not create invoice')}
 async function checkInvoiceStatus(txnId){var json=await apiFetch('/api/invoice-status?txn_id='+encodeURIComponent(txnId));if(json.status==='success'&&json.data){var raw=json.data.status;return raw==='completed'||raw==='paid'?'completed':raw==='expired'?'expired':raw}return 'error'}
-async function submitWithdrawal(amountNGN,cryptoType,walletAddress,email,userName){var json=await apiFetch('/api/withdraw',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,amountNGN:amountNGN,cryptoType:cryptoType,walletAddress:walletAddress,userName:userName})});if(json.status==='success'&&json.data) return json.data;throw new Error(json.message||'Withdrawal failed')}
+async function submitWithdrawal(amountNGN,cryptoType,walletAddress,email,userName){var json=await apiFetch('/api/withdraw',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,amountNGN:amountNGN,cryptoType:cryptoType,walletAddress:walletAddress,userName:userName})});if(json.status==='success'&&json.data)return json.data;throw new Error(json.message||'Withdrawal failed')}
 
 async function showPlisioPayment(inv){
   currentInvoiceData=inv;pollCount=0;
@@ -783,44 +756,26 @@ async function showPlisioPayment(inv){
   var hasData=cryptoAmount>0&&walletAddr.length>10;
   var investAmt=selectedLevel?formatMoney(selectedLevel.amount):'';
   var investLabel=selectedLevel?'Level '+selectedLevel.level+' Investment':'Investment';
-
   document.getElementById('plisioPaymentBody').innerHTML='<div class="plisio-loading"><div class="spinner"></div><p style="color:var(--mut);font-size:13px">Preparing payment...</p></div>';
   openModal('modalPlisio');
   await new Promise(function(r){setTimeout(r,500)});
-
   if(hasData){
     var coinLabel=(inv.currency||'USDT').split('_')[0];
     var decimals=(coinLabel==='BTC'&&cryptoAmount<0.001)?8:6;
     var amountDisplay=coinLabel+' '+cryptoAmount.toFixed(decimals);
     var qrUrl='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(walletAddr);
-    document.getElementById('plisioPaymentBody').innerHTML=
-      '<div class="pay-invest-amount"><span>'+investLabel+'</span>'+investAmt+'</div>'+
-      '<div class="plisio-status waiting" id="plisioStatusBox"><i class="fas fa-clock"></i><span>Waiting for Payment</span></div>'+
-      '<div class="plisio-amount">'+amountDisplay+'</div>'+
-      '<div class="plisio-qr-container"><img src="'+qrUrl+'" alt="QR Code" onerror="this.parentElement.style.display=\'none\'"></div>'+
-      '<div class="plisio-address-box"><input type="text" value="'+walletAddr+'" readonly id="plisioAddrInput"><button class="copy-btn" onclick="copyText(document.getElementById(\'plisioAddrInput\').value)"><i class="fas fa-copy"></i></button></div>'+
-      '<div class="plisio-timer">Expires in: <span id="plisioExpiryTimer">--:--</span></div>'+
-      '<div class="plisio-or-row"><span>or</span></div>'+
-      '<a href="'+invoiceUrl+'" target="_blank" rel="noopener" class="btn btn-out btn-full btn-sm" style="text-align:center;font-size:12px"><i class="fas fa-external-link-alt"></i> Open Plisio Checkout</a>'+
-      '<div class="crypto-warn"><i class="fas fa-triangle-exclamation"></i><span>Send exactly <strong>'+amountDisplay+'</strong> to the address above.</span></div>'+
-      '<div class="poll-status" id="pollStatusRow"><span class="poll-dot"></span> Checking payment status...</div>';
+    document.getElementById('plisioPaymentBody').innerHTML='<div class="pay-invest-amount"><span>'+investLabel+'</span>'+investAmt+'</div><div class="plisio-status waiting" id="plisioStatusBox"><i class="fas fa-clock"></i><span>Waiting for Payment</span></div><div class="plisio-amount">'+amountDisplay+'</div><div class="plisio-qr-container"><img src="'+qrUrl+'" alt="QR Code" onerror="this.parentElement.style.display=\'none\'"></div><div class="plisio-address-box"><input type="text" value="'+walletAddr+'" readonly id="plisioAddrInput"><button class="copy-btn" onclick="copyText(document.getElementById(\'plisioAddrInput\').value)"><i class="fas fa-copy"></i></button></div><div class="plisio-timer">Expires in: <span id="plisioExpiryTimer">--:--</span></div><div class="plisio-or-row"><span>or</span></div><a href="'+invoiceUrl+'" target="_blank" rel="noopener" class="btn btn-out btn-full btn-sm" style="text-align:center;font-size:12px"><i class="fas fa-external-link-alt"></i> Open Plisio Checkout</a><div class="crypto-warn"><i class="fas fa-triangle-exclamation"></i><span>Send exactly <strong>'+amountDisplay+'</strong> to the address above.</span></div><div class="poll-status" id="pollStatusRow"><span class="poll-dot"></span> Checking payment status...</div>';
     startTimerAndPoll();
   }else{
-    document.getElementById('plisioPaymentBody').innerHTML=
-      '<div class="pay-invest-amount"><span>'+investLabel+'</span>'+investAmt+'</div>'+
-      '<div class="plisio-status waiting" id="plisioStatusBox"><i class="fas fa-clock"></i><span>Waiting for Payment</span></div>'+
-      '<p style="text-align:center;color:var(--mut);font-size:13px;margin:16px 0 8px">You will be redirected to our secure payment partner to complete the transaction.</p>'+
-      '<a href="'+invoiceUrl+'" target="_blank" rel="noopener" id="plisioRedirectBtn" class="btn btn-green btn-full btn-big" style="text-decoration:none;margin-bottom:12px"><i class="fas fa-shield-halved"></i> Proceed to Payment</a>'+
-      '<p style="text-align:center;font-size:11px;color:var(--mut);margin-bottom:16px">Opens in a new tab. This window will auto-detect your payment.</p>'+
-      '<div class="poll-status" id="pollStatusRow"><span class="poll-dot"></span> Waiting for payment...</div>';
+    document.getElementById('plisioPaymentBody').innerHTML='<div class="pay-invest-amount"><span>'+investLabel+'</span>'+investAmt+'</div><div class="plisio-status waiting" id="plisioStatusBox"><i class="fas fa-clock"></i><span>Waiting for Payment</span></div><p style="text-align:center;color:var(--mut);font-size:13px;margin:16px 0 8px">You will be redirected to our secure payment partner to complete the transaction.</p><a href="'+invoiceUrl+'" target="_blank" rel="noopener" id="plisioRedirectBtn" class="btn btn-green btn-full btn-big" style="text-decoration:none;margin-bottom:12px"><i class="fas fa-shield-halved"></i> Proceed to Payment</a><p style="text-align:center;font-size:11px;color:var(--mut);margin-bottom:16px">Opens in a new tab. This window will auto-detect your payment.</p><div class="poll-status" id="pollStatusRow"><span class="poll-dot"></span> Waiting for payment...</div>';
     startTimerAndPoll();
   }
 }
 
 function startTimerAndPoll(){
   var expireTime=Date.now()+(currentInvoiceData?currentInvoiceData.expire_min||30:30)*60*1000;
-  if(plisioTimerInterval) clearInterval(plisioTimerInterval);
-  if(plisioCheckInterval) clearInterval(plisioCheckInterval);
+  if(plisioTimerInterval)clearInterval(plisioTimerInterval);
+  if(plisioCheckInterval)clearInterval(plisioCheckInterval);
   var timerEl=document.getElementById('plisioExpiryTimer');
   if(timerEl){
     function tick(){if(!document.getElementById('plisioExpiryTimer')){clearInterval(plisioTimerInterval);return}var rem=Math.max(0,expireTime-Date.now());if(rem<=0){timerEl.textContent='Expired';timerEl.style.color='var(--red)';stopPlisioPolling();var box=document.getElementById('plisioStatusBox');if(box){box.className='plisio-status expired';box.innerHTML='<i class="fas fa-times-circle"></i><span>Invoice Expired</span>'}return}var s=Math.floor(rem/1000);timerEl.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
@@ -834,121 +789,67 @@ function startTimerAndPoll(){
       var box=document.getElementById('plisioStatusBox');
       var pollRow=document.getElementById('pollStatusRow');
       if(!box){stopPlisioPolling();return}
-      if(pollRow) pollRow.innerHTML='<span class="poll-dot"></span> Checking... ('+pollCount+')';
-      if(st==='completed'){
-        stopPlisioPolling();
-        box.className='plisio-status confirmed';
-        box.innerHTML='<i class="fas fa-check-circle"></i><span>Payment Confirmed!</span>';
-        if(pollRow) pollRow.innerHTML='<i class="fas fa-check" style="color:var(--green)"></i> Verified';
-        showToast('Payment confirmed!','ok');
-        setTimeout(finalizePlisioDeposit,1500);
-      }else if(st==='expired'){
-        stopPlisioPolling();
-        box.className='plisio-status expired';
-        box.innerHTML='<i class="fas fa-times-circle"></i><span>Invoice Expired</span>';
-        if(pollRow) pollRow.innerHTML='';
-        showToast('Invoice expired.','err');
-        resetDepositBtn();
-      }
-    }catch(e){
-      console.error('Poll error:',e);
-      var pr=document.getElementById('pollStatusRow');
-      if(pr) pr.innerHTML='<span class="poll-dot"></span> Checking...';
-    }
+      if(pollRow)pollRow.innerHTML='<span class="poll-dot"></span> Checking... ('+pollCount+')';
+      if(st==='completed'){stopPlisioPolling();box.className='plisio-status confirmed';box.innerHTML='<i class="fas fa-check-circle"></i><span>Payment Confirmed!</span>';if(pollRow)pollRow.innerHTML='<i class="fas fa-check" style="color:var(--green)"></i> Verified';showToast('Payment confirmed!','ok');setTimeout(finalizePlisioDeposit,1500)}
+      else if(st==='expired'){stopPlisioPolling();box.className='plisio-status expired';box.innerHTML='<i class="fas fa-times-circle"></i><span>Invoice Expired</span>';if(pollRow)pollRow.innerHTML='';showToast('Invoice expired.','err');resetDepositBtn()}
+    }catch(e){var pr=document.getElementById('pollStatusRow');if(pr)pr.innerHTML='<span class="poll-dot"></span> Checking...'}
   },10000);
 }
 
-async function retryLoadPayment(){
-  if(!currentInvoiceData) return;
-  try{
-    var r=await apiFetch('/api/invoice-status?txn_id='+encodeURIComponent(currentInvoiceData.txn_id));
-    if(r.status==='success'&&r.data){
-      var d=r.data;
-      var ca=parseFloat(d.amount_crypto||d.amount||d.dest_amount||d.pay_amount||0);
-      var wa=String(d.wallet_hash||d.address||d.wallet||'');
-      if(ca>0&&wa.length>10){
-        var coinLabel=(d.currency||'USDT').split('_')[0];
-        var dec=(coinLabel==='BTC'&&ca<0.001)?8:6;
-        var amountDisplay=coinLabel+' '+ca.toFixed(dec);
-        var qrUrl='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(wa);
-        var investAmt=selectedLevel?formatMoney(selectedLevel.amount):'';
-        var investLabel=selectedLevel?'Level '+selectedLevel.level+' Investment':'Investment';
-        var invoiceUrl=String(d.invoice_url||currentInvoiceData.invoice_url||'#');
-        document.getElementById('plisioPaymentBody').innerHTML=
-          '<div class="pay-invest-amount"><span>'+investLabel+'</span>'+investAmt+'</div>'+
-          '<div class="plisio-status waiting" id="plisioStatusBox"><i class="fas fa-clock"></i><span>Waiting for Payment</span></div>'+
-          '<div class="plisio-amount" id="plisioCryptoAmount">'+amountDisplay+'</div>'+
-          '<div class="plisio-qr-container"><img src="'+qrUrl+'" alt="QR Code" onerror="this.parentElement.style.display=\'none\'"></div>'+
-          '<div class="plisio-address-box"><input type="text" value="'+wa+'" readonly id="plisioAddrInput"><button class="copy-btn" onclick="copyText(document.getElementById(\'plisioAddrInput\').value)"><i class="fas fa-copy"></i></button></div>'+
-          '<div class="plisio-timer">Expires in: <span id="plisioExpiryTimer">--:--</span></div>'+
-          '<div class="plisio-or-row"><span>or</span></div>'+
-          '<a href="'+invoiceUrl+'" target="_blank" rel="noopener" class="btn btn-out btn-full btn-sm" style="text-align:center;font-size:12px"><i class="fas fa-external-link-alt"></i> Open Plisio Checkout</a>'+
-          '<div class="crypto-warn"><i class="fas fa-triangle-exclamation"></i><span>Send exactly <strong>'+amountDisplay+'</strong> to the address above.</span></div>'+
-          '<div class="poll-status" id="pollStatusRow"><span class="poll-dot"></span> Checking payment status...</div>';
-        startPaymentTimer();
-        return;
-      }
-    }
-  }catch(e){console.log('[RETRY] Could not reload:',e.message)}
-  var pr=document.getElementById('pollStatusRow');
-  if(pr) pr.innerHTML='<span class="poll-dot"></span> Still loading...';
-  setTimeout(function(){retryLoadPayment()},4000);
-}
-
-function startPaymentPolling(coinLabel,decimals,investAmt,investLabel){
-  if(plisioCheckInterval) clearInterval(plisioCheckInterval);
-  plisioCheckInterval=setInterval(async function(){
-    if(!currentInvoiceData){stopPlisioPolling();return}
-    pollCount++;
-    try{
-      var st=await checkInvoiceStatus(currentInvoiceData.txn_id);
-      var box=document.getElementById('plisioStatusBox');
-      var pollRow=document.getElementById('pollStatusRow');
-      if(!box){stopPlisioPolling();return}
-      if(pollRow) pollRow.innerHTML='<span class="poll-dot"></span> Checking... (attempt '+pollCount+')';
-      if(st==='completed'){
-        stopPlisioPolling();
-        box.className='plisio-status confirmed';
-        box.innerHTML='<i class="fas fa-check-circle"></i><span>Payment Confirmed!</span>';
-        if(pollRow) pollRow.innerHTML='<i class="fas fa-check" style="color:var(--green)"></i> Verified';
-        showToast('Payment confirmed!','ok');
-        setTimeout(finalizePlisioDeposit,1500);
-      }else if(st==='expired'){
-        stopPlisioPolling();
-        box.className='plisio-status expired';
-        box.innerHTML='<i class="fas fa-times-circle"></i><span>Invoice Expired</span>';
-        if(pollRow) pollRow.innerHTML='';
-        showToast('Invoice expired.','err');
-        resetDepositBtn();
-      }
-    }catch(e){
-      console.error('Poll error:',e);
-      var pr=document.getElementById('pollStatusRow');
-      if(pr&&pollCount>3) pr.innerHTML='<i class="fas fa-exclamation-triangle" style="color:var(--gold)"></i> Retrying...';
-    }
-  },8000);
-}
 function stopPlisioPolling(){if(plisioCheckInterval){clearInterval(plisioCheckInterval);plisioCheckInterval=null}if(plisioTimerInterval){clearInterval(plisioTimerInterval);plisioTimerInterval=null}currentInvoiceData=null}
-function resetDepositBtn(){var btn=document.getElementById('depositBtn');if(btn){btn.innerHTML='<i class="fas fa-shield-halved"></i> Pay ';btn.disabled=false}}
-function finalizePlisioDeposit(){if(!selectedLevel||!currentUser) return;var ud=getUserData(currentUser.email),now=Date.now();ud.investments.push({id:now,level:selectedLevel.level,amount:selectedLevel.amount,profit:selectedLevel.profit,rate:selectedLevel.rate,startTime:now,nextPayout:now+getCycleMs(selectedLevel.level),cycles:0,earned:0,status:'active',paymentMethod:'plisio_'+payMethod});saveUserData(currentUser.email,ud);closeModal('modalPlisio');closeModal('modalDeposit');showToast('Level '+selectedLevel.level+' investment active!','ok');resetDepositBtn();refreshDashboard();setTimeout(function(){navigateTo('pagePortfolio')},300)}
+function resetDepositBtn(){var btn=document.getElementById('depositBtn');if(btn){btn.innerHTML='<i class="fas fa-shield-halved"></i> Pay with Plisio';btn.disabled=false}}
+function finalizePlisioDeposit(){if(!selectedLevel||!currentUser)return;var ud=getUserData(currentUser.email),now=Date.now();ud.investments.push({id:now,level:selectedLevel.level,amount:selectedLevel.amount,profit:selectedLevel.profit,rate:selectedLevel.rate,startTime:now,nextPayout:now+getCycleMs(selectedLevel.level),cycles:0,earned:0,status:'active',paymentMethod:'plisio_'+payMethod});saveUserData(currentUser.email,ud);closeModal('modalPlisio');closeModal('modalDeposit');showToast('Level '+selectedLevel.level+' investment active!','ok');resetDepositBtn();refreshDashboard();setTimeout(function(){navigateTo('pagePortfolio')},300)}
 
 function showLogin(){document.getElementById('loginBox').style.display='block';document.getElementById('registerBox').style.display='none'}
 function showRegister(){document.getElementById('loginBox').style.display='none';document.getElementById('registerBox').style.display='block'}
 function toggleEye(id,btn){var inp=document.getElementById(id),ic=btn.querySelector('i');inp.type=inp.type==='password'?'text':'password';ic.className=inp.type==='password'?'fas fa-eye':'fas fa-eye-slash'}
 
+/* ═══════ LOGIN — SERVER FIRST, LOCAL FALLBACK + MIGRATE ═══════ */
 function handleLogin(){
   var em=document.getElementById('loginEmail').value.trim().toLowerCase();
   var pw=document.getElementById('loginPass').value;
   if(!em){showToast('Please enter your email address','err');document.getElementById('loginEmail').focus();return}
   if(!pw){showToast('Please enter your password','err');document.getElementById('loginPass').focus();return}
   if(em.indexOf('@')<1||em.indexOf('.')<2){showToast('Please enter a valid email address','err');return}
-  var db=getDatabase(),u=null;
-  for(var i=0;i<db.users.length;i++) if(db.users[i].email===em){u=db.users[i];break}
-  if(!u){showToast('Account not found. Please register first.','err');setTimeout(function(){showRegister();document.getElementById('regEmail').value=em},1200);return}
-  if(u.password!==pw){showToast('Incorrect password. Try again.','err');document.getElementById('loginPass').value='';document.getElementById('loginPass').focus();return}
-  isTempSession=false;currentUser=u;safeSet('qumovcoin_session',em);enterApp();showToast('Welcome back, '+u.name.split(' ')[0]+'!','ok');
+  var btn=document.querySelector('#loginBox .btn-gold');
+  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Signing in...';
+  btn.disabled=true;
+  fetch(API_BASE+'/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,password:pw})}).then(function(r){return r.json()}).then(function(json){
+    btn.innerHTML='<i class="fas fa-arrow-right-to-bracket"></i> Sign In';btn.disabled=false;
+    if(json.status==='success'){
+      var d=json.data;currentUser={name:d.name,email:d.email,phone:d.phone,password:pw,refCode:d.refCode,joined:d.joined};isTempSession=false;safeSet('qumovcoin_session',em);
+      if(d.userData)safeSet('qumovcoin_data_'+em,d.userData);
+      var db=getDatabase();var localIdx=-1;for(var i=0;i<db.users.length;i++)if(db.users[i].email===em){localIdx=i;break}
+      if(localIdx>=0){db.users[localIdx]=currentUser}else{db.users.push(currentUser)}saveDatabase(db);enterApp();showToast('Welcome back, '+d.name.split(' ')[0]+'!','ok');
+    }else{tryLocalLoginAndMigrate(em,pw)}
+  }).catch(function(err){btn.innerHTML='<i class="fas fa-arrow-right-to-bracket"></i> Sign In';btn.disabled=false;tryLocalLoginAndMigrate(em,pw)});
 }
 
+function tryLocalLoginAndMigrate(em,pw){
+  var db=getDatabase(),u=null;for(var i=0;i<db.users.length;i++)if(db.users[i].email===em){u=db.users[i];break}
+  if(!u){showToast('Account not found. Please register first.','err');setTimeout(function(){showRegister();document.getElementById('regEmail').value=em},1200);return}
+  if(u.password!==pw){showToast('Incorrect password. Try again.','err');document.getElementById('loginPass').value='';document.getElementById('loginPass').focus();return}
+  isTempSession=false;currentUser=u;safeSet('qumovcoin_session',em);
+  var ud=getUserData(em);
+  fetch(API_BASE+'/api/migrate-user',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:u.name,email:u.email,phone:u.phone,password:u.password,refCode:u.refCode,joined:u.joined,userData:ud})}).then(function(r){return r.json()}).then(function(json){
+    if(json.status==='success'&&json.data.migrated){console.log('[MIGRATE] User migrated');if(json.data.user&&json.data.user.refCode!==u.refCode){u.refCode=json.data.user.refCode;currentUser.refCode=u.refCode;var db2=getDatabase();for(var j=0;j<db2.users.length;j++)if(db2.users[j].email===em){db2.users[j].refCode=u.refCode;break}saveDatabase(db2);document.getElementById('myRefCode').value=u.refCode}}
+  }).catch(function(e){});
+  enterApp();showToast('Welcome back, '+u.name.split(' ')[0]+'!','ok');
+}
+
+/* ═══════ VALIDATE REFERRAL — SERVER FIRST, LOCAL FALLBACK ═══════ */
+function validateReferral(){
+  var c=document.getElementById('regReferral').value.trim().toUpperCase();
+  var m=document.getElementById('referralMsg');
+  if(!c){m.style.display='none';return}
+  m.style.display='block';m.style.color='var(--gold)';m.textContent='Checking...';
+  fetch(API_BASE+'/api/validate-referral',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({refCode:c})}).then(function(r){return r.json()}).then(function(json){
+    if(json.valid===true){m.style.color='var(--green)';m.textContent='Valid referral code'}
+    else{var db=getDatabase(),f=false;for(var i=0;i<db.users.length;i++)if(db.users[i].refCode===c){f=true;break}m.style.color=f?'var(--green)':'var(--red)';m.textContent=f?'Valid referral code':'Invalid referral code'}
+  }).catch(function(err){var db=getDatabase(),f=false;for(var i=0;i<db.users.length;i++)if(db.users[i].refCode===c){f=true;break}m.style.color=f?'var(--green)':'var(--red)';m.textContent=f?'Valid referral code':'Invalid referral code'});
+}
+
+/* ═══════ REGISTER — MIGRATE REFERRER IF NEEDED, THEN REGISTER ═══════ */
 function handleRegister(){
   var nm=document.getElementById('regName').value.trim();
   var em=document.getElementById('regEmail').value.trim().toLowerCase();
@@ -959,171 +860,126 @@ function handleRegister(){
   if(!em||em.indexOf('@')<1||em.indexOf('.')<2){showToast('Please enter a valid email address','err');document.getElementById('regEmail').focus();return}
   if(!ph||ph.length<10){showToast('Please enter a valid phone number','err');document.getElementById('regPhone').focus();return}
   if(pw.length<6){showToast('Password must be at least 6 characters','err');document.getElementById('regPass').focus();return}
-  var db=getDatabase();
-  for(var i=0;i<db.users.length;i++) if(db.users[i].email===em){showToast('This email is already registered. Please log in.','err');showLogin();document.getElementById('loginEmail').value=em;return}
-  var referrerEmail=null;
-  if(rf){for(var j=0;j<db.users.length;j++) if(db.users[j].refCode===rf){referrerEmail=db.users[j].email;break}if(!referrerEmail){showToast('Invalid referral code. Leave blank if none.','err');return}}
-  var rc=generateRefCode();
-  var newUser={name:nm,email:em,phone:ph,password:pw,refCode:rc,joined:Date.now()};
-  db.users.push(newUser);saveDatabase(db);
-  saveUserData(em,{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]});
-  if(referrerEmail){
-    var rd=getUserData(referrerEmail);
-    /* ═══════ $2 REFERRAL BONUS — CONVERTED USING FIAT RATE ═══════ */
-    var refCurCode=activeCurrency||'EUR';
-    var fiatRate=FIAT_TO_USD[refCurCode]||1;
-    var _rb=REF_BONUS_USD*fiatRate;
-    rd.refBonus+=_rb;
-    rd.referrals.push({name:nm,date:Date.now(),amount:_rb});
-    saveUserData(referrerEmail,rd);
-  }
-  isTempSession=false;currentUser=newUser;safeSet('qumovcoin_session',em);
-  showToast('Account created! Welcome, '+nm.split(' ')[0]+'!','ok');
-  enterApp();
+  var btn=document.querySelector('#registerBox .btn-gold');
+  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Creating account...';btn.disabled=true;
+  if(rf){migrateReferrerThenRegister(nm,em,ph,pw,rf,btn)}else{doServerRegister(nm,em,ph,pw,null,btn)}
 }
 
-function validateReferral(){var c=document.getElementById('regReferral').value.trim().toUpperCase(),m=document.getElementById('referralMsg');if(!c){m.style.display='none';return}var db=getDatabase(),f=false;for(var i=0;i<db.users.length;i++) if(db.users[i].refCode===c){f=true;break}m.style.display='block';m.style.color=f?'var(--green)':'var(--red)';m.textContent=f?'Valid referral code':'Invalid referral code'}
+function migrateReferrerThenRegister(nm,em,ph,pw,rf,btn){
+  fetch(API_BASE+'/api/validate-referral',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({refCode:rf})}).then(function(r){return r.json()}).then(function(json){
+    if(json.valid===true){doServerRegister(nm,em,ph,pw,rf,btn)}
+    else{
+      var db=getDatabase(),referrer=null;for(var i=0;i<db.users.length;i++)if(db.users[i].refCode===rf){referrer=db.users[i];break}
+      if(referrer){
+        var refUserData=getUserData(referrer.email);
+        fetch(API_BASE+'/api/migrate-referrer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:referrer.name,email:referrer.email,phone:referrer.phone,password:referrer.password,refCode:referrer.refCode,joined:referrer.joined,userData:refUserData})}).then(function(r2){return r2.json()}).then(function(json2){
+          if(json2.status==='success'){doServerRegister(nm,em,ph,pw,json2.data.refCode||rf,btn)}else{btn.innerHTML='<i class="fas fa-user-plus"></i> Create Account';btn.disabled=false;showToast('Could not verify referral code. Try again.','err')}
+        }).catch(function(err){registerLocally(nm,em,ph,pw,rf);btn.innerHTML='<i class="fas fa-user-plus"></i> Create Account';btn.disabled=false});
+      }else{btn.innerHTML='<i class="fas fa-user-plus"></i> Create Account';btn.disabled=false;showToast('Invalid referral code. Leave blank if none.','err')}
+    }
+  }).catch(function(err){
+    var db=getDatabase(),referrer=null;for(var i=0;i<db.users.length;i++)if(db.users[i].refCode===rf){referrer=db.users[i];break}
+    if(referrer){registerLocally(nm,em,ph,pw,rf)}else{showToast('Invalid referral code. Leave blank if none.','err')}
+    btn.innerHTML='<i class="fas fa-user-plus"></i> Create Account';btn.disabled=false;
+  });
+}
+
+function doServerRegister(nm,em,ph,pw,rf,btn){
+  fetch(API_BASE+'/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:nm,email:em,phone:ph,password:pw,refCode:rf||null})}).then(function(r){return r.json()}).then(function(json){
+    btn.innerHTML='<i class="fas fa-user-plus"></i> Create Account';btn.disabled=false;
+    if(json.status==='success'){var d=json.data;var newUser={name:d.name,email:d.email,phone:d.phone,password:pw,refCode:d.refCode,joined:d.joined};var db=getDatabase();db.users.push(newUser);saveDatabase(db);saveUserData(em,{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]});isTempSession=false;currentUser=newUser;safeSet('qumovcoin_session',em);showToast('Account created! Welcome, '+nm.split(' ')[0]+'!','ok');enterApp()}
+    else{showToast(json.message||'Registration failed','err')}
+  }).catch(function(err){btn.innerHTML='<i class="fas fa-user-plus"></i> Create Account';btn.disabled=false;registerLocally(nm,em,ph,pw,rf)});
+}
+
+function registerLocally(nm,em,ph,pw,rf){
+  var db=getDatabase();for(var i=0;i<db.users.length;i++)if(db.users[i].email===em){showToast('This email is already registered. Please log in.','err');showLogin();document.getElementById('loginEmail').value=em;return}
+  var referrerEmail=null;if(rf){for(var j=0;j<db.users.length;j++)if(db.users[j].refCode===rf){referrerEmail=db.users[j].email;break}if(!referrerEmail){showToast('Invalid referral code. Leave blank if none.','err');return}}
+  var rc=generateRefCode();var newUser={name:nm,email:em,phone:ph,password:pw,refCode:rc,joined:Date.now()};db.users.push(newUser);saveDatabase(db);saveUserData(em,{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]});
+  if(referrerEmail){var rd=getUserData(referrerEmail);var refCurCode=activeCurrency||'EUR';var fiatRate=FIAT_TO_USD[refCurCode]||1;var _rb=REF_BONUS_USD*fiatRate;rd.refBonus+=_rb;rd.referrals.push({name:nm,date:Date.now(),amount:_rb});saveUserData(referrerEmail,rd)}
+  isTempSession=false;currentUser=newUser;safeSet('qumovcoin_session',em);showToast('Account created! Welcome, '+nm.split(' ')[0]+'!','ok');enterApp();
+  fetch(API_BASE+'/api/migrate-user',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:nm,email:em,phone:ph,password:pw,refCode:rc,joined:Date.now(),userData:{investments:[],refBonus:0,referrals:[],withdrawn:0,withdrawalHistory:[]}})}).catch(function(e){});
+}
+
 function handleLogout(){if(isTempSession){tempData=null;isTempSession=false}else safeRemove('qumovcoin_session');if(notifInterval){clearInterval(notifInterval);notifInterval=null}stopPlisioPolling();document.getElementById('notifBar').classList.remove('on');currentUser=null;document.getElementById('mainApp').classList.remove('on');document.getElementById('bottomNav').classList.remove('on');document.getElementById('authScreen').classList.remove('off');document.getElementById('loginEmail').value='';document.getElementById('loginPass').value='';closeModal('modalLogout');showToast('Logged out','info')}
 
 function enterApp(){
-  document.getElementById('authScreen').classList.add('off');
-  document.getElementById('mainApp').classList.add('on');
-  document.getElementById('bottomNav').classList.add('on');
-  var ini=currentUser.name.charAt(0).toUpperCase();
-  document.getElementById('avatarHome').textContent=ini;
-  document.getElementById('avatarSettings').textContent=ini;
-  document.getElementById('settingsName').textContent=currentUser.name;
-  document.getElementById('settingsEmail').textContent=currentUser.email;
-  document.getElementById('myRefCode').value=currentUser.refCode;
-  var sc=safeGet('qumovcoin_currency');
-  activeCurrency=(sc&&CURRENCIES[sc])?sc:'EUR';
-  initTheme();buildCurrencyModal();syncCurButtons();updateReferralDisplay();renderLevels();refreshDashboard();navigateTo('pageHome');
-  startNotifBar();
-  if(safeGet('qumovcoin_bal_hidden')==='1'){var card=document.getElementById('balCard');var btn=document.getElementById('balEye');if(card) card.classList.add('bal-hidden');if(btn){btn.classList.add('off');btn.querySelector('i').className='fas fa-eye-slash'}}
+  document.getElementById('authScreen').classList.add('off');document.getElementById('mainApp').classList.add('on');document.getElementById('bottomNav').classList.add('on');
+  var ini=currentUser.name.charAt(0).toUpperCase();document.getElementById('avatarHome').textContent=ini;document.getElementById('avatarSettings').textContent=ini;document.getElementById('settingsName').textContent=currentUser.name;document.getElementById('settingsEmail').textContent=currentUser.email;document.getElementById('myRefCode').value=currentUser.refCode;
+  var sc=safeGet('qumovcoin_currency');activeCurrency=(sc&&CURRENCIES[sc])?sc:'EUR';
+  initTheme();buildCurrencyModal();syncCurButtons();updateReferralDisplay();renderLevels();refreshDashboard();navigateTo('pageHome');startNotifBar();
+  if(safeGet('qumovcoin_bal_hidden')==='1'){var card=document.getElementById('balCard');var btn=document.getElementById('balEye');if(card)card.classList.add('bal-hidden');if(btn){btn.classList.add('off');btn.querySelector('i').className='fas fa-eye-slash'}}
 }
 
-function navigateTo(pid){var ps=document.querySelectorAll('.page');for(var i=0;i<ps.length;i++) ps[i].classList.remove('on');document.getElementById(pid).classList.add('on');var bs=document.querySelectorAll('.nav-btn');for(var j=0;j<bs.length;j++) bs[j].classList.toggle('on',bs[j].getAttribute('data-page')===pid);window.scrollTo({top:0,behavior:'smooth'});if(pid==='pagePortfolio'||pid==='pageHome') refreshDashboard();if(pid==='pageRefer') refreshReferral();if(pid==='pageHistory') refreshHistoryPage()}
+function navigateTo(pid){var ps=document.querySelectorAll('.page');for(var i=0;i<ps.length;i++)ps[i].classList.remove('on');document.getElementById(pid).classList.add('on');var bs=document.querySelectorAll('.nav-btn');for(var j=0;j<bs.length;j++)bs[j].classList.toggle('on',bs[j].getAttribute('data-page')===pid);window.scrollTo({top:0,behavior:'smooth'});if(pid==='pagePortfolio'||pid==='pageHome')refreshDashboard();if(pid==='pageRefer')refreshReferral();if(pid==='pageHistory')refreshHistoryPage()}
 
-/* ═══════ CURRENCY MODAL — SHOWS $2 BONUS PER CURRENCY ═══════ */
-function buildCurrencyModal(){
-  var h='';
-  for(var i=0;i<CURRENCY_LIST.length;i++){
-    var c=CURRENCY_LIST[i];
-    var fiatRate=FIAT_TO_USD[c.code]||1;
-    var bonusDisplay=c.symbol+(REF_BONUS_USD*fiatRate).toFixed(c.decimals);
-    h+='<button class="cur-opt'+(c.code===activeCurrency?' active':'')+'" data-code="'+c.code+'" onclick="selectCurrency(\''+c.code+'\')"><span class="co-flag">'+c.flag+'</span><span class="co-info"><span class="co-code">'+c.code+'</span><span class="co-name">'+c.name+'</span><span class="co-sym">'+c.symbol+' '+bonusDisplay+' / referral</span></span><i class="fas fa-circle-check co-check"></i></button>';
-  }
-  document.getElementById('curModalGrid').innerHTML=h;
-}
-function selectCurrency(code){
-  activeCurrency=code;
-  safeSet('qumovcoin_currency',code);
-  var opts=document.querySelectorAll('.cur-opt');
-  for(var i=0;i<opts.length;i++) opts[i].classList.toggle('active',opts[i].getAttribute('data-code')===code);
-  syncCurButtons();
-  updateReferralDisplay();
-  refreshDashboard();
-  renderLevels();
-  refreshReferral();
-  refreshHistoryPage();
-  var cur=CURRENCIES[code]||CURRENCIES.EUR;
-  showToast('Currency: '+cur.flag+' '+cur.code,'info');
-  setTimeout(function(){closeModal('modalCurrency')},350);
-}
-function syncCurButtons(){
-  var cur=CURRENCIES[activeCurrency]||CURRENCIES.EUR;
-  var btns=document.querySelectorAll('.cur-top-btn');
-  for(var i=0;i<btns.length;i++){
-    btns[i].querySelector('.cur-flag').textContent=cur.flag;
-    btns[i].querySelector('.cur-sym').textContent=cur.symbol;
-  }
-}
+function buildCurrencyModal(){var h='';for(var i=0;i<CURRENCY_LIST.length;i++){var c=CURRENCY_LIST[i];var fiatRate=FIAT_TO_USD[c.code]||1;var bonusDisplay=c.symbol+(REF_BONUS_USD*fiatRate).toFixed(c.decimals);h+='<button class="cur-opt'+(c.code===activeCurrency?' active':'')+'" data-code="'+c.code+'" onclick="selectCurrency(\''+c.code+'\')"><span class="co-flag">'+c.flag+'</span><span class="co-info"><span class="co-code">'+c.code+'</span><span class="co-name">'+c.name+'</span><span class="co-sym">'+c.symbol+' '+bonusDisplay+' / referral</span></span><i class="fas fa-circle-check co-check"></i></button>'}document.getElementById('curModalGrid').innerHTML=h}
+function selectCurrency(code){activeCurrency=code;safeSet('qumovcoin_currency',code);var opts=document.querySelectorAll('.cur-opt');for(var i=0;i<opts.length;i++)opts[i].classList.toggle('active',opts[i].getAttribute('data-code')===code);syncCurButtons();updateReferralDisplay();refreshDashboard();renderLevels();refreshReferral();refreshHistoryPage();var cur=CURRENCIES[code]||CURRENCIES.EUR;showToast('Currency: '+cur.flag+' '+cur.code,'info');setTimeout(function(){closeModal('modalCurrency')},350)}
+function syncCurButtons(){var cur=CURRENCIES[activeCurrency]||CURRENCIES.EUR;var btns=document.querySelectorAll('.cur-top-btn');for(var i=0;i<btns.length;i++){btns[i].querySelector('.cur-flag').textContent=cur.flag;btns[i].querySelector('.cur-sym').textContent=cur.symbol}}
 
-/* ═══════ REFERRAL DISPLAY — $2 AUTO-CONVERTED ═══════ */
-function updateReferralDisplay(){
-  var cur=CURRENCIES[activeCurrency]||CURRENCIES.EUR;
-  var f=document.getElementById('refCountryFlag');
-  var n=document.getElementById('refCountryName');
-  var a=document.getElementById('refBonusAmount');
-  if(f) f.textContent=cur.flag;
-  if(n) n.textContent=cur.name;
-  if(a) a.textContent=getRefBonusInCurrency();
-}
-function getRefBonusInCurrency(){
-  var c=CURRENCIES[activeCurrency]||CURRENCIES.EUR;
-  var fiatRate=FIAT_TO_USD[c.code]||1;
-  var v=REF_BONUS_USD*fiatRate;
-  return c.symbol+v.toFixed(c.decimals).replace(/\B(?=(\d{3})+(?!\d))/g,',');
-}
+function updateReferralDisplay(){var cur=CURRENCIES[activeCurrency]||CURRENCIES.EUR;var f=document.getElementById('refCountryFlag');var n=document.getElementById('refCountryName');var a=document.getElementById('refBonusAmount');if(f)f.textContent=cur.flag;if(n)n.textContent=cur.name;if(a)a.textContent=getRefBonusInCurrency()}
+function getRefBonusInCurrency(){var c=CURRENCIES[activeCurrency]||CURRENCIES.EUR;var fiatRate=FIAT_TO_USD[c.code]||1;var v=REF_BONUS_USD*fiatRate;return c.symbol+v.toFixed(c.decimals).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 function formatMoney(n){var c=CURRENCIES[activeCurrency]||CURRENCIES.EUR;var v=n*c.rate;return c.symbol+(c.decimals===0?Math.round(v).toLocaleString('en-US'):v.toFixed(c.decimals).replace(/\B(?=(\d{3})+(?!\d))/g,','))}
 function formatMoneyCur(n,curCode){var c=CURRENCIES[curCode]||CURRENCIES[activeCurrency]||CURRENCIES.EUR;var v=n*c.rate;return c.symbol+(c.decimals===0?Math.round(v).toLocaleString('en-US'):v.toFixed(c.decimals).replace(/\B(?=(\d{3})+(?!\d))/g,','))}
 
 function toggleTheme(){isDarkMode=!isDarkMode;var t=document.getElementById('themeToggle'),s=document.getElementById('themeSubtext'),ic=document.querySelector('#themeToggleItem .set-left i');if(isDarkMode){document.documentElement.classList.remove('light-mode');t.classList.add('on');s.textContent='Currently active';ic.className='fas fa-moon'}else{document.documentElement.classList.add('light-mode');t.classList.remove('on');s.textContent='Currently inactive';ic.className='fas fa-sun'}safeSet('qumovcoin_theme',isDarkMode?'dark':'light')}
-function initTheme(){var sv=safeGet('qumovcoin_theme');if(sv==='light'){isDarkMode=false;document.documentElement.classList.add('light-mode');document.getElementById('themeToggle').classList.remove('on');document.getElementById('themeSubtext').textContent='Currently inactive';document.querySelector('#themeToggleItem .set-left i').className='fas fa-sun'}else{isDarkMode=true;document.documentElement.classList.remove('light-mode');document.getElementById('themeToggle').classList.add('on');document.getElementById('themeSubtext').textContent='Currently active';document.querySelector('#themeToggleItem .set-left i').className='fas fa-moon'}};
+function initTheme(){var sv=safeGet('qumovcoin_theme');if(sv==='light'){isDarkMode=false;document.documentElement.classList.add('light-mode');document.getElementById('themeToggle').classList.remove('on');document.getElementById('themeSubtext').textContent='Currently inactive';document.querySelector('#themeToggleItem .set-left i').className='fas fa-sun'}else{isDarkMode=true;document.documentElement.classList.remove('light-mode');document.getElementById('themeToggle').classList.add('on');document.getElementById('themeSubtext').textContent='Currently active';document.querySelector('#themeToggleItem .set-left i').className='fas fa-moon'}}
 
 function toggleBalanceVisibility(){var card=document.getElementById('balCard');var btn=document.getElementById('balEye');var isHidden=card.classList.toggle('bal-hidden');btn.classList.toggle('off',isHidden);btn.querySelector('i').className=isHidden?'fas fa-eye-slash':'fas fa-eye';safeSet('qumovcoin_bal_hidden',isHidden?'1':'0')}
 
 function renderLevels(){var h='',cur=CURRENCIES[activeCurrency]||CURRENCIES.EUR;for(var i=0;i<LEVELS.length;i++){var l=LEVELS[i];h+='<div class="lv-card '+(l.star?'star':'')+'" onclick="openDeposit('+l.level+')"><div class="lv-bg">'+String(l.level).padStart(2,'0')+'</div><span class="lv-tag">Level '+l.level+'</span><div class="lv-inv-label">Investment Amount</div><div class="lv-inv-amt"><span class="cur-sym">'+cur.symbol+'</span>'+formatMoney(l.amount)+'</div><div class="lv-inv-usd">≈ $'+l.usd.toLocaleString()+'</div><div class="lv-details"><div class="lv-det"><div class="det-label">Profit / Cycle</div><div class="det-val">'+formatMoney(l.profit)+'</div></div><div class="lv-det"><div class="det-label">Rate</div><div class="det-val gd">'+l.rate+'%</div></div><div class="lv-det"><div class="det-label">Monthly Est.</div><div class="det-val">'+formatMoney(Math.round(l.profit*(30/l.cycle)))+'</div></div></div><div class="lv-cycle"><i class="fas fa-clock"></i> Payout every '+l.cycle+' days</div><button class="btn btn-gold btn-sm"><i class="fas fa-shield-halved"></i> Invest </button></div>'}document.getElementById('levelsGrid').innerHTML=h}
 
-function openDeposit(lv){for(var i=0;i<LEVELS.length;i++) if(LEVELS[i].level===lv){selectedLevel=LEVELS[i];break}if(!selectedLevel) return;document.getElementById('depPlan').textContent='Level '+selectedLevel.level;document.getElementById('depAmount').textContent=formatMoney(selectedLevel.amount);document.getElementById('depProfit').textContent=formatMoney(selectedLevel.profit);document.getElementById('depCycle').textContent=selectedLevel.cycle+' days';document.getElementById('depRate').textContent=selectedLevel.rate+'%';switchPay('usdt');openModal('modalDeposit')}
-function switchPay(m){payMethod=m;var ts=document.querySelectorAll('#payTabs .pay-tab');for(var i=0;i<ts.length;i++) ts[i].classList.toggle('on',ts[i].getAttribute('data-m')===m)}
-async function processDeposit(){if(!selectedLevel||!currentUser) return;var btn=document.getElementById('depositBtn');btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Creating invoice...';btn.disabled=true;try{var inv=await createInvoice(selectedLevel.amount,payMethod,selectedLevel.level,currentUser.email);btn.innerHTML='<i class="fas fa-shield-halved"></i> Pay ';btn.disabled=false;await showPlisioPayment(inv)}catch(e){console.error('Deposit error:',e);showToast(e.message,'err');resetDepositBtn()}};
+function openDeposit(lv){for(var i=0;i<LEVELS.length;i++)if(LEVELS[i].level===lv){selectedLevel=LEVELS[i];break}if(!selectedLevel)return;document.getElementById('depPlan').textContent='Level '+selectedLevel.level;document.getElementById('depAmount').textContent=formatMoney(selectedLevel.amount);document.getElementById('depProfit').textContent=formatMoney(selectedLevel.profit);document.getElementById('depCycle').textContent=selectedLevel.cycle+' days';document.getElementById('depRate').textContent=selectedLevel.rate+'%';switchPay('usdt');openModal('modalDeposit')}
+function switchPay(m){payMethod=m;var ts=document.querySelectorAll('#payTabs .pay-tab');for(var i=0;i<ts.length;i++)ts[i].classList.toggle('on',ts[i].getAttribute('data-m')===m)}
+async function processDeposit(){if(!selectedLevel||!currentUser)return;var btn=document.getElementById('depositBtn');btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Creating invoice...';btn.disabled=true;try{var inv=await createInvoice(selectedLevel.amount,payMethod,selectedLevel.level,currentUser.email);btn.innerHTML='<i class="fas fa-shield-halved"></i> Pay with Plisio';btn.disabled=false;await showPlisioPayment(inv)}catch(e){showToast(e.message,'err');resetDepositBtn()}}
 
-function getWithdrawableProfit(){if(!currentUser) return 0;var ud=getUserData(currentUser.email),t=0;for(var i=0;i<ud.investments.length;i++){var inv=ud.investments[i];if(inv.level<=3&&inv.earned>0) t+=inv.earned}return Math.max(0,t-(ud.withdrawn||0))}
+function getWithdrawableProfit(){if(!currentUser)return 0;var ud=getUserData(currentUser.email),t=0;for(var i=0;i<ud.investments.length;i++){var inv=ud.investments[i];if(inv.level<=3&&inv.earned>0)t+=inv.earned}return Math.max(0,t-(ud.withdrawn||0))}
 function updateWithdrawUI(){var m=document.getElementById('wdMethod').value;document.getElementById('wdWallet').placeholder=m==='usdt'?'USDT TRC-20 address (starts with T...)':'BTC address (starts with 1, 3, or bc1...)'}
-async function processWithdraw(){var av=getWithdrawableProfit();if(av<=0){showToast('No withdrawable profit','err');return}if(av<MIN_WITHDRAW_USD/0.00065){showToast('Minimum withdrawal is $5','err');return}var m=document.getElementById('wdMethod').value,a=document.getElementById('wdWallet').value.trim();if(!a||a.length<10){showToast('Enter valid wallet address','err');return}var btn=document.getElementById('withdrawBtn');btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...';btn.disabled=true;try{var result=await submitWithdrawal(av,m,a,currentUser.email,currentUser.name);var ud=getUserData(currentUser.email);if(!ud.withdrawalHistory) ud.withdrawalHistory=[];ud.withdrawalHistory.unshift({id:Date.now(),type:'withdraw',amount:av,method:m,details:{address:a},status:'processing',date:Date.now(),withdrawalId:result.withdrawal_id,plisioTxnId:result.plisio_txn_id});ud.withdrawn=(ud.withdrawn||0)+av;saveUserData(currentUser.email,ud);closeModal('modalWithdraw');showToast('Withdrawal of '+formatMoney(av)+' submitted!','ok');btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to Wallet';btn.disabled=false;refreshDashboard();refreshHistoryPage()}catch(e){console.error('Withdrawal error:',e);showToast(e.message,'err');btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to Wallet';btn.disabled=false}}
+async function processWithdraw(){var av=getWithdrawableProfit();if(av<=0){showToast('No withdrawable profit','err');return}if(av<MIN_WITHDRAW_USD/0.00065){showToast('Minimum withdrawal is $5','err');return}var m=document.getElementById('wdMethod').value,a=document.getElementById('wdWallet').value.trim();if(!a||a.length<10){showToast('Enter valid wallet address','err');return}var btn=document.getElementById('withdrawBtn');btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...';btn.disabled=true;try{var result=await submitWithdrawal(av,m,a,currentUser.email,currentUser.name);var ud=getUserData(currentUser.email);if(!ud.withdrawalHistory)ud.withdrawalHistory=[];ud.withdrawalHistory.unshift({id:Date.now(),type:'withdraw',amount:av,method:m,details:{address:a},status:'processing',date:Date.now(),withdrawalId:result.withdrawal_id,plisioTxnId:result.plisio_txn_id});ud.withdrawn=(ud.withdrawn||0)+av;saveUserData(currentUser.email,ud);closeModal('modalWithdraw');showToast('Withdrawal of '+formatMoney(av)+' submitted!','ok');btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to Wallet';btn.disabled=false;refreshDashboard();refreshHistoryPage()}catch(e){showToast(e.message,'err');btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to Wallet';btn.disabled=false}}
 
-function setHistFilter(f){histFilter=f;var fs=document.querySelectorAll('.hist-filter');for(var i=0;i<fs.length;i++) fs[i].classList.toggle('on',fs[i].getAttribute('data-filter')===f);refreshHistoryPage()}
-function refreshHistoryPage(){if(!currentUser) return;var ud=getUserData(currentUser.email);var av=getWithdrawableProfit();document.getElementById('histWdBalance').textContent=formatMoney(Math.max(0,av));var wdBtn=document.getElementById('histWdBtn');wdBtn.style.display=av>0?'inline-flex':'none';var txns=[];for(var i=0;i<ud.investments.length;i++){var inv=ud.investments[i];var pm=inv.paymentMethod||'plisio_usdt';var pmLabel=pm==='plisio_usdt'?'USDT (Plisio)':pm==='plisio_btc'?'BTC (Plisio)':'Crypto';txns.push({type:'deposit',date:inv.startTime,amount:inv.amount,label:'Level '+inv.level+' Investment',sub:pmLabel,status:'completed',level:inv.level})}if(ud.withdrawalHistory){for(var j=0;j<ud.withdrawalHistory.length;j++){var w=ud.withdrawalHistory[j];w.type='withdraw';var wL={usdt:'USDT (TRC-20)',btc:'Bitcoin'};w.label='Withdrawal';w.sub=wL[w.method]||w.method;txns.push(w)}}for(var k=0;k<ud.investments.length;k++){var inv2=ud.investments[k];if(inv2.cycles>0){for(var c=1;c<=inv2.cycles;c++){txns.push({type:'payout',date:inv2.startTime+(getCycleMs(inv2.level)*c),amount:inv2.profit,label:'Level '+inv2.level+' Payout #'+c,sub:'Cycle '+c,status:'completed',level:inv2.level})}}}txns.sort(function(a,b){return b.date-a.date});var filtered=histFilter==='all'?txns:txns.filter(function(t){return t.type===histFilter});var el=document.getElementById('txnList');if(!filtered.length){el.innerHTML='<div class="empty-state" style="padding:40px 16px"><i class="fas fa-clock-rotate-left"></i><p>No transactions yet.</p></div>';return}var icons={deposit:'fa-arrow-down',withdraw:'fa-arrow-up',payout:'fa-rotate'};var h='';for(var m=0;m<filtered.length;m++){var t=filtered[m],isPos=t.type==='deposit'||t.type==='payout',amtClass=isPos?'positive':'negative',amtSign=isPos?'+':'-';var iconClass=t.type==='deposit'?'deposit':t.type==='withdraw'?'withdraw-'+(t.status||'pending'):'payout';var ds=new Date(t.date).toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'});var ts=new Date(t.date).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});h+='<div class="txn-item"><div class="txn-icon '+iconClass+'"><i class="fas '+(icons[t.type]||'fa-circle')+'"></i></div><div class="txn-info"><h4>'+t.label+'</h4><p>'+t.sub+' &middot; '+ds+' '+ts+'</p><span class="txn-badge '+t.type+'">'+t.type+'</span></div><div class="txn-right"><div class="txn-amount '+amtClass+'">'+amtSign+formatMoney(t.amount)+'</div><div class="txn-status '+(t.status||'pending')+'">'+(t.status==='processing'?'Processing':t.status==='completed'?'Completed':t.status==='failed'?'Failed':'Pending')+'</div></div></div>'}el.innerHTML=h}
+function setHistFilter(f){histFilter=f;var fs=document.querySelectorAll('.hist-filter');for(var i=0;i<fs.length;i++)fs[i].classList.toggle('on',fs[i].getAttribute('data-filter')===f);refreshHistoryPage()}
+function refreshHistoryPage(){if(!currentUser)return;var ud=getUserData(currentUser.email);var av=getWithdrawableProfit();document.getElementById('histWdBalance').textContent=formatMoney(Math.max(0,av));var wdBtn=document.getElementById('histWdBtn');wdBtn.style.display=av>0?'inline-flex':'none';var txns=[];for(var i=0;i<ud.investments.length;i++){var inv=ud.investments[i];var pm=inv.paymentMethod||'plisio_usdt';var pmLabel=pm==='plisio_usdt'?'USDT (Plisio)':pm==='plisio_btc'?'BTC (Plisio)':'Crypto';txns.push({type:'deposit',date:inv.startTime,amount:inv.amount,label:'Level '+inv.level+' Investment',sub:pmLabel,status:'completed',level:inv.level})}if(ud.withdrawalHistory){for(var j=0;j<ud.withdrawalHistory.length;j++){var w=ud.withdrawalHistory[j];w.type='withdraw';var wL={usdt:'USDT (TRC-20)',btc:'Bitcoin'};w.label='Withdrawal';w.sub=wL[w.method]||w.method;txns.push(w)}}for(var k=0;k<ud.investments.length;k++){var inv2=ud.investments[k];if(inv2.cycles>0){for(var c=1;c<=inv2.cycles;c++){txns.push({type:'payout',date:inv2.startTime+(getCycleMs(inv2.level)*c),amount:inv2.profit,label:'Level '+inv2.level+' Payout #'+c,sub:'Cycle '+c,status:'completed',level:inv2.level})}}}txns.sort(function(a,b){return b.date-a.date});var filtered=histFilter==='all'?txns:txns.filter(function(t){return t.type===histFilter});var el=document.getElementById('txnList');if(!filtered.length){el.innerHTML='<div class="empty-state" style="padding:40px 16px"><i class="fas fa-clock-rotate-left"></i><p>No transactions yet.</p></div>';return}var icons={deposit:'fa-arrow-down',withdraw:'fa-arrow-up',payout:'fa-rotate'};var h='';for(var m=0;m<filtered.length;m++){var t=filtered[m],isPos=t.type==='deposit'||t.type==='payout',amtClass=isPos?'positive':'negative',amtSign=isPos?'+':'-';var iconClass=t.type==='deposit'?'deposit':t.type==='withdraw'?'withdraw-'+(t.status||'pending'):'payout';var ds=new Date(t.date).toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'});var ts=new Date(t.date).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});h+='<div class="txn-item"><div class="txn-icon '+iconClass+'"><i class="fas '+(icons[t.type]||'fa-circle')+'"></i></div><div class="txn-info"><h4>'+t.label+'</h4><p>'+t.sub+' &middot; '+ds+' '+ts+'</p><span class="txn-badge '+t.type+'">'+t.type+'</span></div><div class="txn-right"><div class="txn-amount '+amtClass+'">'+amtSign+formatMoney(t.amount)+'</div><div class="txn-status '+(t.status||'pending')+'">'+(t.status==='processing'?'Processing':t.status==='completed'?'Completed':t.status==='failed'?'Failed':'Pending')+'</div></div></div>'}el.innerHTML=h}
 
-function refreshDashboard(){if(!currentUser) return;var ud=getUserData(currentUser.email);if(!ud) return;var tI=0,tE=0;for(var i=0;i<ud.investments.length;i++){tI+=ud.investments[i].amount;tE+=ud.investments[i].earned}document.getElementById('homeBalance').textContent=formatMoney(tI+tE+ud.refBonus);document.getElementById('homeInvested').textContent=formatMoney(tI);document.getElementById('homeEarned').textContent=formatMoney(tE);document.getElementById('homeRefBonus').textContent=formatMoney(ud.refBonus);document.getElementById('portInvested').textContent=formatMoney(tI);document.getElementById('portEarned').textContent=formatMoney(tE);var ac=0;for(var j=0;j<ud.investments.length;j++) if(ud.investments[j].status==='active') ac++;document.getElementById('portDot').style.display=ac>0?'block':'none';renderInvestmentList('homeInvestList',ud.investments.filter(function(x){return x.status==='active'}).slice(0,3));renderInvestmentList('portInvestList',ud.investments)}
+function refreshDashboard(){if(!currentUser)return;var ud=getUserData(currentUser.email);if(!ud)return;var tI=0,tE=0;for(var i=0;i<ud.investments.length;i++){tI+=ud.investments[i].amount;tE+=ud.investments[i].earned}document.getElementById('homeBalance').textContent=formatMoney(tI+tE+ud.refBonus);document.getElementById('homeInvested').textContent=formatMoney(tI);document.getElementById('homeEarned').textContent=formatMoney(tE);document.getElementById('homeRefBonus').textContent=formatMoney(ud.refBonus);document.getElementById('portInvested').textContent=formatMoney(tI);document.getElementById('portEarned').textContent=formatMoney(tE);var ac=0;for(var j=0;j<ud.investments.length;j++)if(ud.investments[j].status==='active')ac++;document.getElementById('portDot').style.display=ac>0?'block':'none';renderInvestmentList('homeInvestList',ud.investments.filter(function(x){return x.status==='active'}).slice(0,3));renderInvestmentList('portInvestList',ud.investments)}
 function renderInvestmentList(cid,list){var el=document.getElementById(cid);if(!list.length){el.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>'+(cid==='homeInvestList'?'No active investments yet.':'You haven\'t invested yet.')+'</p></div>';return}var h='<div class="inv-list">';for(var i=0;i<list.length;i++){var inv=list[i],rem=Math.max(0,inv.nextPayout-Date.now());var d=Math.floor(rem/86400000),hh=Math.floor((rem%86400000)/3600000),mm=Math.floor((rem%3600000)/60000),ss=Math.floor((rem%60000)/1000);var timer=d+'d '+String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')+':'+String(ss).padStart(2,'0');var cd=getCycleDays(inv.level);h+='<div class="inv-item"><div class="inv-left"><div class="inv-ico">L'+inv.level+'</div><div class="inv-info"><h4>Level '+inv.level+' Plan</h4><p>'+formatMoney(inv.amount)+' &middot; '+inv.cycles+' cycles &middot; '+cd+'d</p></div></div><div class="inv-right"><div class="inv-profit">+'+formatMoney(inv.earned)+'</div><div class="inv-timer" data-end="'+inv.nextPayout+'">'+timer+'</div><span class="status-active"><span class="status-dot"></span> Active</span></div></div></div>'}h+='</div>';el.innerHTML=h}
 
-function tickCountdowns(){if(!currentUser) return;var ud=getUserData(currentUser.email);if(!ud) return;var ch=false;for(var i=0;i<ud.investments.length;i++){var inv=ud.investments[i];if(inv.status!=='active') continue;if(inv.nextPayout-Date.now()<=0){inv.cycles++;inv.earned+=inv.profit;inv.nextPayout=Date.now()+getCycleMs(inv.level);ch=true;showToast('Level '+inv.level+' payout: +'+formatMoney(inv.profit),'ok')}}if(ch){saveUserData(currentUser.email,ud);refreshDashboard()}var ts=document.querySelectorAll('.inv-timer[data-end]');for(var j=0;j<ts.length;j++){var r=Math.max(0,parseInt(ts[j].getAttribute('data-end'))-Date.now());var dd=Math.floor(r/86400000),hh=Math.floor((r%86400000)/3600000),mm=Math.floor((r%3600000)/60000),ss=Math.floor((r%60000)/1000);ts[j].textContent=r>0?dd+'d '+String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')+':'+String(ss).padStart(2,'0'):'Claiming...'}}
+function tickCountdowns(){if(!currentUser)return;var ud=getUserData(currentUser.email);if(!ud)return;var ch=false;for(var i=0;i<ud.investments.length;i++){var inv=ud.investments[i];if(inv.status!=='active')continue;if(inv.nextPayout-Date.now()<=0){inv.cycles++;inv.earned+=inv.profit;inv.nextPayout=Date.now()+getCycleMs(inv.level);ch=true;showToast('Level '+inv.level+' payout: +'+formatMoney(inv.profit),'ok')}}if(ch){saveUserData(currentUser.email,ud);refreshDashboard()}var ts=document.querySelectorAll('.inv-timer[data-end]');for(var j=0;j<ts.length;j++){var r=Math.max(0,parseInt(ts[j].getAttribute('data-end'))-Date.now());var dd=Math.floor(r/86400000),hh=Math.floor((r%86400000)/3600000),mm=Math.floor((r%3600000)/60000),ss=Math.floor((r%60000)/1000);ts[j].textContent=r>0?dd+'d '+String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')+':'+String(ss).padStart(2,'0'):'Claiming...'}}
 
-function refreshReferral(){if(!currentUser) return;var ud=getUserData(currentUser.email);if(!ud) return;document.getElementById('refCount').textContent=ud.referrals.length;document.getElementById('refEarnings').textContent=formatMoney(ud.refBonus);var el=document.getElementById('refHistoryList');if(!ud.referrals.length){el.innerHTML='<div class="empty-state" style="padding:32px 16px"><i class="fas fa-users"></i><p>No referrals yet.</p></div>';return}var h='';for(var i=ud.referrals.length-1;i>=0;i--){var r=ud.referrals[i];h+='<div class="ref-hist-item"><div><div class="rh-name">'+r.name+'</div><div class="rh-date">'+new Date(r.date).toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'})+'</div></div><div class="rh-amt">+'+formatMoney(r.amount)+'</div></div>'}el.innerHTML=h}
+function refreshReferral(){if(!currentUser)return;var ud=getUserData(currentUser.email);if(!ud)return;document.getElementById('refCount').textContent=ud.referrals.length;document.getElementById('refEarnings').textContent=formatMoney(ud.refBonus);var el=document.getElementById('refHistoryList');if(!ud.referrals.length){el.innerHTML='<div class="empty-state" style="padding:32px 16px"><i class="fas fa-users"></i><p>No referrals yet.</p></div>';return}var h='';for(var i=ud.referrals.length-1;i>=0;i--){var r=ud.referrals[i];h+='<div class="ref-hist-item"><div><div class="rh-name">'+r.name+'</div><div class="rh-date">'+new Date(r.date).toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'})+'</div></div><div class="rh-amt">+'+formatMoney(r.amount)+'</div></div>'}el.innerHTML=h}
 
-function prefillProfile(){if(!currentUser) return;document.getElementById('editName').value=currentUser.name;document.getElementById('editPhone').value=currentUser.phone}
-function saveProfile(){var n=document.getElementById('editName').value.trim(),p=document.getElementById('editPhone').value.trim();if(!n||n.length<2){showToast('Name required','err');return}if(!p||p.length<10){showToast('Valid phone required','err');return}if(!isTempSession){var db=getDatabase();for(var i=0;i<db.users.length;i++) if(db.users[i].email===currentUser.email){db.users[i].name=n;db.users[i].phone=p;break}saveDatabase(db)}currentUser.name=n;currentUser.phone=p;var ini=n.charAt(0).toUpperCase();document.getElementById('avatarHome').textContent=ini;document.getElementById('avatarSettings').textContent=ini;document.getElementById('settingsName').textContent=n;closeModal('modalProfile');showToast('Profile updated','ok')}
-function savePassword(){var c=document.getElementById('pwCurrent').value,n=document.getElementById('pwNew').value,f=document.getElementById('pwConfirm').value;if(!c){showToast('Enter current password','err');return}if(c!==currentUser.password){showToast('Incorrect password','err');return}if(n.length<6){showToast('Min 6 characters','err');return}if(n!==f){showToast('Passwords don\'t match','err');return}if(!isTempSession){var db=getDatabase();for(var i=0;i<db.users.length;i++) if(db.users[i].email===currentUser.email){db.users[i].password=n;break}saveDatabase(db)}currentUser.password=n;closeModal('modalPassword');showToast('Password changed','ok')}
+/* ═══════ PROFILE & PASSWORD — SAVE TO SERVER + LOCAL ═══════ */
+function prefillProfile(){if(!currentUser)return;document.getElementById('editName').value=currentUser.name;document.getElementById('editPhone').value=currentUser.phone}
+function saveProfile(){
+  var n=document.getElementById('editName').value.trim(),p=document.getElementById('editPhone').value.trim();
+  if(!n||n.length<2){showToast('Name required','err');return}if(!p||p.length<10){showToast('Valid phone required','err');return}
+  fetch(API_BASE+'/api/update-profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:currentUser.email,name:n,phone:p})}).then(function(r){return r.json()}).then(function(json){
+    if(json.status==='success'){currentUser.name=n;currentUser.phone=p;var ini=n.charAt(0).toUpperCase();document.getElementById('avatarHome').textContent=ini;document.getElementById('avatarSettings').textContent=ini;document.getElementById('settingsName').textContent=n;var db=getDatabase();for(var i=0;i<db.users.length;i++)if(db.users[i].email===currentUser.email){db.users[i].name=n;db.users[i].phone=p;break}saveDatabase(db);closeModal('modalProfile');showToast('Profile updated','ok')}
+    else{showToast(json.message||'Update failed','err')}
+  }).catch(function(err){var db=getDatabase();for(var i=0;i<db.users.length;i++)if(db.users[i].email===currentUser.email){db.users[i].name=n;db.users[i].phone=p;break}saveDatabase(db);currentUser.name=n;currentUser.phone=p;var ini=n.charAt(0).toUpperCase();document.getElementById('avatarHome').textContent=ini;document.getElementById('avatarSettings').textContent=ini;document.getElementById('settingsName').textContent=n;closeModal('modalProfile');showToast('Profile updated (offline)','ok')});
+}
+function savePassword(){
+  var c=document.getElementById('pwCurrent').value,n=document.getElementById('pwNew').value,f=document.getElementById('pwConfirm').value;
+  if(!c){showToast('Enter current password','err');return}if(c!==currentUser.password){showToast('Incorrect password','err');return}if(n.length<6){showToast('Min 6 characters','err');return}if(n!==f){showToast('Passwords don\'t match','err');return}
+  fetch(API_BASE+'/api/change-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:currentUser.email,currentPassword:c,newPassword:n})}).then(function(r){return r.json()}).then(function(json){
+    if(json.status==='success'){currentUser.password=n;var db=getDatabase();for(var i=0;i<db.users.length;i++)if(db.users[i].email===currentUser.email){db.users[i].password=n;break}saveDatabase(db);closeModal('modalPassword');showToast('Password changed','ok')}
+    else{showToast(json.message||'Failed','err')}
+  }).catch(function(err){currentUser.password=n;var db=getDatabase();for(var i=0;i<db.users.length;i++)if(db.users[i].email===currentUser.email){db.users[i].password=n;break}saveDatabase(db);closeModal('modalPassword');showToast('Password changed (offline)','ok')});
+}
 
-function copyText(t){if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){showToast('Copied!','ok')}).catch(function(){showToast('Copy failed','err')});else showToast('Copy not supported','err')}
+function copyText(t){if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){showToast('Copied!','ok')}).catch(function(){showToast('Copy failed','err')});else showToast('Copy not supported','err')}
 function shareReferral(){var c=document.getElementById('myRefCode').value;if(!c){showToast('No referral code','err');return}var link=window.location.origin+window.location.pathname+'?ref='+c;var t='Join Qumovcoin and earn '+getRefBonusInCurrency()+' per referral! Use my code: '+c+'\n'+link;if(navigator.share){navigator.share({title:'Qumovcoin',text:t,url:link}).catch(function(){})}else{copyText(link);showToast('Referral link copied!','ok')}}
 
-function openModal(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';if(id==='modalCurrency'){var opts=document.querySelectorAll('.cur-opt');for(var i=0;i<opts.length;i++) opts[i].classList.toggle('active',opts[i].getAttribute('data-code')===activeCurrency)}if(id==='modalWithdraw'){var av=getWithdrawableProfit();document.getElementById('wdBalance').textContent=formatMoney(Math.max(0,av));document.getElementById('wdWallet').value='';updateWithdrawUI()}}
-function closeModal(id){document.getElementById(id).classList.remove('on');if(!document.querySelector('.modal-bg.on')) document.body.style.overflow='';if(id==='modalPlisio'){stopPlisioPolling();resetDepositBtn()}}
-var am=document.querySelectorAll('.modal-bg');
-for(var mi=0;mi<am.length;mi++){(function(m){m.addEventListener('click',function(e){if(e.target===m) closeModal(m.id)})})(am[mi])}
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){var o=document.querySelector('.modal-bg.on');if(o) closeModal(o.id)}});
+function openModal(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';if(id==='modalCurrency'){var opts=document.querySelectorAll('.cur-opt');for(var i=0;i<opts.length;i++)opts[i].classList.toggle('active',opts[i].getAttribute('data-code')===activeCurrency)}if(id==='modalWithdraw'){var av=getWithdrawableProfit();document.getElementById('wdBalance').textContent=formatMoney(Math.max(0,av));document.getElementById('wdWallet').value='';updateWithdrawUI()}}
+function closeModal(id){document.getElementById(id).classList.remove('on');if(!document.querySelector('.modal-bg.on'))document.body.style.overflow='';if(id==='modalPlisio'){stopPlisioPolling();resetDepositBtn()}}
+var am=document.querySelectorAll('.modal-bg');for(var mi=0;mi<am.length;mi++){(function(m){m.addEventListener('click',function(e){if(e.target===m)closeModal(m.id)})})(am[mi])}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){var o=document.querySelector('.modal-bg.on');if(o)closeModal(o.id)}});
 
 (function(){
-  /* ═══════ AUTO-APPLY REFERRAL CODE FROM URL ═══════ */
-  var urlP=new URLSearchParams(window.location.search);
-  var urlRef=urlP.get('ref');
-  if(urlRef){
-    var rfInput=document.getElementById('regReferral');
-    if(rfInput){rfInput.value=urlRef}
-    var regBox=document.getElementById('registerBox');
-    var loginBox=document.getElementById('loginBox');
-    if(regBox&&loginBox&&regBox.style.display==='none'){
-      showRegister();
-      setTimeout(function(){if(rfInput) rfInput.value=urlRef},100);
-    }
-  }
-
+  var urlP=new URLSearchParams(window.location.search);var urlRef=urlP.get('ref');
+  if(urlRef){var rfInput=document.getElementById('regReferral');if(rfInput)rfInput.value=urlRef;var regBox=document.getElementById('registerBox');var loginBox=document.getElementById('loginBox');if(regBox&&loginBox&&regBox.style.display==='none'){showRegister();setTimeout(function(){if(rfInput)rfInput.value=urlRef},100)}}
   setInterval(tickCountdowns,1000);
   var s=safeGet('qumovcoin_session');
-  if(s&&typeof s==='string'){
-    var db=getDatabase();
-    for(var i=0;i<db.users.length;i++){
-      if(db.users[i].email===s){
-        isTempSession=false;
-        currentUser=db.users[i];
-        enterApp();
-        return;
-      }
-    }
-  }
+  if(s&&typeof s==='string'){var db=getDatabase();for(var i=0;i<db.users.length;i++){if(db.users[i].email===s){isTempSession=false;currentUser=db.users[i];enterApp();return}}}
   document.getElementById('authScreen').classList.remove('off');
 })();
 </script>
