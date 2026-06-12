@@ -1,1145 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Qumovcoin Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
---bg:#07070c;--card:#0f0f18;--elev:#161622;--inp:#1a1a28;
---fg:#f0ece4;--mut:#7d7a8a;--gold:#d4a843;--gold-d:rgba(212,168,67,.12);
---gold-g:rgba(212,168,67,.2);--green:#2ecc71;--green-d:rgba(46,204,113,.12);
---red:#e74c3c;--red-d:rgba(231,76,60,.12);--blue:#3498db;--blue-d:rgba(52,152,219,.12);
---bdr:rgba(212,168,67,.1);--bdr2:rgba(212,168,67,.25);--rad:14px;--rad2:10px;--rad3:8px
-}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;-webkit-font-smoothing:antialiased}
-html{scroll-behavior:smooth}
-::-webkit-scrollbar{width:6px;height:6px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(212,168,67,.2);border-radius:3px}
-
-#adminLogin{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#07070c,#161628,#07070c)}
-#adminLogin.off{display:none}
-.login-card{width:100%;max-width:440px;background:var(--card);border:1px solid var(--bdr2);border-radius:24px;padding:48px 36px;box-shadow:0 24px 80px rgba(0,0,0,.6)}
-.login-card .logo{display:flex;align-items:center;gap:14px;margin-bottom:32px;justify-content:center}
-.login-card .logo-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--gold),#b8912e);display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff}
-.login-card .logo-text{font-family:'Playfair Display',serif;font-size:26px;font-weight:700}
-.login-card .admin-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;background:var(--red-d);border:1px solid rgba(231,76,60,.3);border-radius:50px;font-size:12px;font-weight:600;color:var(--red);margin-bottom:24px}
-.login-card h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;text-align:center;margin-bottom:8px}
-.login-card p{text-align:center;color:var(--mut);font-size:14px;margin-bottom:28px;line-height:1.6}
-.fgroup{margin-bottom:18px}
-.fgroup label{display:block;font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;font-weight:600}
-.fwrap{position:relative}
-.fwrap>.ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:14px;pointer-events:none}
-.finput{width:100%;padding:14px 14px 14px 44px;background:var(--inp);border:1px solid var(--bdr);border-radius:var(--rad2);color:var(--fg);font-size:14px;font-family:inherit;outline:none;transition:all .25s}
-.finput:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-d)}
-.finput::placeholder{color:rgba(125,122,138,.5)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:var(--rad2);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .25s;font-family:inherit;text-decoration:none}
-.btn:active{transform:scale(.97)}
-.btn-gold{background:linear-gradient(135deg,var(--gold),#b8912e);color:#fff;box-shadow:0 4px 20px var(--gold-g)}
-.btn-gold:hover{box-shadow:0 6px 30px var(--gold-g);transform:translateY(-1px)}
-.btn-out{background:transparent;border:1px solid var(--bdr);color:var(--fg)}
-.btn-out:hover{border-color:var(--gold);color:var(--gold)}
-.btn-green{background:linear-gradient(135deg,var(--green),#27ae60);color:#fff;box-shadow:0 4px 20px var(--green-d)}
-.btn-red{background:var(--red-d);color:var(--red);border:1px solid rgba(231,76,60,.2)}
-.btn-blue{background:var(--blue-d);color:var(--blue);border:1px solid rgba(52,152,219,.2)}
-.btn-full{width:100%}
-.btn-sm{padding:8px 14px;font-size:12px}
-.btn-xs{padding:6px 10px;font-size:11px}
-.btn:disabled{opacity:.5;pointer-events:none}
-
-#adminDashboard{display:none}
-#adminDashboard.on{display:block}
-.admin-topbar{background:var(--card);border-bottom:1px solid var(--bdr);padding:16px 24px;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
-.admin-topbar .inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.admin-topbar .logo-sm{display:flex;align-items:center;gap:10px}
-.admin-topbar .logo-sm i{font-size:20px;color:var(--gold)}
-.admin-topbar .logo-sm span{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
-.admin-topbar .admin-tag{font-size:11px;padding:4px 10px;background:var(--red-d);border:1px solid rgba(231,76,60,.3);border-radius:50px;color:var(--red);font-weight:600}
-.admin-topbar .actions{display:flex;gap:10px;align-items:center}
-.icon-btn{width:38px;height:38px;border-radius:var(--rad3);background:var(--elev);border:1px solid var(--bdr);color:var(--mut);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .25s}
-.icon-btn:hover{border-color:var(--gold);color:var(--gold)}
-.refresh-spin{animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.admin-content{max-width:1400px;margin:0 auto;padding:24px}
-
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:28px}
-.stat-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--rad);padding:20px;position:relative;overflow:hidden}
-.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.stat-card.gold::before{background:linear-gradient(90deg,var(--gold),#b8912e)}
-.stat-card.green::before{background:linear-gradient(90deg,var(--green),#27ae60)}
-.stat-card.blue::before{background:linear-gradient(90deg,var(--blue),#2980b9)}
-.stat-card.red::before{background:linear-gradient(90deg,var(--red),#c0392b)}
-.stat-card .stat-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px}
-.stat-card.gold .stat-icon{background:var(--gold-d);color:var(--gold)}
-.stat-card.green .stat-icon{background:var(--green-d);color:var(--green)}
-.stat-card.blue .stat-icon{background:var(--blue-d);color:var(--blue)}
-.stat-card.red .stat-icon{background:var(--red-d);color:var(--red)}
-.stat-card .stat-label{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
-.stat-card .stat-value{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;margin-bottom:4px}
-.stat-card.gold .stat-value{color:var(--gold)}
-.stat-card.green .stat-value{color:var(--green)}
-.stat-card.blue .stat-value{color:var(--blue)}
-.stat-card.red .stat-value{color:var(--red)}
-.stat-card .stat-sub{font-size:11px;color:var(--mut)}
-.stat-card .stat-err{font-size:12px;color:var(--red);display:none}
-
-.tab-nav{display:flex;gap:4px;background:var(--card);border:1px solid var(--bdr);border-radius:var(--rad);padding:6px;margin-bottom:20px;overflow-x:auto}
-.tab-btn{flex:1;min-width:120px;padding:10px 16px;border-radius:var(--rad2);background:transparent;border:none;color:var(--mut);cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;transition:all .25s;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:6px}
-.tab-btn:hover{color:var(--fg);background:var(--elev)}
-.tab-btn.on{background:var(--gold);color:#fff;box-shadow:0 2px 12px var(--gold-g)}
-.tab-btn .badge{font-size:10px;padding:2px 6px;border-radius:50px;background:rgba(255,255,255,.2);font-weight:700}
-.tab-btn:not(.on) .badge{background:var(--elev);color:var(--mut)}
-
-.tab-content{display:none}
-.tab-content.on{display:block;animation:fadeIn .3s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-.table-container{background:var(--card);border:1px solid var(--bdr);border-radius:var(--rad);overflow:hidden}
-.table-header{padding:18px 20px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.table-header h3{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
-.table-header h3 i{color:var(--gold)}
-.table-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.search-box{position:relative;min-width:250px}
-.search-box input{width:100%;padding:10px 14px 10px 38px;background:var(--inp);border:1px solid var(--bdr);border-radius:var(--rad3);color:var(--fg);font-size:13px;font-family:inherit;outline:none;transition:border .25s}
-.search-box input:focus{border-color:var(--gold)}
-.search-box i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:13px}
-.filter-select{padding:10px 14px;background:var(--inp);border:1px solid var(--bdr);border-radius:var(--rad3);color:var(--fg);font-size:13px;font-family:inherit;outline:none;cursor:pointer}
-.filter-select:focus{border-color:var(--gold)}
-
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse}
-thead{background:var(--elev)}
-th{padding:12px 16px;text-align:left;font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;font-weight:600;white-space:nowrap;border-bottom:1px solid var(--bdr)}
-td{padding:14px 16px;font-size:13px;border-bottom:1px solid rgba(212,168,67,.04);vertical-align:middle}
-tr:hover td{background:rgba(212,168,67,.02)}
-.user-cell{display:flex;align-items:center;gap:12px}
-.user-avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--gold),#b8912e);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
-.user-info .name{font-weight:600;font-size:14px}
-.user-info .email{font-size:11px;color:var(--mut);margin-top:2px}
-.money{font-weight:700;font-family:'DM Sans',sans-serif}
-.money.positive{color:var(--green)}
-.money.negative{color:var(--red)}
-.money.gold{color:var(--gold)}
-
-.status{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:50px;font-size:11px;font-weight:600;white-space:nowrap}
-.status.paid,.status.completed{background:var(--green-d);color:var(--green);border:1px solid rgba(46,204,113,.2)}
-.status.pending,.status.processing{background:var(--gold-d);color:var(--gold);border:1px solid var(--bdr2)}
-.status.expired,.status.failed{background:var(--red-d);color:var(--red);border:1px solid rgba(231,76,60,.2)}
-.status-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
-.status.pending .status-dot,.status.processing .status-dot{animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-
-.action-btns{display:flex;gap:6px;flex-wrap:wrap}
-.empty-state{text-align:center;padding:60px 24px;color:var(--mut)}
-.empty-state i{font-size:48px;color:rgba(212,168,67,.1);margin-bottom:16px;display:block}
-.empty-state p{font-size:14px;line-height:1.6}
-.error-state{text-align:center;padding:48px 24px}
-.error-state i{font-size:42px;color:var(--red);margin-bottom:14px;display:block}
-.error-state p{font-size:13px;color:var(--mut);line-height:1.6;margin-bottom:16px}
-.error-state .err-msg{color:var(--red);font-size:12px;background:var(--red-d);padding:8px 14px;border-radius:var(--rad3);display:inline-block;word-break:break-all}
-
-.loading-state{text-align:center;padding:60px 24px}
-.spinner{width:40px;height:40px;border:3px solid var(--bdr);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
-
-.toast-area{position:fixed;top:20px;right:20px;z-index:1000;display:flex;flex-direction:column;gap:8px;pointer-events:none}
-.toast{border:1px solid var(--bdr);border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:10px;font-size:13px;animation:toastIn .4s ease;pointer-events:auto;background:var(--elev);box-shadow:0 8px 32px rgba(0,0,0,.5);max-width:380px}
-.toast.t-ok{border-left:4px solid var(--green)}.toast.t-ok i{color:var(--green)}
-.toast.t-err{border-left:4px solid var(--red)}.toast.t-err i{color:var(--red)}
-.toast.t-info{border-left:4px solid var(--gold)}.toast.t-info i{color:var(--gold)}
-.toast.hiding{opacity:0;transform:translateX(60px);transition:all .3s}
-@keyframes toastIn{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
-
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .3s;padding:16px}
-.modal-bg.on{opacity:1;visibility:visible}
-.modal-box{background:var(--card);border:1px solid var(--bdr);border-radius:20px;width:100%;max-width:600px;max-height:85vh;overflow-y:auto;transform:scale(.95);transition:transform .3s;box-shadow:0 24px 80px rgba(0,0,0,.5)}
-.modal-bg.on .modal-box{transform:scale(1)}
-.modal-body{padding:32px 28px}
-.modal-body h3{font-size:20px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px}
-.modal-body h3 i{color:var(--gold)}
-.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
-.detail-item{background:var(--elev);border:1px solid var(--bdr);border-radius:var(--rad2);padding:16px}
-.detail-item .label{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-.detail-item .value{font-size:16px;font-weight:700}
-.detail-item .value.gold{color:var(--gold)}
-.detail-item .value.green{color:var(--green)}
-.detail-item .value.red{color:var(--red)}
-.detail-item .value.blue{color:var(--blue)}
-.transaction-timeline{margin-top:20px}
-.transaction-timeline h4{font-size:14px;font-weight:700;margin-bottom:12px;color:var(--gold)}
-.timeline-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--bdr)}
-.timeline-item:last-child{border-bottom:none}
-.timeline-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);margin-top:4px;flex-shrink:0}
-.timeline-content{flex:1}
-.timeline-content .date{font-size:11px;color:var(--mut)}
-.timeline-content .desc{font-size:13px;font-weight:600;margin-top:2px}
-.timeline-content .amount{font-size:14px;font-weight:700;color:var(--green);margin-top:4px}
-.modal-btns{display:flex;gap:10px;margin-top:20px}
-.modal-btns .btn{flex:1}
-
-.confirm-body{text-align:center;padding:28px 22px}
-.confirm-body i{font-size:48px;color:var(--red);margin-bottom:20px;display:block}
-.confirm-body h3{font-size:20px;font-weight:700;margin-bottom:10px}
-.confirm-body p{font-size:13px;color:var(--mut);margin-bottom:24px;line-height:1.6}
-.confirm-btns{display:flex;gap:10px}
-.confirm-btns .btn{flex:1}
-
-.pagination{padding:16px 20px;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.pagination .info{font-size:12px;color:var(--mut)}
-.pagination .btns{display:flex;gap:6px}
-.page-btn{width:34px;height:34px;border-radius:var(--rad3);background:var(--elev);border:1px solid var(--bdr);color:var(--mut);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;transition:all .25s;font-family:inherit}
-.page-btn:hover{border-color:var(--gold);color:var(--gold)}
-.page-btn.on{background:var(--gold);color:#fff;border-color:var(--gold)}
-.page-btn:disabled{opacity:.4;pointer-events:none}
-
-.conn-banner{background:var(--red-d);border:1px solid rgba(231,76,60,.3);border-radius:var(--rad2);padding:12px 18px;margin-bottom:20px;display:none;align-items:center;gap:10px;font-size:13px;color:var(--red)}
-.conn-banner i{font-size:16px;flex-shrink:0}
-.conn-banner .retry-btn{margin-left:auto;white-space:nowrap}
-.conn-banner.on{display:flex}
-
-.live-indicator{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--green);font-weight:600}
-.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite}
-
-/* Setup error banner */
-.setup-error{background:var(--red-d);border:2px solid rgba(231,76,60,.4);border-radius:var(--rad);padding:20px;margin:16px 0}
-.setup-error h4{color:var(--red);font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.setup-error ul{color:var(--mut);font-size:13px;line-height:2;padding-left:20px}
-.setup-error code{background:var(--elev);padding:2px 8px;border-radius:4px;font-size:12px;color:var(--gold)}
-
-@media(max-width:768px){
-.admin-content{padding:16px}
-.stats-grid{grid-template-columns:repeat(2,1fr)}
-.table-header{flex-direction:column;align-items:stretch}
-.search-box{min-width:100%}
-.stat-card .stat-value{font-size:22px}
-.detail-grid{grid-template-columns:1fr}
-}
-@media(max-width:480px){
-.stats-grid{grid-template-columns:1fr}
-.login-card{padding:32px 24px}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qumovcoin Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:#0a0a0f;color:#e0e0e0;min-height:100vh}
+        .login-container{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+        .login-box{background:#14141f;border:1px solid rgba(212,168,67,.2);border-radius:16px;padding:40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+        .logo{text-align:center;margin-bottom:30px}
+        .logo-icon{width:60px;height:60px;background:linear-gradient(135deg,#d4a843,#b8912e);border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:28px;color:#fff;margin-bottom:16px}
+        .logo h1{font-size:24px;font-weight:700;color:#f0ece4}
+        .logo p{color:#7d7a8a;font-size:14px;margin-top:6px}
+        .form-group{margin-bottom:20px}
+        .form-group label{display:block;font-size:12px;font-weight:600;color:#7d7a8a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+        .input-wrapper{position:relative}
+        .input-wrapper i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#7d7a8a;font-size:14px}
+        .input-wrapper input{width:100%;padding:14px 14px 14px 42px;background:#1a1a28;border:1px solid rgba(212,168,67,.1);border-radius:10px;color:#f0ece4;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color .3s}
+        .input-wrapper input:focus{border-color:#d4a843}
+        .input-wrapper input::placeholder{color:rgba(125,122,138,.5)}
+        .login-btn{width:100%;padding:14px;background:linear-gradient(135deg,#d4a843,#b8912e);border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px}
+        .login-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,168,67,.3)}
+        .login-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+        .error-message{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.2);color:#e74c3c;padding:12px;border-radius:8px;font-size:13px;margin-bottom:16px;display:none}
+        .error-message.show{display:block}
+        .back-link{text-align:center;margin-top:20px}
+        .back-link a{color:#d4a843;text-decoration:none;font-size:13px;font-weight:500}
+        .back-link a:hover{text-decoration:underline}
+        .dashboard{display:none}
+        .dashboard.active{display:block}
+        .header{background:#14141f;border-bottom:1px solid rgba(212,168,67,.1);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+        .header-left{display:flex;align-items:center;gap:12px}
+        .header-left h2{font-size:18px;font-weight:700}
+        .header-right{display:flex;gap:12px;align-items:center}
+        .hdr-btn{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;border:1px solid}
+        .refresh-btn{background:rgba(212,168,67,.1);border-color:rgba(212,168,67,.2);color:#d4a843}
+        .refresh-btn:hover{background:rgba(212,168,67,.2)}
+        .logout-btn{background:rgba(231,76,60,.1);border-color:rgba(231,76,60,.2);color:#e74c3c}
+        .logout-btn:hover{background:rgba(231,76,60,.2)}
+        .content{padding:24px;max-width:1400px;margin:0 auto}
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px}
+        .stat-card{background:#14141f;border:1px solid rgba(212,168,67,.1);border-radius:12px;padding:20px}
+        .stat-card .label{font-size:12px;color:#7d7a8a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+        .stat-card .value{font-size:26px;font-weight:700;color:#d4a843}
+        .stat-card .value.green{color:#2ecc71}
+        .stat-card .value.red{color:#e74c3c}
+        .section{background:#14141f;border:1px solid rgba(212,168,67,.1);border-radius:12px;margin-bottom:24px;overflow:hidden}
+        .section-header{padding:16px 20px;border-bottom:1px solid rgba(212,168,67,.1);font-size:16px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+        .section-content{padding:0;overflow-x:auto}
+        table{width:100%;border-collapse:collapse;min-width:700px}
+        th,td{padding:12px 16px;text-align:left;border-bottom:1px solid rgba(212,168,67,.05)}
+        th{font-size:11px;color:#7d7a8a;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+        td{font-size:13px}
+        .status{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;display:inline-block}
+        .status.pending{background:rgba(212,168,67,.1);color:#d4a843}
+        .status.paid,.status.completed{background:rgba(46,204,113,.1);color:#2ecc71}
+        .status.expired,.status.failed{background:rgba(231,76,60,.1);color:#e74c3c}
+        .status.processing{background:rgba(52,152,219,.1);color:#3498db}
+        .act-btn{padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid rgba(212,168,67,.2);background:rgba(212,168,67,.1);color:#d4a843;transition:all .2s;font-family:'Inter',sans-serif;margin:2px}
+        .act-btn:hover{background:rgba(212,168,67,.2)}
+        .act-btn.danger{border-color:rgba(231,76,60,.2);background:rgba(231,76,60,.1);color:#e74c3c}
+        .act-btn.danger:hover{background:rgba(231,76,60,.2)}
+        .act-btn.green{border-color:rgba(46,204,113,.2);background:rgba(46,204,113,.1);color:#2ecc71}
+        .act-btn.green:hover{background:rgba(46,204,113,.2)}
+        .empty-state{padding:40px;text-align:center;color:#7d7a8a}
+        .loading{text-align:center;padding:40px;color:#7d7a8a}
+        .spinner{width:30px;height:30px;border:3px solid rgba(212,168,67,.1);border-top-color:#d4a843;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .mono{font-family:monospace;font-size:11px;color:#7d7a8a;word-break:break-all;max-width:180px;display:inline-block}
+        .truncate{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block}
+        .toast-area{position:fixed;top:20px;right:20px;z-index:1000;display:flex;flex-direction:column;gap:8px}
+        .toast{padding:12px 16px;border-radius:8px;font-size:13px;animation:toastIn .3s ease;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+        .toast.ok{background:#14141f;border:1px solid rgba(46,204,113,.3);color:#2ecc71}
+        .toast.err{background:#14141f;border:1px solid rgba(231,76,60,.3);color:#e74c3c}
+        @keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+        @media(max-width:768px){.content{padding:16px}.stats-grid{grid-template-columns:1fr 1fr}.header{flex-direction:column;gap:12px;padding:12px 16px}.header-right{width:100%;justify-content:flex-end}}
+        @media(max-width:480px){.stats-grid{grid-template-columns:1fr}}
+    </style>
 </head>
 <body>
+    <div class="toast-area" id="toastArea"></div>
 
-<div id="adminLogin">
-<div class="login-card">
-  <div class="logo">
-    <div class="logo-icon"><i class="fas fa-coins"></i></div>
-    <span class="logo-text">Qumovcoin</span>
-  </div>
-  <div style="text-align:center"><span class="admin-badge"><i class="fas fa-shield-halved"></i> Admin Access</span></div>
-  <h1>Admin Panel</h1>
-  <p>Enter your admin password to access the dashboard.</p>
-  
-  <div id="setupError" class="setup-error" style="display:none">
-    <h4><i class="fas fa-exclamation-triangle"></i> Connection Error</h4>
-    <ul id="setupErrorList"></ul>
-  </div>
-  
-  <div class="fgroup">
-    <label>Password</label>
-    <div class="fwrap">
-      <input type="password" class="finput" id="adminPassword" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')handleAdminLogin()">
-      <i class="fas fa-lock ico"></i>
-    </div>
-  </div>
-  <button class="btn btn-gold btn-full" onclick="handleAdminLogin()" id="loginBtn" style="padding:14px;font-size:15px;margin-top:8px">
-    <i class="fas fa-arrow-right-to-bracket"></i> Access Dashboard
-  </button>
-  <div id="loginError" style="display:none;text-align:center;margin-top:14px;font-size:12px;color:var(--red);background:var(--red-d);padding:8px 14px;border-radius:var(--rad3)"></div>
-  <p style="text-align:center;margin-top:20px;font-size:11px;color:var(--mut)">
-    <i class="fas fa-circle-info" style="margin-right:4px"></i>Authorized access only. All actions are logged.
-  </p>
-  <div style="text-align:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--bdr)">
-    <div id="connectionStatus" style="font-size:11px;color:var(--mut)"><i class="fas fa-spinner fa-spin"></i> Checking server...</div>
-  </div>
-</div>
-</div>
-
-<div id="adminDashboard">
-<div class="admin-topbar">
-  <div class="inner">
-    <div class="logo-sm">
-      <i class="fas fa-coins"></i>
-      <span>Qumovcoin</span>
-      <span class="admin-tag"><i class="fas fa-shield-halved"></i> Admin</span>
-    </div>
-    <div class="actions">
-      <div class="live-indicator"><span class="live-dot"></span> Live</div>
-      <button class="icon-btn" onclick="exportData()" title="Export Data">
-        <i class="fas fa-download"></i>
-      </button>
-      <button class="icon-btn" onclick="refreshData()" title="Refresh Data" id="refreshBtn">
-        <i class="fas fa-arrows-rotate"></i>
-      </button>
-      <button class="btn btn-out btn-sm" onclick="handleLogout()">
-        <i class="fas fa-right-from-bracket"></i> Logout
-      </button>
-    </div>
-  </div>
-</div>
-
-<div class="admin-content">
-  <div class="conn-banner" id="connBanner">
-    <i class="fas fa-triangle-exclamation"></i>
-    <span id="connMsg">Connection error</span>
-    <button class="btn btn-xs btn-out retry-btn" onclick="refreshData()"><i class="fas fa-redo"></i> Retry</button>
-  </div>
-
-  <div class="stats-grid" id="statsGrid">
-    <div class="stat-card gold">
-      <div class="stat-icon"><i class="fas fa-users"></i></div>
-      <div class="stat-label">Total Users</div>
-      <div class="stat-value" id="statUsers">--</div>
-      <div class="stat-sub" id="statUsersSub">Loading...</div>
-      <div class="stat-err" id="statUsersErr"></div>
-    </div>
-    <div class="stat-card green">
-      <div class="stat-icon"><i class="fas fa-arrow-down"></i></div>
-      <div class="stat-label">Total Deposits</div>
-      <div class="stat-value" id="statDeposits">--</div>
-      <div class="stat-sub" id="statDepositsSub">Loading...</div>
-      <div class="stat-err" id="statDepositsErr"></div>
-    </div>
-    <div class="stat-card blue">
-      <div class="stat-icon"><i class="fas fa-arrow-up"></i></div>
-      <div class="stat-label">Total Withdrawals</div>
-      <div class="stat-value" id="statWithdrawals">--</div>
-      <div class="stat-sub" id="statWithdrawalsSub">Loading...</div>
-      <div class="stat-err" id="statWithdrawalsErr"></div>
-    </div>
-    <div class="stat-card red">
-      <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
-      <div class="stat-label">Net Profit</div>
-      <div class="stat-value" id="statProfit">--</div>
-      <div class="stat-sub" id="statProfitSub">Loading...</div>
-      <div class="stat-err" id="statProfitErr"></div>
-    </div>
-  </div>
-
-  <div class="tab-nav">
-    <button class="tab-btn on" onclick="switchTab('users')">
-      <i class="fas fa-users"></i> Users <span class="badge" id="usersBadge">0</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('deposits')">
-      <i class="fas fa-arrow-down"></i> Deposits <span class="badge" id="depositsBadge">0</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('withdrawals')">
-      <i class="fas fa-arrow-up"></i> Withdrawals <span class="badge" id="withdrawalsBadge">0</span>
-    </button>
-  </div>
-
-  <div class="tab-content on" id="tabUsers">
-    <div class="table-container">
-      <div class="table-header">
-        <h3><i class="fas fa-users"></i> All Users</h3>
-        <div class="table-actions">
-          <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search by name or email..." id="userSearch" oninput="filterUsers()">
-          </div>
-          <select class="filter-select" id="userFilter" onchange="filterUsers()">
-            <option value="all">All Users</option>
-            <option value="active">With Deposits</option>
-            <option value="inactive">No Deposits</option>
-          </select>
+    <div class="login-container" id="loginScreen">
+        <div class="login-box">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-shield-halved"></i></div>
+                <h1>Admin Panel</h1>
+                <p>Qumovcoin Management System</p>
+            </div>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Enter admin password" autocomplete="current-password">
+                </div>
+            </div>
+            <button class="login-btn" id="loginBtn" onclick="handleLogin()">
+                <i class="fas fa-arrow-right-to-bracket"></i> Sign In
+            </button>
+            <div class="back-link"><a href="/">← Back to Website</a></div>
         </div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Phone</th>
-              <th>Joined</th>
-              <th>Deposits</th>
-              <th>Total Deposited</th>
-              <th>Withdrawn</th>
-              <th>Referrals</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="usersTableBody">
-            <tr><td colspan="8"><div class="loading-state"><div class="spinner"></div><p>Loading users...</p></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pagination" id="usersPagination" style="display:none">
-        <div class="info" id="usersPageInfo"></div>
-        <div class="btns" id="usersPageBtns"></div>
-      </div>
     </div>
-  </div>
 
-  <div class="tab-content" id="tabDeposits">
-    <div class="table-container">
-      <div class="table-header">
-        <h3><i class="fas fa-arrow-down"></i> Deposit Invoices</h3>
-        <div class="table-actions">
-          <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search by email or TXN ID..." id="depositSearch" oninput="filterDeposits()">
-          </div>
-          <select class="filter-select" id="depositFilter" onchange="filterDeposits()">
-            <option value="all">All Status</option>
-            <option value="pending">Pending</option>
-            <option value="paid">Paid</option>
-            <option value="expired">Expired</option>
-          </select>
+    <div class="dashboard" id="dashboard">
+        <div class="header">
+            <div class="header-left">
+                <i class="fas fa-shield-halved" style="color:#d4a843;font-size:20px"></i>
+                <h2>Qumovcoin Admin</h2>
+            </div>
+            <div class="header-right">
+                <button class="hdr-btn refresh-btn" onclick="loadDashboard()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                <button class="hdr-btn logout-btn" onclick="handleLogout()"><i class="fas fa-right-from-bracket"></i> Logout</button>
+            </div>
         </div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>TXN ID</th>
-              <th>User</th>
-              <th>Level</th>
-              <th>Amount (NGN)</th>
-              <th>Amount (USD)</th>
-              <th>Crypto</th>
-              <th>Status</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="depositsTableBody">
-            <tr><td colspan="9"><div class="loading-state"><div class="spinner"></div><p>Loading deposits...</p></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pagination" id="depositsPagination" style="display:none">
-        <div class="info" id="depositsPageInfo"></div>
-        <div class="btns" id="depositsPageBtns"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="tab-content" id="tabWithdrawals">
-    <div class="table-container">
-      <div class="table-header">
-        <h3><i class="fas fa-arrow-up"></i> Withdrawal Requests</h3>
-        <div class="table-actions">
-          <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search by email or ID..." id="withdrawalSearch" oninput="filterWithdrawals()">
-          </div>
-          <select class="filter-select" id="withdrawalFilter" onchange="filterWithdrawals()">
-            <option value="all">All Status</option>
-            <option value="processing">Processing</option>
-            <option value="completed">Completed</option>
-            <option value="failed">Failed</option>
-          </select>
+        <div class="content">
+            <div class="stats-grid" id="statsGrid"></div>
+            <div class="section">
+                <div class="section-header"><span><i class="fas fa-users"></i> Users (<span id="userCount">0</span>)</span></div>
+                <div class="section-content" id="usersContent"></div>
+            </div>
+            <div class="section">
+                <div class="section-header"><span><i class="fas fa-arrow-down"></i> Invoices (<span id="invoiceCount">0</span>)</span></div>
+                <div class="section-content" id="depositsContent"></div>
+            </div>
+            <div class="section">
+                <div class="section-header"><span><i class="fas fa-arrow-up"></i> Withdrawals (<span id="withdrawalCount">0</span>)</span></div>
+                <div class="section-content" id="withdrawalsContent"></div>
+            </div>
         </div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Withdrawal ID</th>
-              <th>User</th>
-              <th>Amount (NGN)</th>
-              <th>Amount (USD)</th>
-              <th>Crypto</th>
-              <th>Wallet</th>
-              <th>Status</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="withdrawalsTableBody">
-            <tr><td colspan="9"><div class="loading-state"><div class="spinner"></div><p>Loading withdrawals...</p></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pagination" id="withdrawalsPagination" style="display:none">
-        <div class="info" id="withdrawalsPageInfo"></div>
-        <div class="btns" id="withdrawalsPageBtns"></div>
-      </div>
     </div>
-  </div>
-</div>
-</div>
-
-<div class="modal-bg" id="confirmModal">
-  <div class="modal-box" style="max-width:440px">
-    <div class="confirm-body">
-      <i class="fas fa-triangle-exclamation"></i>
-      <h3 id="confirmTitle">Confirm Action</h3>
-      <p id="confirmMessage">Are you sure you want to proceed?</p>
-      <div class="confirm-btns">
-        <button class="btn btn-out" onclick="closeConfirm()">Cancel</button>
-        <button class="btn btn-red" id="confirmAction" onclick="executeConfirm()">Confirm</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal-bg" id="userDetailModal">
-  <div class="modal-box">
-    <div class="modal-body" id="userDetailContent"></div>
-  </div>
-</div>
-
-<div class="modal-bg" id="transactionDetailModal">
-  <div class="modal-box" style="max-width:550px">
-    <div class="modal-body" id="transactionDetailContent"></div>
-  </div>
-</div>
-
-<div class="toast-area" id="toastArea"></div>
 
 <script>
-// ═══════ CONFIGURATION - Update this if your server runs on a different port ═══════
-var API_BASE = window.location.origin;
-var NGN_TO_USD = 0.00065;
-var ITEMS_PER_PAGE = 15;
+var authToken=null;
+var API_BASE=window.location.origin;
 
-var adminToken = null;
-var currentTab = 'users';
-var allUsers = [], allDeposits = [], allWithdrawals = [];
-var filteredUsers = [], filteredDeposits = [], filteredWithdrawals = [];
-var usersPage = 1, depositsPage = 1, withdrawalsPage = 1;
-var pendingConfirm = null;
-var isLoading = false;
-var autoRefreshTimer = null;
-var serverAvailable = false;
-
-function fmtMoney(n) { return '\u20A6' + Math.round(n).toLocaleString('en-US'); }
-function fmtUSD(n) { return '$' + parseFloat(n).toFixed(2); }
-function fmtDate(s) {
-  if (!s) return '-';
-  var d = new Date(s);
-  return d.toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'}) + ' ' + d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-}
-function trunc(s, n) { return (!s) ? '-' : (s.length > n ? s.substring(0,n) + '...' : s); }
-
-function showToast(msg, type) {
-  type = type || 'info';
-  var icons = {ok:'fa-circle-check',err:'fa-circle-exclamation',info:'fa-circle-info'};
-  var el = document.createElement('div');
-  el.className = 'toast t-' + type;
-  el.innerHTML = '<i class="fas '+(icons[type]||icons.info)+'"></i><span>'+msg+'</span>';
-  document.getElementById('toastArea').appendChild(el);
-  setTimeout(function(){ el.classList.add('hiding'); setTimeout(function(){ el.remove(); },300); },4000);
-}
-
-function showConnError(msg) {
-  var b = document.getElementById('connBanner');
-  document.getElementById('connMsg').textContent = msg || 'Connection error';
-  b.classList.add('on');
-}
-function hideConnError() { document.getElementById('connBanner').classList.remove('on'); }
-
-function showErrorState(tbodyId, colSpan, err) {
-  document.getElementById(tbodyId).innerHTML = '<tr><td colspan="'+colSpan+'"><div class="error-state"><i class="fas fa-circle-exclamation"></i><p>Failed to load data</p><div class="err-msg">'+(err||'Unknown error')+'</div><button class="btn btn-out btn-sm" onclick="refreshData()" style="margin-top:12px"><i class="fas fa-redo"></i> Retry</button></div></td></tr>';
-}
-
-// ═══════ SERVER CONNECTION CHECK ═══════
-async function checkServerConnection() {
-  var statusEl = document.getElementById('connectionStatus');
-  var errorEl = document.getElementById('setupError');
-  var errorList = document.getElementById('setupErrorList');
-  
-  var errors = [];
-  
-  // Check if opened as file
-  if (window.location.protocol === 'file:') {
-    errors.push('You are opening this file directly. You must access it through the server.');
-    errors.push('Run <code>node server.js</code> then visit <code>http://localhost:5500/admin</code>');
-  }
-  
-  // Check server availability
-  try {
-    var response = await fetch(API_BASE + '/api/health', { 
-      method: 'GET',
-      signal: AbortSignal.timeout(5000)
-    });
-    
-    if (response.ok) {
-      var data = await response.json();
-      serverAvailable = true;
-      statusEl.innerHTML = '<i class="fas fa-check-circle" style="color:var(--green)"></i> <span style="color:var(--green)">Server connected (' + (data.total_users || 0) + ' users)</span>';
-      errorEl.style.display = 'none';
-      return true;
-    } else {
-      errors.push('Server responded with status ' + response.status);
-    }
-  } catch(e) {
-    if (e.name === 'TimeoutError' || e.name === 'AbortError') {
-      errors.push('Server connection timed out. Is the server running?');
-    } else if (e.message.includes('Failed to fetch') || e.message.includes('NetworkError')) {
-      errors.push('Cannot connect to server at <code>' + API_BASE + '</code>');
-    } else {
-      errors.push('Connection error: ' + e.message);
-    }
-  }
-  
-  serverAvailable = false;
-  
-  // Build error message
-  errors.push('Make sure you ran <code>node server.js</code>');
-  errors.push('Access admin at <code>http://localhost:5500/admin</code> (not file://)');
-  errors.push('Ensure <code>admin.html</code> is in the <code>public/</code> folder');
-  
-  errorList.innerHTML = errors.map(function(e) { return '<li>' + e + '</li>'; }).join('');
-  errorEl.style.display = 'block';
-  statusEl.innerHTML = '<i class="fas fa-times-circle" style="color:var(--red)"></i> <span style="color:var(--red)">Server not available</span>';
-  
-  return false;
-}
-
-async function api(endpoint, opts) {
-  opts = opts || {};
-  var url = API_BASE + endpoint;
-  var headers = {'Content-Type':'application/json'};
-  if (adminToken) headers['x-admin-key'] = adminToken;
-  
-  var fetchOpts = {
-    method: opts.method || 'GET',
-    headers: headers
-  };
-  if (opts.body) fetchOpts.body = JSON.stringify(opts.body);
-  
-  var res;
-  try {
-    res = await fetch(url, fetchOpts);
-  } catch(e) {
-    throw new Error('Network error: Cannot connect to server. Make sure it\'s running.');
-  }
-  
-  // Handle HTML responses (like 404 pages from SPA fallback)
-  var contentType = res.headers.get('content-type') || '';
-  if (contentType.indexOf('text/html') >= 0) {
-    if (res.status === 404) {
-      throw new Error('API endpoint not found (404). Is admin.html in the public/ folder and server running?');
-    }
-    throw new Error('Server returned HTML instead of JSON. Check your server configuration.');
-  }
-  
-  var text = await res.text();
-  var json;
-  try { json = JSON.parse(text); } catch(e) {
-    throw new Error('Server returned invalid response (' + res.status + ')');
-  }
-  
-  if (res.status === 401) {
-    throw new Error('Unauthorized - session expired');
-  }
-  if (json.status === 'error') {
-    throw new Error(json.message || 'Server error');
-  }
-  return json;
-}
-
-// ═══════ AUTH ═══════
-async function handleAdminLogin() {
-  if (!serverAvailable) {
-    var ok = await checkServerConnection();
-    if (!ok) {
-      showToast('Server not available. Check the error message below.','err');
-      return;
-    }
-  }
-  
-  var pw = document.getElementById('adminPassword').value;
-  var errEl = document.getElementById('loginError');
-  errEl.style.display = 'none';
-  
-  if (!pw) { errEl.textContent = 'Enter admin password'; errEl.style.display = 'block'; return; }
-  
-  var btn = document.getElementById('loginBtn');
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
-  btn.disabled = true;
-  
-  try {
-    var res = await api('/api/admin/login', { method:'POST', body:{password:pw} });
-    if (res.status === 'success' && res.data && res.data.token) {
-      adminToken = res.data.token;
-      sessionStorage.setItem('admin_token', adminToken);
-      document.getElementById('adminLogin').classList.add('off');
-      document.getElementById('adminDashboard').classList.add('on');
-      showToast('Welcome to Admin Panel','ok');
-      await refreshData();
-      startAutoRefresh();
-    }
-  } catch(err) {
-    errEl.textContent = err.message;
-    errEl.style.display = 'block';
-  } finally {
-    btn.innerHTML = '<i class="fas fa-arrow-right-to-bracket"></i> Access Dashboard';
-    btn.disabled = false;
-  }
-}
-
-function handleLogout() {
-  adminToken = null;
-  sessionStorage.removeItem('admin_token');
-  stopAutoRefresh();
-  document.getElementById('adminLogin').classList.remove('off');
-  document.getElementById('adminDashboard').classList.remove('on');
-  document.getElementById('adminPassword').value = '';
-  document.getElementById('loginError').style.display = 'none';
-  hideConnError();
-  showToast('Logged out','info');
-  checkServerConnection();
-}
-
-function startAutoRefresh() {
-  stopAutoRefresh();
-  autoRefreshTimer = setInterval(function(){ if(adminToken) refreshData(); }, 30000);
-}
-function stopAutoRefresh() { if(autoRefreshTimer){ clearInterval(autoRefreshTimer); autoRefreshTimer=null; } }
-
-// ═══════ TABS ═══════
-function switchTab(tab) {
-  currentTab = tab;
-  var tabs = ['users','deposits','withdrawals'];
-  var ids = ['tabUsers','tabDeposits','tabWithdrawals'];
-  for(var i=0;i<tabs.length;i++){
-    document.querySelectorAll('.tab-btn')[i].classList.toggle('on', tabs[i]===tab);
-    document.getElementById(ids[i]).classList.toggle('on', ids[i]==='tab'+tab.charAt(0).toUpperCase()+tab.slice(1));
-  }
-}
-
-// ═══════ EXPORT DATA ═══════
-function exportData() {
-  var data = {
-    exportDate: new Date().toISOString(),
-    users: filteredUsers,
-    deposits: filteredDeposits,
-    withdrawals: filteredWithdrawals
-  };
-  
-  var blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = 'qumovcoin-admin-export-' + new Date().toISOString().split('T')[0] + '.json';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  showToast('Data exported successfully','ok');
-}
-
-// ═══════ USER DETAIL MODAL ═══════
-function showUserDetail(email) {
-  var user = allUsers.find(function(u){ return u.email === email; });
-  if (!user) return;
-  
-  var userDeposits = allDeposits.filter(function(d){ return d.email === email; });
-  var userWithdrawals = allWithdrawals.filter(function(w){ return w.email === email; });
-  
-  var totalDeposited = user.totalDepositedNGN || 0;
-  var totalWithdrawn = user.totalWithdrawnNGN || 0;
-  var netActivity = totalDeposited - totalWithdrawn;
-  
-  var html = '<h3><i class="fas fa-user-circle"></i> User Details</h3>';
-  html += '<div class="detail-grid">';
-  html += '<div class="detail-item"><div class="label">Name</div><div class="value">' + user.name + '</div></div>';
-  html += '<div class="detail-item"><div class="label">Email</div><div class="value" style="font-size:13px;word-break:break-all">' + user.email + '</div></div>';
-  html += '<div class="detail-item"><div class="label">Phone</div><div class="value">' + (user.phone || '-') + '</div></div>';
-  html += '<div class="detail-item"><div class="label">Joined</div><div class="value" style="font-size:13px">' + fmtDate(user.joined) + '</div></div>';
-  html += '<div class="detail-item"><div class="label">Total Deposited</div><div class="value gold">' + fmtMoney(totalDeposited) + '</div></div>';
-  html += '<div class="detail-item"><div class="label">Total Withdrawn</div><div class="value red">' + fmtMoney(totalWithdrawn) + '</div></div>';
-  html += '<div class="detail-item"><div class="label">Net Activity</div><div class="value ' + (netActivity >= 0 ? 'green' : 'red') + '">' + (netActivity >= 0 ? '+' : '') + fmtMoney(netActivity) + '</div></div>';
-  html += '<div class="detail-item"><div class="label">Referrals</div><div class="value blue">' + (user.refCount || 0) + '</div></div>';
-  html += '</div>';
-  
-  html += '<div class="transaction-timeline">';
-  html += '<h4><i class="fas fa-history"></i> Transaction History (' + (userDeposits.length + userWithdrawals.length) + ')</h4>';
-  
-  var allTxns = [];
-  userDeposits.forEach(function(d) {
-    allTxns.push({type:'deposit', date:d.created, amount:d.amountNGN, status:d.status, id:d.txn_id, level:d.level});
-  });
-  userWithdrawals.forEach(function(w) {
-    allTxns.push({type:'withdrawal', date:w.created, amount:w.amountNGN, status:w.status, id:w.withdrawal_id, crypto:w.cryptoType});
-  });
-  
-  allTxns.sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
-  
-  if (allTxns.length === 0) {
-    html += '<p style="color:var(--mut);font-size:13px;padding:12px 0">No transactions found</p>';
-  } else {
-    allTxns.slice(0, 10).forEach(function(txn) {
-      var isDeposit = txn.type === 'deposit';
-      html += '<div class="timeline-item">';
-      html += '<div class="timeline-dot" style="background:' + (isDeposit ? 'var(--green)' : 'var(--red)') + '"></div>';
-      html += '<div class="timeline-content">';
-      html += '<div class="date">' + fmtDate(txn.date) + '</div>';
-      html += '<div class="desc">' + (isDeposit ? 'Level ' + txn.level + ' Deposit' : txn.crypto.toUpperCase() + ' Withdrawal') + '</div>';
-      html += '<div class="amount" style="color:' + (isDeposit ? 'var(--green)' : 'var(--red)') + '">' + (isDeposit ? '+' : '-') + fmtMoney(txn.amount) + '</div>';
-      html += '<span class="status ' + txn.status + '"><span class="status-dot"></span>' + txn.status + '</span>';
-      html += '</div></div>';
-    });
-    
-    if (allTxns.length > 10) {
-      html += '<p style="color:var(--mut);font-size:12px;margin-top:8px">Showing 10 of ' + allTxns.length + ' transactions</p>';
-    }
-  }
-  
-  html += '</div>';
-  html += '<div class="modal-btns">';
-  html += '<button class="btn btn-out" onclick="closeModal(\'userDetailModal\')">Close</button>';
-  html += '<button class="btn btn-red" onclick="confirmDeleteUser(\'' + user.email.replace(/'/g,"\\'") + '\',\'' + user.name.replace(/'/g,"\\'") + '\')"><i class="fas fa-trash"></i> Delete User</button>';
-  html += '</div>';
-  
-  document.getElementById('userDetailContent').innerHTML = html;
-  openModal('userDetailModal');
-}
-
-// ═══════ TRANSACTION DETAIL MODAL ═══════
-function showTransactionDetail(type, id) {
-  var txn;
-  if (type === 'deposit') {
-    txn = allDeposits.find(function(d){ return d.txn_id === id; });
-  } else {
-    txn = allWithdrawals.find(function(w){ return w.withdrawal_id === id; });
-  }
-  
-  if (!txn) return;
-  
-  var isDeposit = type === 'deposit';
-  var html = '<h3><i class="fas ' + (isDeposit ? 'fa-arrow-down' : 'fa-arrow-up') + '"></i> ' + (isDeposit ? 'Deposit' : 'Withdrawal') + ' Details</h3>';
-  html += '<div class="detail-grid">';
-  
-  if (isDeposit) {
-    html += '<div class="detail-item"><div class="label">Transaction ID</div><div class="value" style="font-size:12px;word-break:break-all">' + txn.txn_id + '</div></div>';
-    html += '<div class="detail-item"><div class="label">Level</div><div class="value gold">Level ' + txn.level + '</div></div>';
-    html += '<div class="detail-item"><div class="label">Amount (NGN)</div><div class="value gold">' + fmtMoney(txn.amountNGN) + '</div></div>';
-    html += '<div class="detail-item"><div class="label">Amount (USD)</div><div class="value">' + fmtUSD(txn.amountUSD) + '</div></div>';
-    html += '<div class="detail-item"><div class="label">Crypto Type</div><div class="value" style="text-transform:uppercase">' + txn.cryptoType + '</div></div>';
-    html += '<div class="detail-item"><div class="label">Crypto Amount</div><div class="value">' + (txn.amountCrypto || '-') + '</div></div>';
-  } else {
-    html += '<div class="detail-item"><div class="label">Withdrawal ID</div><div class="value" style="font-size:12px;word-break:break-all">' + txn.withdrawal_id + '</div></div>';
-    html += '<div class="detail-item"><div class="label">Plisio TXN ID</div><div class="value" style="font-size:12px;word-break:break-all">' + (txn.plisio_txn_id || '-') + '</div></div>';
-    html += '<div class="detail-item"><div class="label">Amount (NGN)</div><div class="value red">' + fmtMoney(txn.amountNGN) + '</div></div>';
-    html += '<div class="detail-item"><div class="label">Amount (USD)</div><div class="value">' + fmtUSD(txn.amountUSD) + '</div></div>';
-    html += '<div class="detail-item"><div class="label">Crypto Type</div><div class="value" style="text-transform:uppercase">' + txn.cryptoType + '</div></div>';
-    html += '<div class="detail-item"><div class="label">Wallet Address</div><div class="value" style="font-size:11px;word-break:break-all">' + (txn.walletAddress || '-') + '</div></div>';
-  }
-  
-  html += '<div class="detail-item"><div class="label">User Email</div><div class="value" style="font-size:13px">' + txn.email + '</div></div>';
-  html += '<div class="detail-item"><div class="label">Status</div><div class="value"><span class="status ' + txn.status + '"><span class="status-dot"></span>' + txn.status + '</span></div></div>';
-  html += '<div class="detail-item"><div class="label">Created</div><div class="value" style="font-size:13px">' + fmtDate(txn.created) + '</div></div>';
-  html += '<div class="detail-item"><div class="label">Updated</div><div class="value" style="font-size:13px">' + fmtDate(txn.updated) + '</div></div>';
-  html += '</div>';
-  
-  html += '<div class="modal-btns">';
-  html += '<button class="btn btn-out" onclick="closeModal(\'transactionDetailModal\')">Close</button>';
-  
-  if (isDeposit && txn.status === 'pending') {
-    html += '<button class="btn btn-green" onclick="updateInvoice(\'' + txn.txn_id + '\',\'paid\');closeModal(\'transactionDetailModal\')"><i class="fas fa-check"></i> Approve</button>';
-    html += '<button class="btn btn-red" onclick="updateInvoice(\'' + txn.txn_id + '\',\'expired\');closeModal(\'transactionDetailModal\')"><i class="fas fa-times"></i> Expire</button>';
-  } else if (!isDeposit && txn.status === 'processing') {
-    html += '<button class="btn btn-green" onclick="updateWithdrawal(\'' + txn.withdrawal_id + '\',\'completed\');closeModal(\'transactionDetailModal\')"><i class="fas fa-check"></i> Complete</button>';
-    html += '<button class="btn btn-red" onclick="updateWithdrawal(\'' + txn.withdrawal_id + '\',\'failed\');closeModal(\'transactionDetailModal\')"><i class="fas fa-times"></i> Fail</button>';
-  }
-  
-  html += '</div>';
-  
-  document.getElementById('transactionDetailContent').innerHTML = html;
-  openModal('transactionDetailModal');
-}
-
-// ═══════ REFRESH ═══════
-async function refreshData() {
-  if (isLoading) return;
-  isLoading = true;
-  hideConnError();
-  
-  var btn = document.getElementById('refreshBtn');
-  btn.querySelector('i').classList.add('refresh-spin');
-  
-  var hasError = false;
-  
-  try { await fetchStats(); } catch(e) { showStatError('statUsersErr', e.message); hasError = true; }
-  try { await fetchUsers(); } catch(e) { showErrorState('usersTableBody', 8, e.message); hasError = true; }
-  try { await fetchDeposits(); } catch(e) { showErrorState('depositsTableBody', 9, e.message); hasError = true; }
-  try { await fetchWithdrawals(); } catch(e) { showErrorState('withdrawalsTableBody', 9, e.message); hasError = true; }
-  
-  if (hasError) {
-    showConnError('Some data failed to load. Check your connection and try again.');
-  }
-  
-  isLoading = false;
-  btn.querySelector('i').classList.remove('refresh-spin');
-}
-
-function showStatError(errId, msg) {
-  var el = document.getElementById(errId);
-  if (el) { el.textContent = msg; el.style.display = 'block'; }
-}
-
-// ═══════ FETCH STATS ═══════
-async function fetchStats() {
-  var res = await api('/api/admin/stats');
-  var d = res.data;
-  
-  document.getElementById('statUsers').textContent = d.users.total;
-  document.getElementById('statUsersSub').textContent = d.users.withDeposits + ' with deposits';
-  document.getElementById('statUsersErr').style.display = 'none';
-  
-  document.getElementById('statDeposits').textContent = fmtMoney(d.deposits.totalNGN);
-  document.getElementById('statDepositsSub').textContent = d.deposits.paid + ' paid, ' + d.deposits.pending + ' pending';
-  document.getElementById('statDepositsErr').style.display = 'none';
-  
-  document.getElementById('statWithdrawals').textContent = fmtMoney(d.withdrawals.totalNGN);
-  document.getElementById('statWithdrawalsSub').textContent = d.withdrawals.pending + ' pending';
-  document.getElementById('statWithdrawalsErr').style.display = 'none';
-  
-  var profit = d.profit || 0;
-  document.getElementById('statProfit').textContent = (profit >= 0 ? '+' : '') + fmtUSD(profit);
-  document.getElementById('statProfitSub').textContent = 'Deposits - Withdrawals';
-  document.getElementById('statProfitErr').style.display = 'none';
-}
-
-// ═══════ FETCH USERS ═══════
-async function fetchUsers() {
-  var res = await api('/api/admin/users');
-  allUsers = res.data || [];
-  filteredUsers = allUsers.slice();
-  document.getElementById('usersBadge').textContent = allUsers.length;
-  usersPage = 1;
-  renderUsers();
-}
-
-// ═══════ FETCH DEPOSITS ═══════
-async function fetchDeposits() {
-  var res = await api('/api/admin/invoices');
-  allDeposits = res.data || [];
-  filteredDeposits = allDeposits.slice();
-  document.getElementById('depositsBadge').textContent = allDeposits.length;
-  depositsPage = 1;
-  renderDeposits();
-}
-
-// ═══════ FETCH WITHDRAWALS ═══════
-async function fetchWithdrawals() {
-  var res = await api('/api/admin/withdrawals');
-  allWithdrawals = res.data || [];
-  filteredWithdrawals = allWithdrawals.slice();
-  document.getElementById('withdrawalsBadge').textContent = allWithdrawals.length;
-  withdrawalsPage = 1;
-  renderWithdrawals();
-}
-
-// ═══════ FILTERS ═══════
-function filterUsers() {
-  var q = document.getElementById('userSearch').value.toLowerCase();
-  var filter = document.getElementById('userFilter').value;
-  
-  filteredUsers = allUsers.filter(function(u){ 
-    var matchSearch = u.name.toLowerCase().indexOf(q)>=0 || u.email.toLowerCase().indexOf(q)>=0 || (u.phone||'').indexOf(q)>=0;
-    var matchFilter = true;
-    if (filter === 'active') matchFilter = u.paidDeposits > 0;
-    else if (filter === 'inactive') matchFilter = u.paidDeposits === 0;
-    return matchSearch && matchFilter;
-  });
-  usersPage = 1; renderUsers();
-}
-
-function filterDeposits() {
-  var q = document.getElementById('depositSearch').value.toLowerCase();
-  var filter = document.getElementById('depositFilter').value;
-  
-  filteredDeposits = allDeposits.filter(function(d){ 
-    var matchSearch = d.email.toLowerCase().indexOf(q)>=0 || d.txn_id.toLowerCase().indexOf(q)>=0;
-    var matchFilter = filter === 'all' || d.status === filter;
-    return matchSearch && matchFilter;
-  });
-  depositsPage = 1; renderDeposits();
-}
-
-function filterWithdrawals() {
-  var q = document.getElementById('withdrawalSearch').value.toLowerCase();
-  var filter = document.getElementById('withdrawalFilter').value;
-  
-  filteredWithdrawals = allWithdrawals.filter(function(w){ 
-    var matchSearch = w.email.toLowerCase().indexOf(q)>=0 || w.withdrawal_id.toLowerCase().indexOf(q)>=0;
-    var matchFilter = filter === 'all' || w.status === filter;
-    return matchSearch && matchFilter;
-  });
-  withdrawalsPage = 1; renderWithdrawals();
-}
-
-// ═══════ RENDER USERS ═══════
-function renderUsers() {
-  var tbody = document.getElementById('usersTableBody');
-  if (!filteredUsers.length) {
-    tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="fas fa-users"></i><p>No users found</p></div></td></tr>';
-    document.getElementById('usersPagination').style.display = 'none';
-    return;
-  }
-  var start = (usersPage-1)*ITEMS_PER_PAGE, end = Math.min(start+ITEMS_PER_PAGE, filteredUsers.length);
-  var page = filteredUsers.slice(start, end);
-  var html = '';
-  for(var i=0;i<page.length;i++){
-    var u = page[i];
-    html += '<tr><td><div class="user-cell"><div class="user-avatar">'+u.name.charAt(0).toUpperCase()+'</div><div class="user-info"><div class="name">'+u.name+'</div><div class="email">'+u.email+'</div></div></div></td><td>'+(u.phone||'-')+'</td><td style="font-size:12px;color:var(--mut)">'+fmtDate(u.joined)+'</td><td><span style="color:var(--green);font-weight:600">'+(u.paidDeposits||0)+'/'+(u.deposits||0)+'</span></td><td class="money gold">'+fmtMoney(u.totalDepositedNGN||0)+'</td><td class="money negative">'+fmtMoney(u.totalWithdrawnNGN||0)+'</td><td><span style="color:var(--blue);font-weight:600">'+(u.refCount||0)+'</span></td><td><div class="action-btns"><button class="btn btn-xs btn-blue" onclick="showUserDetail(\''+u.email.replace(/'/g,"\\'")+'\')"><i class="fas fa-eye"></i> View</button><button class="btn btn-xs btn-red" onclick="confirmDeleteUser(\''+u.email.replace(/'/g,"\\'")+'\',\''+u.name.replace(/'/g,"\\'")+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
-  }
-  tbody.innerHTML = html;
-  renderPagination('users', filteredUsers.length, usersPage);
-}
-
-// ═══════ RENDER DEPOSITS ═══════
-function renderDeposits() {
-  var tbody = document.getElementById('depositsTableBody');
-  if (!filteredDeposits.length) {
-    tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state"><i class="fas fa-arrow-down"></i><p>No deposits found</p></div></td></tr>';
-    document.getElementById('depositsPagination').style.display = 'none';
-    return;
-  }
-  var start = (depositsPage-1)*ITEMS_PER_PAGE, end = Math.min(start+ITEMS_PER_PAGE, filteredDeposits.length);
-  var page = filteredDeposits.slice(start, end);
-  var html = '';
-  for(var i=0;i<page.length;i++){
-    var d = page[i];
-    var cryptoColor = d.cryptoType==='btc' ? '#f7931a' : '#26a17b';
-    var actions = '<button class="btn btn-xs btn-blue" onclick="showTransactionDetail(\'deposit\',\''+d.txn_id+'\')"><i class="fas fa-eye"></i></button>';
-    if(d.status==='pending'){
-      actions += ' <button class="btn btn-xs btn-green" onclick="updateInvoice(\''+d.txn_id+'\',\'paid\')"><i class="fas fa-check"></i></button> <button class="btn btn-xs btn-red" onclick="updateInvoice(\''+d.txn_id+'\',\'expired\')"><i class="fas fa-times"></i></button>';
-    }
-    html += '<tr><td><code style="font-size:11px;color:var(--gold);cursor:pointer" onclick="showTransactionDetail(\'deposit\',\''+d.txn_id+'\')">'+trunc(d.txn_id,16)+'</code></td><td>'+d.email+'</td><td><span style="color:var(--gold);font-weight:600">L'+d.level+'</span></td><td class="money gold">'+fmtMoney(d.amountNGN||0)+'</td><td class="money">'+fmtUSD(d.amountUSD||0)+'</td><td><span style="text-transform:uppercase;font-weight:600;color:'+cryptoColor+'">'+d.cryptoType+'</span></td><td><span class="status '+d.status+'"><span class="status-dot"></span>'+d.status+'</span></td><td style="font-size:12px;color:var(--mut)">'+fmtDate(d.created)+'</td><td><div class="action-btns">'+actions+'</div></td></tr>';
-  }
-  tbody.innerHTML = html;
-  renderPagination('deposits', filteredDeposits.length, depositsPage);
-}
-
-// ═══════ RENDER WITHDRAWALS ═══════
-function renderWithdrawals() {
-  var tbody = document.getElementById('withdrawalsTableBody');
-  if (!filteredWithdrawals.length) {
-    tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state"><i class="fas fa-arrow-up"></i><p>No withdrawals found</p></div></td></tr>';
-    document.getElementById('withdrawalsPagination').style.display = 'none';
-    return;
-  }
-  var start = (withdrawalsPage-1)*ITEMS_PER_PAGE, end = Math.min(start+ITEMS_PER_PAGE, filteredWithdrawals.length);
-  var page = filteredWithdrawals.slice(start, end);
-  var html = '';
-  for(var i=0;i<page.length;i++){
-    var w = page[i];
-    var cryptoColor = w.cryptoType==='btc' ? '#f7931a' : '#26a17b';
-    var actions = '<button class="btn btn-xs btn-blue" onclick="showTransactionDetail(\'withdrawal\',\''+w.withdrawal_id+'\')"><i class="fas fa-eye"></i></button>';
-    if(w.status==='processing'){
-      actions += ' <button class="btn btn-xs btn-green" onclick="updateWithdrawal(\''+w.withdrawal_id+'\',\'completed\')"><i class="fas fa-check"></i></button> <button class="btn btn-xs btn-red" onclick="updateWithdrawal(\''+w.withdrawal_id+'\',\'failed\')"><i class="fas fa-times"></i></button>';
-    }
-    html += '<tr><td><code style="font-size:11px;color:var(--gold);cursor:pointer" onclick="showTransactionDetail(\'withdrawal\',\''+w.withdrawal_id+'\')">'+trunc(w.withdrawal_id,16)+'</code></td><td><div class="user-info"><div class="name">'+(w.userName||w.email)+'</div><div class="email">'+w.email+'</div></div></td><td class="money negative">'+fmtMoney(w.amountNGN||0)+'</td><td class="money">'+fmtUSD(w.amountUSD||0)+'</td><td><span style="text-transform:uppercase;font-weight:600;color:'+cryptoColor+'">'+w.cryptoType+'</span></td><td><code style="font-size:10px;color:var(--mut)">'+trunc(w.walletAddress,12)+'</code></td><td><span class="status '+w.status+'"><span class="status-dot"></span>'+w.status+'</span></td><td style="font-size:12px;color:var(--mut)">'+fmtDate(w.created)+'</td><td><div class="action-btns">'+actions+'</div></td></tr>';
-  }
-  tbody.innerHTML = html;
-  renderPagination('withdrawals', filteredWithdrawals.length, withdrawalsPage);
-}
-
-// ═══════ PAGINATION ═══════
-function renderPagination(type, total, cur) {
-  var pages = Math.ceil(total/ITEMS_PER_PAGE);
-  var el = document.getElementById(type+'Pagination');
-  if(pages<=1){ el.style.display='none'; return; }
-  el.style.display = 'flex';
-  document.getElementById(type+'PageInfo').textContent = 'Showing '+((cur-1)*ITEMS_PER_PAGE+1)+'-'+Math.min(cur*ITEMS_PER_PAGE,total)+' of '+total;
-  
-  var h = '<button class="page-btn" onclick="goPage(\''+type+'\','+(cur-1)+')" '+(cur===1?'disabled':'')+'><i class="fas fa-chevron-left"></i></button>';
-  var s = Math.max(1,cur-2), e = Math.min(pages,s+4);
-  if(e-s<4) s = Math.max(1,e-4);
-  if(s>1){ h+='<button class="page-btn" onclick="goPage(\''+type+'\',1)">1</button>'; if(s>2) h+='<span style="color:var(--mut);padding:0 4px">...</span>'; }
-  for(var i=s;i<=e;i++) h+='<button class="page-btn '+(i===cur?'on':'')+'" onclick="goPage(\''+type+'\','+i+')">'+i+'</button>';
-  if(e<pages){ if(e<pages-1) h+='<span style="color:var(--mut);padding:0 4px">...</span>'; h+='<button class="page-btn" onclick="goPage(\''+type+'\','+pages+')">'+pages+'</button>'; }
-  h+='<button class="page-btn" onclick="goPage(\''+type+'\','+(cur+1)+')" '+(cur===pages?'disabled':'')+'><i class="fas fa-chevron-right"></i></button>';
-  document.getElementById(type+'PageBtns').innerHTML = h;
-}
-
-function goPage(type, p) {
-  var total = type==='users'?filteredUsers.length:type==='deposits'?filteredDeposits.length:filteredWithdrawals.length;
-  if(p<1||p>Math.ceil(total/ITEMS_PER_PAGE)) return;
-  if(type==='users'){usersPage=p;renderUsers();}
-  else if(type==='deposits'){depositsPage=p;renderDeposits();}
-  else{withdrawalsPage=p;renderWithdrawals();}
-}
-
-// ═══════ ACTIONS ═══════
-function confirmDeleteUser(email, name) {
-  pendingConfirm = async function(){
-    try {
-      await api('/api/admin/users/'+encodeURIComponent(email), {method:'DELETE'});
-      showToast('User "'+name+'" deleted','ok');
-      await refreshData();
-    } catch(e) { showToast('Delete failed: '+e.message,'err'); }
-  };
-  document.getElementById('confirmTitle').textContent = 'Delete User';
-  document.getElementById('confirmMessage').textContent = 'Delete "'+name+'" ('+email+')? This permanently removes all their data.';
-  document.getElementById('confirmModal').classList.add('on');
-}
-
-async function updateInvoice(txnId, status) {
-  try {
-    await api('/api/admin/invoices/'+txnId, {method:'PUT', body:{status:status}});
-    showToast('Invoice '+txnId.substring(0,12)+'... → '+status,'ok');
-    await refreshData();
-  } catch(e) { showToast('Failed: '+e.message,'err'); }
-}
-
-async function updateWithdrawal(id, status) {
-  try {
-    await api('/api/admin/withdrawals/'+id, {method:'PUT', body:{status:status}});
-    showToast('Withdrawal '+id.substring(0,12)+'... → '+status,'ok');
-    await refreshData();
-  } catch(e) { showToast('Failed: '+e.message,'err'); }
-}
-
-function closeConfirm() { document.getElementById('confirmModal').classList.remove('on'); pendingConfirm=null; }
-async function executeConfirm() { if(pendingConfirm){await pendingConfirm();closeConfirm();} }
-
-// ═══════ MODAL MANAGEMENT ═══════
-function openModal(id) {
-  document.getElementById(id).classList.add('on');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal(id) {
-  document.getElementById(id).classList.remove('on');
-  if (!document.querySelector('.modal-bg.on')) {
-    document.body.style.overflow = '';
-  }
-}
-
-document.querySelectorAll('.modal-bg').forEach(function(modal) {
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      closeModal(modal.id);
-    }
-  });
-});
-
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    var openModalEl = document.querySelector('.modal-bg.on');
-    if (openModalEl) closeModal(openModalEl.id);
-  }
-});
-
-// ═══════ INIT ═══════
 (function(){
-  // Check server connection on page load
-  checkServerConnection();
-  
-  var tok = sessionStorage.getItem('admin_token');
-  if(tok){
-    adminToken = tok;
-    document.getElementById('adminLogin').classList.add('off');
-    document.getElementById('adminDashboard').classList.add('on');
-    refreshData().catch(function(e){
-      showConnError('Session expired or server unreachable: '+e.message);
-      handleLogout();
-    });
-    startAutoRefresh();
-  }
+    var token=sessionStorage.getItem('admin_token');
+    if(token){authToken=token;showDashboard()}
+    document.getElementById('password').addEventListener('keypress',function(e){if(e.key==='Enter')handleLogin()});
 })();
+
+function toast(m,t){
+    var el=document.createElement('div');
+    el.className='toast '+(t||'ok');
+    el.textContent=m;
+    document.getElementById('toastArea').appendChild(el);
+    setTimeout(function(){el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(function(){el.remove()},300)},3000);
+}
+
+function showError(m){var el=document.getElementById('errorMessage');el.textContent=m;el.classList.add('show')}
+function hideError(){document.getElementById('errorMessage').classList.remove('show')}
+
+async function handleLogin(){
+    var password=document.getElementById('password').value;
+    var btn=document.getElementById('loginBtn');
+    hideError();
+    if(!password){showError('Please enter the admin password');return}
+    btn.disabled=true;
+    btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Signing in...';
+    try{
+        var res=await fetch(API_BASE+'/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:password})});
+        var data=await res.json();
+        if(data.status==='success'&&data.data&&data.data.token){
+            authToken=data.data.token;
+            sessionStorage.setItem('admin_token',authToken);
+            showDashboard();
+        }else{
+            showError(data.message||'Login failed');
+        }
+    }catch(e){
+        console.error('Login error:',e);
+        showError('Cannot connect to server. Make sure the server is running.');
+    }finally{
+        btn.disabled=false;
+        btn.innerHTML='<i class="fas fa-arrow-right-to-bracket"></i> Sign In';
+    }
+}
+
+function handleLogout(){
+    authToken=null;
+    sessionStorage.removeItem('admin_token');
+    document.getElementById('loginScreen').style.display='flex';
+    document.getElementById('dashboard').classList.remove('active');
+    document.getElementById('password').value='';
+    hideError();
+}
+
+function showDashboard(){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('dashboard').classList.add('active');
+    loadDashboard();
+}
+
+async function apiCall(endpoint,opts){
+    var o=opts||{};
+    var res=await fetch(API_BASE+endpoint,{
+        ...o,
+        headers:{'x-admin-key':authToken,...(o.headers||{})}
+    });
+    if(res.status===401){handleLogout();throw new Error('Session expired')}
+    return await res.json();
+}
+
+async function loadDashboard(){
+    try{
+        var s=await apiCall('/api/admin/stats');
+        if(s.status==='success')renderStats(s.data);
+    }catch(e){console.error('Stats error:',e)}
+    try{
+        var u=await apiCall('/api/admin/users');
+        if(u.status==='success')renderUsers(u.data);
+    }catch(e){console.error('Users error:',e)}
+    try{
+        var d=await apiCall('/api/admin/invoices');
+        if(d.status==='success')renderDeposits(d.data);
+    }catch(e){console.error('Deposits error:',e)}
+    try{
+        var w=await apiCall('/api/admin/withdrawals');
+        if(w.status==='success')renderWithdrawals(w.data);
+    }catch(e){console.error('Withdrawals error:',e)}
+}
+
+function renderStats(d){
+    document.getElementById('statsGrid').innerHTML=
+        '<div class="stat-card"><div class="label">Total Users</div><div class="value">'+(d.users?d.users.total:0)+'</div></div>'+
+        '<div class="stat-card"><div class="label">Deposits (USD)</div><div class="value green">$'+(d.deposits?d.deposits.totalUSD.toFixed(2):'0.00')+'</div></div>'+
+        '<div class="stat-card"><div class="label">Withdrawals (USD)</div><div class="value red">$'+(d.withdrawals?d.withdrawals.totalUSD.toFixed(2):'0.00')+'</div></div>'+
+        '<div class="stat-card"><div class="label">Profit (USD)</div><div class="value green">$'+(d.profit?d.profit.toFixed(2):'0.00')+'</div></div>'+
+        '<div class="stat-card"><div class="label">Paid Invoices</div><div class="value">'+(d.deposits?d.deposits.paid:0)+'</div></div>'+
+        '<div class="stat-card"><div class="label">Pending Withdrawals</div><div class="value">'+(d.withdrawals?d.withdrawals.pending:0)+'</div></div>';
+}
+
+function fmtDate(ts){
+    if(!ts)return '-';
+    var d=new Date(ts);
+    return d.toLocaleDateString('en-US',{day:'2-digit',month:'short',year:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+}
+
+function escHtml(s){
+    if(!s)return '';
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderUsers(users){
+    document.getElementById('userCount').textContent=users?users.length:0;
+    if(!users||!users.length){
+        document.getElementById('usersContent').innerHTML='<div class="empty-state"><i class="fas fa-users" style="font-size:30px;opacity:.3;margin-bottom:12px;display:block"></i>No users registered yet.</div>';
+        return;
+    }
+    var h='<table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Ref Code</th><th>Joined</th><th>Action</th></tr></thead><tbody>';
+    for(var i=0;i<users.length;i++){
+        var u=users[i];
+        h+='<tr><td>'+escHtml(u.name)+'</td><td class="truncate">'+escHtml(u.email)+'</td><td>'+escHtml(u.phone||'-')+'</td><td class="mono">'+escHtml(u.refCode)+'</td><td>'+fmtDate(u.joined)+'</td><td><button class="act-btn danger" onclick="deleteUser(\''+escHtml(u.email)+'\')"><i class="fas fa-trash"></i> Delete</button></td></tr>';
+    }
+    h+='</tbody></table>';
+    document.getElementById('usersContent').innerHTML=h;
+}
+
+async function deleteUser(email){
+    if(!confirm('Delete user '+email+'? This cannot be undone.'))return;
+    try{
+        var r=await apiCall('/api/admin/users/'+encodeURIComponent(email),{method:'DELETE'});
+        if(r.status==='success'){toast('User deleted','ok');loadDashboard()}
+        else toast(r.message||'Delete failed','err');
+    }catch(e){toast(e.message||'Error','err')}
+}
+
+function renderDeposits(invoices){
+    document.getElementById('invoiceCount').textContent=invoices?invoices.length:0;
+    if(!invoices||!invoices.length){
+        document.getElementById('depositsContent').innerHTML='<div class="empty-state"><i class="fas fa-arrow-down" style="font-size:30px;opacity:.3;margin-bottom:12px;display:block"></i>No invoices yet.</div>';
+        return;
+    }
+    var h='<table><thead><tr><th>Date</th><th>Email</th><th>Level</th><th>Amount (NGN)</th><th>Amount (USD)</th><th>Crypto</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
+    for(var i=0;i<invoices.length;i++){
+        var inv=invoices[i];
+        h+='<tr><td>'+fmtDate(inv.created)+'</td><td class="truncate">'+escHtml(inv.email)+'</td><td>L'+inv.level+'</td><td>'+(inv.amountNGN||0).toLocaleString()+'</td><td>$'+(inv.amountUSD||0).toFixed(2)+'</td><td>'+(inv.cryptoType||'-').toUpperCase()+'</td><td><span class="status '+(inv.status||'pending')+'">'+(inv.status||'pending')+'</span></td><td>';
+        if(inv.status==='pending'){
+            h+='<button class="act-btn green" onclick="updateInvoice(\''+escHtml(inv.txn_id)+'\',\'paid\')"><i class="fas fa-check"></i> Mark Paid</button> ';
+            h+='<button class="act-btn danger" onclick="updateInvoice(\''+escHtml(inv.txn_id)+'\',\'expired\')"><i class="fas fa-times"></i> Expire</button>';
+        }
+        h+='</td></tr>';
+    }
+    h+='</tbody></table>';
+    document.getElementById('depositsContent').innerHTML=h;
+}
+
+async function updateInvoice(txnId,status){
+    if(!confirm('Change invoice '+txnId+' to '+status+'?'))return;
+    try{
+        var r=await apiCall('/api/admin/invoices/'+encodeURIComponent(txnId),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:status})});
+        if(r.status==='success'){toast('Invoice updated to '+status,'ok');loadDashboard()}
+        else toast(r.message||'Update failed','err');
+    }catch(e){toast(e.message||'Error','err')}
+}
+
+function renderWithdrawals(withdrawals){
+    document.getElementById('withdrawalCount').textContent=withdrawals?withdrawals.length:0;
+    if(!withdrawals||!withdrawals.length){
+        document.getElementById('withdrawalsContent').innerHTML='<div class="empty-state"><i class="fas fa-arrow-up" style="font-size:30px;opacity:.3;margin-bottom:12px;display:block"></i>No withdrawals yet.</div>';
+        return;
+    }
+    var h='<table><thead><tr><th>Date</th><th>Email</th><th>Name</th><th>Amount (NGN)</th><th>Amount (USD)</th><th>Crypto</th><th>Wallet</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
+    for(var i=0;i<withdrawals.length;i++){
+        var w=withdrawals[i];
+        h+='<tr><td>'+fmtDate(w.created)+'</td><td class="truncate">'+escHtml(w.email)+'</td><td class="truncate">'+escHtml(w.userName||'-')+'</td><td>'+(w.amountNGN||0).toLocaleString()+'</td><td>$'+(w.amountUSD||0).toFixed(2)+'</td><td>'+(w.cryptoType||'-').toUpperCase()+'</td><td class="mono" title="'+escHtml(w.walletAddress||'')+'">'+escHtml((w.walletAddress||'').substring(0,16))+'...</td><td><span class="status '+(w.status||'pending')+'">'+(w.status||'pending')+'</span></td><td>';
+        if(w.status==='processing'){
+            h+='<button class="act-btn green" onclick="updateWithdrawal(\''+escHtml(w.withdrawal_id)+'\',\'completed\')"><i class="fas fa-check"></i> Complete</button> ';
+            h+='<button class="act-btn danger" onclick="updateWithdrawal(\''+escHtml(w.withdrawal_id)+'\',\'failed\')"><i class="fas fa-times"></i> Fail</button>';
+        }
+        h+='</td></tr>';
+    }
+    h+='</tbody></table>';
+    document.getElementById('withdrawalsContent').innerHTML=h;
+}
+
+async function updateWithdrawal(id,status){
+    if(!confirm('Change withdrawal '+id+' to '+status+'?'))return;
+    try{
+        var r=await apiCall('/api/admin/withdrawals/'+encodeURIComponent(id),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:status})});
+        if(r.status==='success'){toast('Withdrawal updated to '+status,'ok');loadDashboard()}
+        else toast(r.message||'Update failed','err');
+    }catch(e){toast(e.message||'Error','err')}
+}
 </script>
 </body>
 </html>

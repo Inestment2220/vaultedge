@@ -379,9 +379,16 @@ app.post('/api/create-invoice', async (req, res) => {
             const result = await plisioGet('/invoices/new', plisioParams);
             if (!result.data) throw new Error('No data from Plisio');
             inv = result.data;
+            console.log('[INVOICE] Raw Plisio response keys:', Object.keys(inv));
+            console.log('[INVOICE] Raw Plisio sample:', JSON.stringify({amount:inv.amount,dest_amount:inv.dest_amount,pay_amount:inv.pay_amount,wallet_hash:inv.wallet_hash,address:inv.address,currency:inv.currency}));
         }
 
         if (!inv || !inv.txn_id) throw new Error('Invalid invoice response');
+
+        var cryptoAmt = String(inv.amount || inv.dest_amount || inv.pay_amount || inv.source_amount || '0');
+        var wallHash = String(inv.wallet_hash || inv.address || '');
+        var invUrl = String(inv.invoice_url || inv.checkout_url || '');
+        var curCode = String(inv.currency || inv.dest_currency || inv.pay_currency || plisioCurrency);
 
         const invoices = readInvoices();
         invoices[inv.txn_id] = {
@@ -391,26 +398,26 @@ app.post('/api/create-invoice', async (req, res) => {
             amountNGN: parseFloat(amountNGN),
             amountUSD: parseFloat(usd),
             cryptoType,
-            wallet_hash: inv.wallet_hash,
-            invoice_url: inv.invoice_url || '',
-            amount_crypto: inv.amount,
-            currency: inv.currency || plisioCurrency,
+            wallet_hash: wallHash,
+            invoice_url: invUrl,
+            amount_crypto: cryptoAmt,
+            currency: curCode,
             status: 'pending',
             test_mode: TEST_MODE,
             created: Date.now()
         };
         writeInvoices(invoices);
 
-        console.log('[INVOICE] Created:', inv.txn_id);
+        console.log('[INVOICE] Created:', inv.txn_id, 'crypto:', cryptoAmt, 'wallet:', wallHash.substring(0, 20) + '...');
 
         res.json({
             status: 'success',
             data: {
                 txn_id: inv.txn_id,
-                wallet_hash: inv.wallet_hash,
-                invoice_url: inv.invoice_url || '',
-                amount_crypto: inv.amount,
-                currency: inv.currency || plisioCurrency,
+                wallet_hash: wallHash,
+                invoice_url: invUrl,
+                amount_crypto: cryptoAmt,
+                currency: curCode,
                 amount_usd: usd,
                 expire_min: 30,
                 test_mode: TEST_MODE
@@ -447,10 +454,30 @@ app.get('/api/invoice-status', async (req, res) => {
                 if (local.status !== ps) {
                     invoices[txn_id].status = ps;
                     invoices[txn_id].updated = Date.now();
+                    // Update wallet/amount from Plisio if we had missing data
+                    if (!local.wallet_hash || local.wallet_hash === '') {
+                        invoices[txn_id].wallet_hash = String(r.data.wallet_hash || r.data.address || '');
+                    }
+                    if (!local.amount_crypto || local.amount_crypto === '0') {
+                        invoices[txn_id].amount_crypto = String(r.data.amount || r.data.dest_amount || r.data.pay_amount || '0');
+                    }
                     writeInvoices(invoices);
                     if (ps === 'paid') console.log('[STATUS] CONFIRMED via Plisio:', txn_id);
                 }
-                return res.json({ status: 'success', data: { txn_id: r.data.txn_id, status: r.data.status, level: local.level, amountNGN: local.amountNGN, email: local.email } });
+                return res.json({
+                    status: 'success',
+                    data: {
+                        txn_id: r.data.txn_id,
+                        status: r.data.status,
+                        level: local.level,
+                        amountNGN: local.amountNGN,
+                        email: local.email,
+                        wallet_hash: invoices[txn_id].wallet_hash,
+                        amount_crypto: invoices[txn_id].amount_crypto,
+                        currency: invoices[txn_id].currency,
+                        invoice_url: invoices[txn_id].invoice_url
+                    }
+                });
             }
         } catch (e) {
             console.log('[STATUS] Plisio check failed, using local:', e.message);
@@ -465,7 +492,11 @@ app.get('/api/invoice-status', async (req, res) => {
             level: local.level,
             amountNGN: local.amountNGN,
             email: local.email,
-            test_mode: local.test_mode
+            test_mode: local.test_mode,
+            wallet_hash: local.wallet_hash,
+            amount_crypto: local.amount_crypto,
+            currency: local.currency,
+            invoice_url: local.invoice_url
         }
     });
 });
